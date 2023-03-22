@@ -178,35 +178,82 @@ import {
 	TableHead,
 	TableRow,
 	Paper,
+	withStyles,
+	makeStyles,
 } from "@material-ui/core"
 
+const StyledTableCell = withStyles((theme) => ({
+	root: {
+		padding: "8px",
+	},
+	head: {
+		backgroundColor: theme.table.header.bgColor,
+		color: theme.table.header.textColor,
+		fontWeight: theme.table.header.fontWeight,
+	},
+	body: {
+		borderBottomColor: theme.table.row.bottomBorder,
+	},
+}))(TableCell)
+
+const useStyles = makeStyles((theme) => ({
+	root: {
+		"&:nth-of-type(even)": {
+			backgroundColor: theme.table.row.primaryColor,
+		},
+		"&$hover:hover": {
+			backgroundColor: theme.table.row.hoverBgColor,
+			cursor: "pointer",
+		},
+	},
+
+	hover: {},
+}))
+
 const CharTable = () => {
+	const classes = useStyles()
+
 	return (
 		<TableContainer component={Paper}>
 			<Table>
 				<TableHead>
 					<TableRow>
-						<TableCell>Name</TableCell>
-						<TableCell>Eye Color</TableCell>
-						<TableCell>Height</TableCell>
-						<TableCell>Gender</TableCell>
-						<TableCell>Birth Year</TableCell>
-						<TableCell>Homeworld</TableCell>
-						<TableCell>Species</TableCell>
-						<TableCell>Number of Films</TableCell>
+						<StyledTableCell>Name</StyledTableCell>
+						<StyledTableCell>Eye Color</StyledTableCell>
+						<StyledTableCell>Height</StyledTableCell>
+						<StyledTableCell>Gender</StyledTableCell>
+						<StyledTableCell>Birth Year</StyledTableCell>
+						<StyledTableCell>Homeworld</StyledTableCell>
+						<StyledTableCell>Species</StyledTableCell>
+						<StyledTableCell>Number of Films</StyledTableCell>
 					</TableRow>
 				</TableHead>
 				<TableBody>
 					{data.map((row) => (
-						<TableRow key={row.id}>
-							<TableCell>{row.name}</TableCell>
-							<TableCell>{row.eyeColor}</TableCell>
-							<TableCell>{row.height}</TableCell>
-							<TableCell>{row.gender}</TableCell>
-							<TableCell>{row.birthYear}</TableCell>
-							<TableCell>{row.homeworld.name}</TableCell>
-							<TableCell>{row.species ? row.species.name : "-"}</TableCell>
-							<TableCell>{row.filmConnection.totalCount}</TableCell>
+						<TableRow
+							hover
+							key={row.id}
+							classes={{ root: classes.root, hover: classes.hover }}
+							onClick={() => alert("You have clicked row " + row.name)}
+						>
+							<StyledTableCell>{row.name}</StyledTableCell>
+							<StyledTableCell>
+								{row.eyeColor[0].toUpperCase() + row.eyeColor.substring(1)}
+							</StyledTableCell>
+							<StyledTableCell>{row.height}</StyledTableCell>
+							<StyledTableCell>
+								{row.gender === "n/a"
+									? "-"
+									: row.gender[0].toUpperCase() + row.gender.substring(1)}
+							</StyledTableCell>
+							<StyledTableCell>
+								{row.birthYear === "unknown" ? "-" : row.birthYear}
+							</StyledTableCell>
+							<StyledTableCell>{row.homeworld.name}</StyledTableCell>
+							<StyledTableCell>
+								{row.species ? row.species.name : "-"}
+							</StyledTableCell>
+							<StyledTableCell>{row.filmConnection.totalCount}</StyledTableCell>
 						</TableRow>
 					))}
 				</TableBody>

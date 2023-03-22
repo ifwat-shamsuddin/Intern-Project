@@ -20,12 +20,13 @@ const theme = createTheme({
 	table: {
 		header: {
 			bgColor: "#f1f3f5",
-			textColor: "7e7e7e",
-			fontStyle: "bold",
+			textColor: "#7e7e7e",
+			fontWeight: "bold",
 		},
 		row: {
 			bottomBorder: "#f0f3f7",
-			hoverBgColor: "f5f7f8",
+			hoverBgColor: "#f5f7f8",
+			primaryColor: "#d7dfe7",
 		},
 	},
 })
