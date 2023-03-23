@@ -1,3 +1,3 @@
-import CharTable from "./table"
+import CharTable from "./Table"
 
 export default CharTable
