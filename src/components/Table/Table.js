@@ -1,17 +1,20 @@
 import { Table, TableContainer, Paper } from "@material-ui/core"
 
 import CustomisedTableHead from "./CustomisedTableHead"
-import StyledTableRow from "./StyledTableBody"
+import StyledTableBody from "./StyledTableBody"
 
-const CharTable = () => {
-	return (
-		<TableContainer component={Paper}>
-			<Table>
-				<CustomisedTableHead />
-				<StyledTableRow />
-			</Table>
-		</TableContainer>
-	)
+const CustomTable = ({ columns, data }) => {
+  return (
+    <TableContainer component={Paper}>
+      <Table>
+        <CustomisedTableHead columns={columns} />
+        <StyledTableBody
+          columns={columns}
+          data={data}
+        />
+      </Table>
+    </TableContainer>
+  )
 }
 
-export default CharTable
+export default CustomTable

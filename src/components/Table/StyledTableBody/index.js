@@ -1,3 +1,3 @@
-import StyledTableRow from "./StyledTableBody"
+import StyledTableBody from "./StyledTableBody"
 
-export default StyledTableRow
+export default StyledTableBody
