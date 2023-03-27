@@ -1,6 +1,5 @@
 import { TableCell, withStyles } from "@material-ui/core"
 
-import capitalizeFirstLetter from "@/utils/capitalizeFirstLetter"
 import replaceIfNull from "@/utils/replaceIfNull"
 
 const NewTableCell = withStyles((theme) => ({
@@ -14,15 +13,12 @@ const NewTableCell = withStyles((theme) => ({
   },
   body: {
     borderBottomColor: theme.palette.primary.dark,
+    textTransform: "capitalize",
   },
 }))(TableCell)
 
 const StyledTableCell = ({ children }) => {
-  return (
-    <NewTableCell>
-      {capitalizeFirstLetter(replaceIfNull(children))}
-    </NewTableCell>
-  )
+  return <NewTableCell>{replaceIfNull(children)}</NewTableCell>
 }
 
 export default StyledTableCell

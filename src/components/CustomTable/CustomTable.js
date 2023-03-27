@@ -8,6 +8,7 @@ const CustomTable = ({ columns, data }) => {
     <TableContainer component={Paper}>
       <Table>
         <CustomisedTableHead columns={columns} />
+
         <StyledTableBody
           columns={columns}
           data={data}

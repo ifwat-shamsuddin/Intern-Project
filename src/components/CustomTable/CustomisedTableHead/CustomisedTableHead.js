@@ -7,7 +7,7 @@ const CustomisedTableHead = ({ columns }) => {
     <TableHead>
       <TableRow>
         {columns.map((column) => (
-          <StyledTableCell>{column.header}</StyledTableCell>
+          <StyledTableCell key={column.header}>{column.header}</StyledTableCell>
         ))}
       </TableRow>
     </TableHead>

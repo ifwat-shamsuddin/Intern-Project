@@ -1,4 +1,5 @@
 import { TableBody, TableRow, makeStyles } from "@material-ui/core"
+import { get } from "lodash"
 
 import StyledTableCell from "../StyledTableCell"
 
@@ -12,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
       cursor: "pointer",
     },
   },
-
+  //Produce warning if removed
   hover: {},
 }))
 
@@ -29,12 +30,8 @@ const StyledTableBody = ({ columns, data }) => {
           onClick={() => alert("You have clicked row " + row.name)}
         >
           {columns.map((column) => (
-            <StyledTableCell>
-              {column.nestedKey
-                ? row[column.nestedKey]
-                  ? row[column.nestedKey][column.field]
-                  : "-"
-                : row[column.field]}
+            <StyledTableCell key={row.id + column.header}>
+              {get(row, column.field, "-")}
             </StyledTableCell>
           ))}
         </TableRow>
