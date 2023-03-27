@@ -1,9 +1,8 @@
-import store from "@/store/store"
 import { Provider } from "react-redux"
-
-import theme from "@/theme"
 import { ThemeProvider } from "@material-ui/core"
 
+import store from "@/store/store"
+import theme from "@/theme"
 import "@/styles/globals.css"
 
 export default function App({ Component, pageProps }) {
