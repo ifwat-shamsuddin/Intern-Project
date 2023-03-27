@@ -1,3 +1,1 @@
-import StyledTableCell from "./StyledTableCell"
-
-export default StyledTableCell
+export { default } from "./StyledTableCell"

@@ -1,3 +1,1 @@
-import StyledTableBody from "./StyledTableBody"
-
-export default StyledTableBody
+export { default } from "./StyledTableBody"
