@@ -1,9 +1,6 @@
 const wordsToReplace = ["n/a", "unknown"]
 
-function replaceIfNull(string) {
-  if (Number.isInteger(string)) {
-    return string
-  }
+const replaceIfNull = (string) => {
   return wordsToReplace.includes(string) ? "-" : string
 }
 
