@@ -17,8 +17,8 @@ const NewTableCell = withStyles((theme) => ({
   },
 }))(TableCell)
 
-const StyledTableCell = ({ children }) => {
-  return <NewTableCell>{replaceIfNull(children)}</NewTableCell>
+const StyledTableCell = ({ value }) => {
+  return <NewTableCell>{replaceIfNull(value)}</NewTableCell>
 }
 
 export default StyledTableCell

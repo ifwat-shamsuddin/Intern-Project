@@ -30,9 +30,10 @@ const StyledTableBody = ({ columns, data }) => {
           onClick={() => alert("You have clicked row " + row.name)}
         >
           {columns.map((column) => (
-            <StyledTableCell key={row.id + column.header}>
-              {get(row, column.field, "-")}
-            </StyledTableCell>
+            <StyledTableCell
+              key={row.id + column.header}
+              value={get(row, column.field, "-")}
+            />
           ))}
         </TableRow>
       ))}
