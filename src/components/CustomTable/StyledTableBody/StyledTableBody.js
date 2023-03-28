@@ -8,13 +8,11 @@ const useStyles = makeStyles((theme) => ({
     "&:nth-of-type(even)": {
       backgroundColor: theme.palette.secondary.main,
     },
-    "&$hover:hover": {
+    "&:hover": {
       backgroundColor: theme.palette.primary.main,
       cursor: "pointer",
     },
   },
-  //Produce warning if removed
-  hover: {},
 }))
 
 const StyledTableBody = ({ columns, data }) => {
