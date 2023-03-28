@@ -5,7 +5,10 @@ import StyledTableBody from "./StyledTableBody"
 
 const CustomTable = ({ columns, data }) => {
   return (
-    <TableContainer component={Paper}>
+    <TableContainer
+      component={Paper}
+      elevation={0}
+    >
       <Table>
         <CustomisedTableHead columns={columns} />
 
