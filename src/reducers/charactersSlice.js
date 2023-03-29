@@ -172,16 +172,16 @@ const initialState = [
   },
 ]
 
-const dataSlice = createSlice({
-  name: "data",
+const charactersSlice = createSlice({
+  name: "characters",
   initialState,
   reducers: {
-    dataAdded(state, action) {
+    charactersAdded(state, action) {
       state.push(action.payload)
     },
   },
 })
 
-export const { dataAdded } = dataSlice.actions
+export const { charactersAdded } = charactersSlice.actions
 
-export default dataSlice.reducer
+export default charactersSlice.reducer

@@ -1,11 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit"
 
-import dataReducer from "@/reducers/dataSlice"
+import charactersReducer from "@/reducers/charactersSlice"
 
 export const makeStore = () => {
   return configureStore({
     reducer: {
-      data: dataReducer,
+      characters: charactersReducer,
     },
   })
 }
