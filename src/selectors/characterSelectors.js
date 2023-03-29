@@ -1,1 +1,1 @@
-export const characterSelectors = (state) => state.characters.character
+export const characterSelectors = (state) => state.character.character

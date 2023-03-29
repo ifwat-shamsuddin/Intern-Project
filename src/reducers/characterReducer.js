@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit"
 
 const initialState = {
-  character: [
+  characters: [
     {
       id: "cGVvcGxlOjE=",
       name: "Luke Skywalker",
@@ -178,12 +178,12 @@ const characterReducer = createSlice({
   name: "character",
   initialState,
   reducers: {
-    characterAdded: (state, action) => {
-      state.character.push(action.payload)
+    addCharacter: (state, action) => {
+      state.characters.push(action.payload)
     },
   },
 })
 
-export const { characterAdded } = characterReducer.actions
+export const { addCharacter } = characterReducer.actions
 
 export default characterReducer.reducer

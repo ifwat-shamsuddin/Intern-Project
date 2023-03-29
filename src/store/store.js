@@ -5,7 +5,7 @@ import characterReducer from "@/reducers/characterReducer"
 export const makeStore = () => {
   return configureStore({
     reducer: {
-      characters: characterReducer,
+      character: characterReducer,
     },
   })
 }
