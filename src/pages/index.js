@@ -2,7 +2,7 @@ import { makeStyles } from "@material-ui/core/styles"
 import { Typography } from "@material-ui/core"
 
 import CustomTable from "@/components/CustomTable"
-import data from "public/data.json"
+import { useSelector } from "react-redux"
 
 const useStyles = makeStyles((theme) => ({
   body: {
@@ -28,6 +28,8 @@ export default function Home() {
       field: "filmConnection.totalCount",
     },
   ]
+
+  const data = useSelector((state) => state.data)
 
   return (
     <div className={classes.body}>
