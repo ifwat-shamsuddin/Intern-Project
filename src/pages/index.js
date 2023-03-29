@@ -29,7 +29,7 @@ export default function Home() {
     },
   ]
 
-  const data = useSelector((state) => state.data)
+  const data = useSelector((state) => state.characters)
 
   return (
     <div className={classes.body}>
