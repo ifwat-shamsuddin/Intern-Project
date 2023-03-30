@@ -1,8 +1,9 @@
 import { makeStyles } from "@material-ui/core/styles"
 import { Typography } from "@material-ui/core"
+import { useSelector } from "react-redux"
 
 import CustomTable from "@/components/CustomTable"
-import data from "public/data.json"
+import { characterSelectors } from "@/selectors/characterSelectors"
 
 const useStyles = makeStyles((theme) => ({
   body: {
@@ -14,6 +15,8 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Home() {
   const classes = useStyles()
+
+  const data = useSelector(characterSelectors)
 
   const columns = [
     { header: "Name", field: "name" },
