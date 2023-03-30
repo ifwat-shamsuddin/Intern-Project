@@ -18,6 +18,11 @@ const theme = createTheme({
       dark: "#7e7e7e",
       contrastText: "#fff",
     },
+    button: {
+      light: "#aecdff",
+      main: "#0999e2",
+      dark: "#0676af",
+    },
   },
 })
 

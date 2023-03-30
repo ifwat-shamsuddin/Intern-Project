@@ -4,12 +4,17 @@ import { useSelector } from "react-redux"
 
 import CustomTable from "@/components/CustomTable"
 import { characterSelectors } from "@/selectors/characterSelectors"
+import AddNewButton from "@/components/AddNewButton"
 
 const useStyles = makeStyles((theme) => ({
   body: {
     display: "grid",
     placeItems: "center",
+    gap: "10px",
     padding: "25px",
+  },
+  button: {
+    placeSelf: "end",
   },
 }))
 
@@ -35,6 +40,9 @@ export default function Home() {
   return (
     <div className={classes.body}>
       <Typography variant="h2">Star Wars</Typography>
+      <div className={classes.button}>
+        <AddNewButton label="Add New Character" />
+      </div>
       <CustomTable
         columns={columns}
         data={data}
