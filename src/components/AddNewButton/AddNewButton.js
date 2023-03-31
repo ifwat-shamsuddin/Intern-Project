@@ -19,6 +19,7 @@ const AddNewButton = ({ label, onClick }) => {
       variant="contained"
       className={classes.button}
       startIcon={<AddCircleIcon />}
+      onClick={onClick}
     >
       {label}
     </Button>

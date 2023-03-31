@@ -1,4 +1,6 @@
-import { createTheme } from "@material-ui/core/styles"
+import { unstable_createMuiStrictModeTheme as createTheme } from "@material-ui/core/styles"
+// Changes import because of a findDOMnode error upon opening Drawer
+// Might need to find other solution because this method should not be used in production
 
 // Create a theme instance.
 const theme = createTheme({

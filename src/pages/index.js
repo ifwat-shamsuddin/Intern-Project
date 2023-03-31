@@ -1,10 +1,12 @@
 import { makeStyles } from "@material-ui/core/styles"
 import { Typography } from "@material-ui/core"
 import { useSelector } from "react-redux"
+import { useState } from "react"
 
 import CustomTable from "@/components/CustomTable"
-import { characterSelectors } from "@/selectors/characterSelectors"
 import AddNewButton from "@/components/AddNewButton"
+import RightSideDrawer from "@/components/RightSideDrawer"
+import { characterSelectors } from "@/selectors/characterSelectors"
 
 const useStyles = makeStyles((theme) => ({
   body: {
@@ -22,6 +24,7 @@ export default function Home() {
   const classes = useStyles()
 
   const data = useSelector(characterSelectors)
+  const [open, setOpen] = useState(false)
 
   const columns = [
     { header: "Name", field: "name" },
@@ -39,9 +42,16 @@ export default function Home() {
 
   return (
     <div className={classes.body}>
+      <RightSideDrawer
+        open={open}
+        setOpen={setOpen}
+      />
       <Typography variant="h2">Star Wars</Typography>
       <div className={classes.button}>
-        <AddNewButton label="Add New Character" />
+        <AddNewButton
+          label="Add New Character"
+          onClick={() => setOpen(true)}
+        />
       </div>
       <CustomTable
         columns={columns}
