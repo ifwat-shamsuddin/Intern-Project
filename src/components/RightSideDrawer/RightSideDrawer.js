@@ -1,4 +1,5 @@
 import { Drawer, makeStyles } from "@material-ui/core"
+import AddNewCharacterForm from "../AddNewCharacterForm"
 
 const useStyles = makeStyles((theme) => ({
   paperAnchorRight: {
@@ -45,7 +46,9 @@ const RightSideDrawer = ({ open, setOpen }) => {
         >
           <div>X</div>
         </div>
-        <div className={classes.form}>Form Container</div>
+        <div className={classes.form}>
+          <AddNewCharacterForm />
+        </div>
       </div>
     </Drawer>
   )
