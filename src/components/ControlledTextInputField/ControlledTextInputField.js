@@ -1,4 +1,5 @@
 import { makeStyles, TextField } from "@material-ui/core"
+import { Controller } from "react-hook-form"
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -14,33 +15,38 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-const TextInputField = ({
-  id,
+const ControlledTextInputField = ({
+  name,
   label,
-  required,
+  control,
+  errors,
+  rules = {},
+  defaultValue = "",
   placeholder,
-  error,
-  errorMsg,
 }) => {
   const classes = useStyles()
+
+  const isRequired = rules.required !== undefined
 
   return (
     <div className={classes.root}>
       <span className={classes.label}>
         {label}
-        {required && "*"}
+        {isRequired && "*"}
       </span>
-      <TextField
-        id={`${id}-input`}
-        required={required}
-        variant="outlined"
+      <Controller
+        as={<TextField />}
+        control={control}
+        name={name}
+        rules={rules}
+        defaultValue={defaultValue}
         placeholder={placeholder}
-        size="small"
-        error={error}
-        helperText={error && errorMsg}
+        variant="outlined"
+        error={Boolean(errors[name])}
+        helperText={errors[name]?.message}
       />
     </div>
   )
 }
 
-export default TextInputField
+export default ControlledTextInputField

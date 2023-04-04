@@ -38,6 +38,7 @@ const RightSideDrawer = ({ open, setOpen }) => {
       onClose={() => setOpen(false)}
       classes={{ paperAnchorRight: classes.paperAnchorRight }}
       elevation={0}
+      keepMounted
     >
       <div className={classes.root}>
         <div
