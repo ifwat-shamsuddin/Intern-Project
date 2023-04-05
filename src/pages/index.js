@@ -7,6 +7,7 @@ import CustomTable from "@/components/CustomTable"
 import AddNewButton from "@/components/AddNewButton"
 import RightSideDrawer from "@/components/RightSideDrawer"
 import { characterSelectors } from "@/selectors/characterSelectors"
+import AddNewCharacterForm from "@/components/AddNewCharacterForm/AddNewCharacterForm"
 
 const useStyles = makeStyles((theme) => ({
   body: {
@@ -57,6 +58,8 @@ export default function Home() {
         columns={columns}
         data={data}
       />
+      <AddNewCharacterForm />
+      {/* Debugging purposes */}
     </div>
   )
 }

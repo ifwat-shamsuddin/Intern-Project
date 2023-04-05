@@ -1,5 +1,5 @@
 import { makeStyles, TextField } from "@material-ui/core"
-import { Controller } from "react-hook-form"
+import { Controller, useFormContext } from "react-hook-form"
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -18,13 +18,12 @@ const useStyles = makeStyles((theme) => ({
 const ControlledTextInputField = ({
   name,
   label,
-  control,
-  errors,
   rules = {},
   defaultValue = "",
   placeholder,
 }) => {
   const classes = useStyles()
+  const { control, errors } = useFormContext()
 
   const isRequired = rules.required !== undefined
 

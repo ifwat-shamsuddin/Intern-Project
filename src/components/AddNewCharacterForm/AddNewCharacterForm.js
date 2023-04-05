@@ -1,5 +1,6 @@
 import { Button, makeStyles } from "@material-ui/core"
-import { useForm } from "react-hook-form"
+import { FormProvider, useForm } from "react-hook-form"
+import { useState, useCallback } from "react"
 
 import ControlledTextInputField from "../ControlledTextInputField"
 import NumberInputField from "../NumberInputField"
@@ -16,36 +17,43 @@ const useStyles = makeStyles((theme) => ({
 
 const AddNewCharacterForm = () => {
   const classes = useStyles()
-  const { handleSubmit, control, errors } = useForm()
+  const methods = useForm()
 
-  const onSubmit = (data) => console.log(data)
+  const onSubmit = (data, e) => console.log(data, e)
+  const onError = (errors, e) => console.log(errors, e)
+
+  const [, updateState] = useState()
+  const forceUpdate = useCallback(() => updateState({}), [])
 
   return (
-    <form
-      className={classes.root}
-      onSubmit={handleSubmit(onSubmit)}
-    >
-      <ControlledTextInputField
-        name="name"
-        label="Name"
-        placeholder="Enter name"
-        control={control}
-        errors={errors}
-        rules={{
-          required: "Please enter a name",
-          minLength: {
-            value: 3,
-            message: "Name should be at least 3 characters",
-          },
-        }}
-      />
-      <Button
-        type="submit"
-        variant="contained"
-      >
-        Submit
-      </Button>
-    </form>
+    <div>
+      <FormProvider {...methods}>
+        <form
+          className={classes.root}
+          onSubmit={methods.handleSubmit(onSubmit, onError)}
+        >
+          <ControlledTextInputField
+            name="name"
+            label="Name"
+            placeholder="Enter name"
+            rules={{
+              required: "Please enter a name",
+              minLength: {
+                value: 3,
+                message: "Name should be at least 3 characters",
+              },
+            }}
+          />
+          <Button
+            type="submit"
+            variant="contained"
+          >
+            Submit
+          </Button>
+        </form>
+      </FormProvider>
+      <button onClick={forceUpdate}>Force re-render</button>
+    </div>
   )
 }
 
