@@ -58,8 +58,6 @@ export default function Home() {
         columns={columns}
         data={data}
       />
-      <AddNewCharacterForm />
-      {/* Debugging purposes */}
     </div>
   )
 }
