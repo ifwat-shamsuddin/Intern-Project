@@ -38,7 +38,6 @@ const RightSideDrawer = ({ open, setOpen }) => {
       onClose={() => setOpen(false)}
       classes={{ paperAnchorRight: classes.paperAnchorRight }}
       elevation={0}
-      keepMounted
     >
       <div className={classes.root}>
         <div
@@ -48,7 +47,7 @@ const RightSideDrawer = ({ open, setOpen }) => {
           <div>X</div>
         </div>
         <div className={classes.form}>
-          <AddNewCharacterForm />
+          <AddNewCharacterForm setOpen={setOpen} />
         </div>
       </div>
     </Drawer>

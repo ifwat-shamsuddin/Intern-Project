@@ -5,14 +5,21 @@ const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
     flexDirection: "column",
+    fontSize: theme.typography.fontSize,
+    fontFamily: theme.typography.fontFamily,
+
     "& .MuiFormHelperText-contained": {
       margin: "0",
+    },
+
+    "& .MuiOutlinedInput-input": {
+      padding: "6px 10px 6px 10px",
+      fontSize: theme.typography.fontSize,
     },
   },
   label: {
     fontWeight: theme.typography.fontWeightBold,
-    fontSize: theme.typography.fontSize,
-    fontFamily: theme.typography.fontFamily,
+    paddingBottom: "4px",
   },
 }))
 
