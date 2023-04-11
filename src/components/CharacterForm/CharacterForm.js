@@ -4,7 +4,8 @@ import { useDispatch } from "react-redux"
 import { nanoid } from "@reduxjs/toolkit"
 import { addCharacter } from "@/reducers/characterReducer"
 
-import ControlledInputField from "../ControlledInputField"
+import ControlledTextInputField from "../ControlledTextInputField"
+import ControlledNumberInputField from "../ControlledNumberInputField/ControlledNumberInputField"
 import ControlledSelectInputField from "../ControlledSelectInputField/ControlledSelectInputField"
 
 const useStyles = makeStyles((theme) => ({
@@ -112,7 +113,7 @@ const CharacterForm = ({ setOpen }) => {
             item
             xs
           >
-            <ControlledInputField
+            <ControlledTextInputField
               control={control}
               name="name"
               label="Name"
@@ -123,7 +124,7 @@ const CharacterForm = ({ setOpen }) => {
             item
             xs
           >
-            <ControlledInputField
+            <ControlledTextInputField
               control={control}
               name="eyeColor"
               label="Eye Color"
@@ -140,7 +141,7 @@ const CharacterForm = ({ setOpen }) => {
             item
             xs
           >
-            <ControlledInputField
+            <ControlledNumberInputField
               control={control}
               name="height"
               label="Height"
@@ -170,7 +171,7 @@ const CharacterForm = ({ setOpen }) => {
             item
             xs
           >
-            <ControlledInputField
+            <ControlledTextInputField
               control={control}
               name="birthYear"
               label="Birth Year"
@@ -181,7 +182,7 @@ const CharacterForm = ({ setOpen }) => {
             item
             xs
           >
-            <ControlledInputField
+            <ControlledTextInputField
               control={control}
               name="homeworld"
               label="HomeWorld"
@@ -210,7 +211,7 @@ const CharacterForm = ({ setOpen }) => {
             item
             xs
           >
-            <ControlledInputField
+            <ControlledNumberInputField
               control={control}
               name="numberOfFilms"
               label="Number Of Films"
