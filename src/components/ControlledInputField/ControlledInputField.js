@@ -26,13 +26,6 @@ const useStyles = makeStyles((theme) => ({
 const ControlledInputField = ({ control, name, label, placeholder, type }) => {
   const classes = useStyles()
 
-  const validateInput = (value) => {
-    if (!value) return false
-    if (value.length < 3) return false
-
-    return true
-  }
-
   return (
     <div className={classes.root}>
       <span className={classes.label}>{label}</span>
