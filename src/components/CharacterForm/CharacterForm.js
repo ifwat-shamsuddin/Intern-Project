@@ -2,7 +2,6 @@ import { Button, Container, Grid, makeStyles } from "@material-ui/core"
 import { useForm } from "react-hook-form"
 import { useDispatch } from "react-redux"
 import { nanoid } from "@reduxjs/toolkit"
-
 import { addCharacter } from "@/reducers/characterReducer"
 
 import ControlledInputField from "../ControlledInputField"
@@ -10,7 +9,7 @@ import ControlledSelectInputField from "../ControlledSelectInputField/Controlled
 
 const useStyles = makeStyles((theme) => ({
   title: {
-    borderBottom: "1px solid grey",
+    borderBottom: `1px solid ${theme.palette.grey[800]}`,
     padding: theme.spacing(1),
     fontWeight: theme.typography.fontWeightBold,
   },
@@ -20,7 +19,9 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     flexDirection: "column",
     gap: theme.spacing(2),
-    width: "30vw",
+    width: "92%",
+    height: "78%",
+    overflow: "auto",
   },
 
   buttonBox: {
@@ -41,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-const AddNewCharacterForm = ({ setOpen }) => {
+const CharacterForm = ({ setOpen }) => {
   const classes = useStyles()
   const { control, handleSubmit } = useForm({
     defaultValues: {
@@ -59,30 +60,39 @@ const AddNewCharacterForm = ({ setOpen }) => {
 
   const dispatch = useDispatch()
 
-  const onSubmit = (data) => {
-    if (data.name && data.eyeColor) {
-      dispatch(
-        addCharacter({
+  const onSubmit = ({
+    name,
+    eyeColor,
+    height,
+    gender,
+    birthYear,
+    homeworld,
+    species,
+    numberOfFilms,
+  }) => {
+    if (!name || !eyeColor) return
+
+    dispatch(
+      addCharacter({
+        id: nanoid(),
+        name: name,
+        eyeColor: eyeColor,
+        height: height,
+        gender: gender,
+        birthYear: birthYear,
+        homeworld: {
           id: nanoid(),
-          name: data.name,
-          eyeColor: data.eyeColor,
-          height: data.height,
-          gender: data.gender,
-          birthYear: data.birthYear,
-          homeworld: {
-            id: nanoid(),
-            name: data.homeworld,
-          },
-          species: {
-            id: nanoid(),
-            name: data.species,
-          },
-          filmConnection: {
-            totalCount: data.numberOfFilms,
-          },
-        })
-      )
-    }
+          name: homeworld,
+        },
+        species: {
+          id: nanoid(),
+          name: species,
+        },
+        filmConnection: {
+          totalCount: numberOfFilms,
+        },
+      })
+    )
   }
 
   return (
@@ -230,4 +240,4 @@ const AddNewCharacterForm = ({ setOpen }) => {
   )
 }
 
-export default AddNewCharacterForm
+export default CharacterForm
