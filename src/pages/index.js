@@ -6,8 +6,7 @@ import { useState } from "react"
 import CustomTable from "@/components/CustomTable"
 import AddNewButton from "@/components/AddNewButton"
 import RightSideDrawer from "@/components/RightSideDrawer"
-import { characterSelectors } from "@/selectors/characterSelectors"
-import AddNewCharacterForm from "@/components/AddNewCharacterForm/AddNewCharacterForm"
+import { characters } from "@/selectors/characterSelectors"
 
 const useStyles = makeStyles((theme) => ({
   body: {
@@ -24,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
 export default function Home() {
   const classes = useStyles()
 
-  const data = useSelector(characterSelectors)
+  const data = useSelector(characters)
   const [open, setOpen] = useState(false)
 
   const columns = [
