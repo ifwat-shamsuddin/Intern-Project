@@ -6,6 +6,7 @@ import { useState } from "react"
 import CustomTable from "@/components/CustomTable"
 import AddNewButton from "@/components/AddNewButton"
 import RightSideDrawer from "@/components/RightSideDrawer"
+import CharacterForm from "@/components/CharacterForm"
 import { characters } from "@/selectors/characterSelectors"
 
 const useStyles = makeStyles((theme) => ({
@@ -45,6 +46,7 @@ export default function Home() {
       <RightSideDrawer
         open={open}
         setOpen={setOpen}
+        Component={CharacterForm}
       />
       <Typography variant="h2">Star Wars</Typography>
       <div className={classes.button}>
