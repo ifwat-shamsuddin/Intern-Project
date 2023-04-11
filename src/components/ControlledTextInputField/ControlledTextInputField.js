@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-const ControlledInputField = ({ control, name, label, placeholder, type }) => {
+const ControlledTextInputField = ({ control, name, label, placeholder }) => {
   const classes = useStyles()
 
   return (
@@ -41,7 +41,6 @@ const ControlledInputField = ({ control, name, label, placeholder, type }) => {
               variant="outlined"
               onChange={(event) => onChange(event.target.value)}
               size="small"
-              type={type}
             />
           )
         }}
@@ -50,4 +49,4 @@ const ControlledInputField = ({ control, name, label, placeholder, type }) => {
   )
 }
 
-export default ControlledInputField
+export default ControlledTextInputField
