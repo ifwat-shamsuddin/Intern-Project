@@ -1,5 +1,6 @@
-import { makeStyles, MenuItem, TextField } from "@material-ui/core"
+import { makeStyles } from "@material-ui/core"
 import { Controller } from "react-hook-form"
+import Select from "react-select"
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -7,15 +8,6 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "column",
     fontSize: theme.typography.fontSize,
     fontFamily: theme.typography.fontFamily,
-
-    "& .MuiFormHelperText-contained": {
-      margin: "0",
-    },
-
-    "& .MuiOutlinedInput-input": {
-      padding: "6px 10px 6px 10px",
-      fontSize: theme.typography.fontSize,
-    },
   },
   label: {
     fontWeight: theme.typography.fontWeightBold,
@@ -48,31 +40,37 @@ const ControlledSelectInputField = ({
         name={name}
         render={({ value, onChange }) => {
           return (
-            <TextField
-              value={value}
+            <Select
+              styles={{
+                control: (baseStyles) => ({
+                  ...baseStyles,
+                  minHeight: 0,
+                  height: "30px",
+                }),
+                valueContainer: (baseStyles) => ({
+                  ...baseStyles,
+                  padding: "2px 8px 8px 8px",
+                }),
+                dropdownIndicator: (baseStyles) => ({
+                  ...baseStyles,
+                  padding: "2px 8px 8px 8px",
+                }),
+                indicatorSeparator: (baseStyles) => ({
+                  ...baseStyles,
+                  marginTop: 0,
+                  marginBottom: "5px",
+                }),
+                placeholder: (baseStyles) => ({
+                  ...baseStyles,
+                  color: "#a2a2a2",
+                }),
+              }}
+              options={options}
+              defaultValue={null}
               placeholder={placeholder}
-              variant="outlined"
-              onChange={(event) => onChange(event.target.value)}
-              size="small"
-              select
-            >
-              <MenuItem
-                key=""
-                value=""
-              >
-                None
-              </MenuItem>
-              {options.map((option) => {
-                return (
-                  <MenuItem
-                    key={option}
-                    value={option}
-                  >
-                    {option}
-                  </MenuItem>
-                )
-              })}
-            </TextField>
+              value={options.find((option) => option.value === value)}
+              onChange={(event) => onChange(event.value)}
+            />
           )
         }}
       />

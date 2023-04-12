@@ -158,7 +158,10 @@ const CharacterForm = ({ setOpen }) => {
               name="gender"
               label="Gender"
               placeholder="Select gender"
-              options={["Male", "Female"]}
+              options={[
+                { value: "male", label: "Male" },
+                { value: "female", label: "Female" },
+              ]}
             />
           </Grid>
         </Grid>
@@ -204,7 +207,10 @@ const CharacterForm = ({ setOpen }) => {
               name="species"
               label="Species"
               placeholder="Select species"
-              options={["Droid", "Human"]}
+              options={[
+                { value: "droid", label: "Droid" },
+                { value: "human", label: "Human" },
+              ]}
             />
           </Grid>
           <Grid
