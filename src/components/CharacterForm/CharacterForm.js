@@ -4,6 +4,8 @@ import { useDispatch } from "react-redux"
 import { nanoid } from "@reduxjs/toolkit"
 import { addCharacter } from "@/reducers/characterReducer"
 
+import { genderEnum } from "@/enums/genderEnum"
+import { speciesEnum } from "@/enums/speciesEnum"
 import ControlledTextInputField from "../ControlledTextInputField"
 import ControlledNumberInputField from "../ControlledNumberInputField/ControlledNumberInputField"
 import ControlledSelectInputField from "../ControlledSelectInputField/ControlledSelectInputField"
@@ -50,10 +52,10 @@ const CharacterForm = ({ setOpen }) => {
       name: "",
       eyeColor: "",
       height: "",
-      gender: "",
+      gender: null,
       birthYear: "",
       homeworld: "",
-      species: "",
+      species: null,
       numberOfFilms: "",
     },
     reValidateMode: "onSubmit",
@@ -79,7 +81,7 @@ const CharacterForm = ({ setOpen }) => {
         name: name,
         eyeColor: eyeColor,
         height: height,
-        gender: gender,
+        gender: gender.value,
         birthYear: birthYear,
         homeworld: {
           id: nanoid(),
@@ -87,7 +89,7 @@ const CharacterForm = ({ setOpen }) => {
         },
         species: {
           id: nanoid(),
-          name: species,
+          name: species.value,
         },
         filmConnection: {
           totalCount: numberOfFilms,
@@ -159,8 +161,8 @@ const CharacterForm = ({ setOpen }) => {
               label="Gender"
               placeholder="Select gender"
               options={[
-                { value: "male", label: "Male" },
-                { value: "female", label: "Female" },
+                { value: genderEnum.male, label: "Male" },
+                { value: genderEnum.female, label: "Female" },
               ]}
             />
           </Grid>
@@ -208,8 +210,8 @@ const CharacterForm = ({ setOpen }) => {
               label="Species"
               placeholder="Select species"
               options={[
-                { value: "droid", label: "Droid" },
-                { value: "human", label: "Human" },
+                { value: speciesEnum.droid, label: "Droid" },
+                { value: speciesEnum.human, label: "Human" },
               ]}
             />
           </Grid>
