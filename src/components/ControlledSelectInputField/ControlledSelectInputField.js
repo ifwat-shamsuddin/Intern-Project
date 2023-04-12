@@ -1,4 +1,5 @@
-import { makeStyles } from "@material-ui/core"
+import { makeStyles, useTheme } from "@material-ui/core"
+import { useMemo } from "react"
 import { Controller } from "react-hook-form"
 import Select from "react-select"
 
@@ -23,13 +24,34 @@ const ControlledSelectInputField = ({
   options,
 }) => {
   const classes = useStyles()
+  const theme = useTheme()
 
-  const validateInput = (value) => {
-    if (!value) return false
-    if (value.length < 3) return false
-
-    return true
-  }
+  const customStyles = useMemo(() => {
+    return {
+      control: (baseStyles) => ({
+        ...baseStyles,
+        minHeight: 0,
+        height: "30px",
+      }),
+      valueContainer: (baseStyles) => ({
+        ...baseStyles,
+        padding: "2px 8px 8px 8px",
+      }),
+      dropdownIndicator: (baseStyles) => ({
+        ...baseStyles,
+        padding: "2px 8px 8px 8px",
+      }),
+      indicatorSeparator: (baseStyles) => ({
+        ...baseStyles,
+        marginTop: 0,
+        marginBottom: "5px",
+      }),
+      placeholder: (baseStyles) => ({
+        ...baseStyles,
+        color: theme.palette.text.hint,
+      }),
+    }
+  }, [theme])
 
   return (
     <div className={classes.root}>
@@ -41,35 +63,12 @@ const ControlledSelectInputField = ({
         render={({ value, onChange }) => {
           return (
             <Select
-              styles={{
-                control: (baseStyles) => ({
-                  ...baseStyles,
-                  minHeight: 0,
-                  height: "30px",
-                }),
-                valueContainer: (baseStyles) => ({
-                  ...baseStyles,
-                  padding: "2px 8px 8px 8px",
-                }),
-                dropdownIndicator: (baseStyles) => ({
-                  ...baseStyles,
-                  padding: "2px 8px 8px 8px",
-                }),
-                indicatorSeparator: (baseStyles) => ({
-                  ...baseStyles,
-                  marginTop: 0,
-                  marginBottom: "5px",
-                }),
-                placeholder: (baseStyles) => ({
-                  ...baseStyles,
-                  color: "#a2a2a2",
-                }),
-              }}
+              styles={customStyles}
               options={options}
               defaultValue={null}
               placeholder={placeholder}
-              value={options.find((option) => option.value === value)}
-              onChange={(event) => onChange(event.value)}
+              value={value}
+              onChange={(newValue) => onChange(newValue)}
             />
           )
         }}
