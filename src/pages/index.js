@@ -46,8 +46,9 @@ export default function Home() {
       <RightSideDrawer
         open={open}
         setOpen={setOpen}
-        Component={CharacterForm}
-      />
+      >
+        <CharacterForm setOpen={setOpen} />
+      </RightSideDrawer>
       <Typography variant="h2">Star Wars</Typography>
       <div className={classes.button}>
         <AddNewButton

@@ -7,6 +7,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
     fontFamily: theme.typography.fontFamily,
+    height: "100%",
   },
   closeContainer: {
     height: "inherit",
@@ -23,11 +24,10 @@ const useStyles = makeStyles((theme) => ({
   },
   form: {
     backgroundColor: theme.palette.common.white,
-    height: "100vh",
   },
 }))
 
-const RightSideDrawer = ({ open, setOpen, Component }) => {
+const RightSideDrawer = ({ open, setOpen, children }) => {
   const classes = useStyles()
 
   return (
@@ -45,9 +45,7 @@ const RightSideDrawer = ({ open, setOpen, Component }) => {
         >
           <div>X</div>
         </div>
-        <div className={classes.form}>
-          <Component setOpen={setOpen} />
-        </div>
+        <div className={classes.form}>{children}</div>
       </div>
     </Drawer>
   )
