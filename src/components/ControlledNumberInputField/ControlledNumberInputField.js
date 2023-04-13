@@ -16,6 +16,17 @@ const useStyles = makeStyles((theme) => ({
       padding: "6px 10px 6px 10px",
       fontSize: theme.typography.fontSize,
     },
+    "& input[type=number]": {
+      "-moz-appearance": "textfield",
+    },
+    "& input[type=number]::-webkit-outer-spin-button": {
+      "-webkit-appearance": "none",
+      margin: 0,
+    },
+    "& input[type=number]::-webkit-inner-spin-button": {
+      "-webkit-appearance": "none",
+      margin: 0,
+    },
   },
   label: {
     fontWeight: theme.typography.fontWeightBold,
