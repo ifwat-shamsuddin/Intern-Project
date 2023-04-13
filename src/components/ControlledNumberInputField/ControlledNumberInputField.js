@@ -37,6 +37,12 @@ const useStyles = makeStyles((theme) => ({
 const ControlledNumberInputField = ({ control, name, label, placeholder }) => {
   const classes = useStyles()
 
+  const handleKeyDown = (event) => {
+    if (event.key === "-" || event.key === "e" || event.key === "E") {
+      event.preventDefault()
+    }
+  }
+
   return (
     <div className={classes.root}>
       <span className={classes.label}>{label}</span>
@@ -53,6 +59,7 @@ const ControlledNumberInputField = ({ control, name, label, placeholder }) => {
               onChange={(event) => onChange(event.target.value)}
               size="small"
               type="number"
+              onKeyDown={(event) => handleKeyDown(event)}
             />
           )
         }}
