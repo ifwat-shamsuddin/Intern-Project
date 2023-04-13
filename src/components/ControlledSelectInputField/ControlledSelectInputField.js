@@ -65,7 +65,6 @@ const ControlledSelectInputField = ({
             <Select
               styles={customStyles}
               options={options}
-              defaultValue={null}
               placeholder={placeholder}
               value={value}
               onChange={(newValue) => onChange(newValue)}
