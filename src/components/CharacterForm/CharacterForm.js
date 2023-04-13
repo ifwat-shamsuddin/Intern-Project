@@ -78,11 +78,11 @@ const CharacterForm = ({ setOpen }) => {
     dispatch(
       addCharacter({
         id: nanoid(),
-        name: name,
-        eyeColor: eyeColor,
-        height: height,
+        name,
+        eyeColor,
+        height,
         gender: gender.value,
-        birthYear: birthYear,
+        birthYear,
         homeworld: {
           id: nanoid(),
           name: homeworld,
