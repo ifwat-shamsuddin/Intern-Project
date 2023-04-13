@@ -81,7 +81,7 @@ const CharacterForm = ({ setOpen }) => {
         name,
         eyeColor,
         height,
-        gender: gender.value,
+        gender: gender?.value,
         birthYear,
         homeworld: {
           id: nanoid(),
@@ -89,7 +89,7 @@ const CharacterForm = ({ setOpen }) => {
         },
         species: {
           id: nanoid(),
-          name: species.value,
+          name: species?.value,
         },
         filmConnection: {
           totalCount: numberOfFilms,
