@@ -8,8 +8,12 @@
     "start": "next start",
     "lint": "next lint"
   },
+  "engines": {
+    "node": "18.x.x"
+  },
   "dependencies": {
     "@material-ui/core": "^4.12.4",
+    "@material-ui/icons": "^4.11.3",
     "@reduxjs/toolkit": "^1.9.3",
     "eslint": "8.36.0",
     "eslint-config-next": "13.2.4",
@@ -17,6 +21,8 @@
     "next": "13.2.4",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "react-redux": "^8.0.5"
+    "react-hook-form": "6.14.2",
+    "react-redux": "^8.0.5",
+    "react-select": "^5.7.2"
   }
 }
