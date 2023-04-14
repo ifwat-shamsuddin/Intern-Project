@@ -51,7 +51,7 @@ const ControlledNumberInputField = ({ control, name, label, placeholder }) => {
               placeholder={placeholder}
               variant="outlined"
               size="small"
-              inputProps={{ pattern: "[0-9]+[1-9]*" }}
+              inputProps={{ pattern: "[0-9]*" }}
               onChange={(event) => {
                 const isValidData =
                   event.target.validity.valid || event.target.value === ""
