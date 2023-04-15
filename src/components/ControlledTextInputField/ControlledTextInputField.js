@@ -23,7 +23,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-const ControlledTextInputField = ({ control, name, label, placeholder }) => {
+const ControlledTextInputField = ({
+  control,
+  name,
+  label,
+  placeholder,
+  rules,
+  errors,
+}) => {
   const classes = useStyles()
 
   return (
@@ -33,6 +40,7 @@ const ControlledTextInputField = ({ control, name, label, placeholder }) => {
       <Controller
         control={control}
         name={name}
+        rules={rules}
         render={({ value, onChange }) => {
           return (
             <TextField
@@ -41,6 +49,8 @@ const ControlledTextInputField = ({ control, name, label, placeholder }) => {
               variant="outlined"
               onChange={(event) => onChange(event.target.value)}
               size="small"
+              error={!!errors?.[name]}
+              helperText={!!errors?.[name] && errors[name].message}
             />
           )
         }}

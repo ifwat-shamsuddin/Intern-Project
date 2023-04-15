@@ -34,7 +34,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-const ControlledNumberInputField = ({ control, name, label, placeholder }) => {
+const ControlledNumberInputField = ({
+  control,
+  name,
+  label,
+  placeholder,
+  rules,
+  errors,
+}) => {
   const classes = useStyles()
 
   return (
@@ -44,6 +51,7 @@ const ControlledNumberInputField = ({ control, name, label, placeholder }) => {
       <Controller
         control={control}
         name={name}
+        rules={rules}
         render={({ value, onChange }) => {
           return (
             <TextField
@@ -57,6 +65,8 @@ const ControlledNumberInputField = ({ control, name, label, placeholder }) => {
                   event.target.validity.valid || event.target.value === ""
                 if (isValidData) onChange(event.target.value)
               }}
+              error={!!errors?.[name]}
+              helperText={!!errors?.[name] && errors[name].message}
             />
           )
         }}
