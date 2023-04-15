@@ -1,4 +1,5 @@
 import { Button, Container, Grid, makeStyles } from "@material-ui/core"
+import { useState } from "react"
 import { useForm } from "react-hook-form"
 import { useDispatch } from "react-redux"
 import { nanoid } from "@reduxjs/toolkit"
@@ -47,6 +48,8 @@ const useStyles = makeStyles((theme) => ({
 
 const CharacterForm = ({ setOpen }) => {
   const classes = useStyles()
+  const [errors, setErrors] = useState({})
+
   const { control, handleSubmit } = useForm({
     defaultValues: {
       name: "",
@@ -73,8 +76,6 @@ const CharacterForm = ({ setOpen }) => {
     species,
     numberOfFilms,
   }) => {
-    if (!name || !eyeColor) return
-
     dispatch(
       addCharacter({
         id: nanoid(),
@@ -96,6 +97,47 @@ const CharacterForm = ({ setOpen }) => {
         },
       })
     )
+  }
+
+  const submit = handleSubmit(onSubmit, (errors) => {
+    setErrors(errors)
+  })
+
+  const rules = {
+    name: {
+      required: "This field is required",
+      minLength: {
+        value: 3,
+        message: "This field should contain at least 3 characters",
+      },
+      pattern: {
+        value: /^[^\s]{3}.*/,
+        message: "The first 3 characters shouldn't be space!",
+      },
+    },
+    eyeColor: {
+      required: "This field is required",
+    },
+    height: {
+      min: {
+        value: 1,
+        message: "The height should range from 1 - 300",
+      },
+      max: {
+        value: 300,
+        message: "The height should range from 1 - 300",
+      },
+    },
+    homeworld: {
+      required: "This field is required",
+    },
+    numberOfFilms: {
+      required: "This field is required",
+      min: {
+        value: 1,
+        message: "The minimum value is 1",
+      },
+    },
   }
 
   return (
@@ -120,6 +162,8 @@ const CharacterForm = ({ setOpen }) => {
               name="name"
               label="Name"
               placeholder="Enter name"
+              rules={rules.name}
+              errors={errors}
             />
           </Grid>
           <Grid
@@ -131,6 +175,8 @@ const CharacterForm = ({ setOpen }) => {
               name="eyeColor"
               label="Eye Color"
               placeholder="Enter eye color"
+              rules={rules.eyeColor}
+              errors={errors}
             />
           </Grid>
         </Grid>
@@ -149,6 +195,8 @@ const CharacterForm = ({ setOpen }) => {
               label="Height"
               placeholder="Enter height"
               type="number"
+              rules={rules.height}
+              errors={errors}
             />
           </Grid>
           <Grid
@@ -192,6 +240,8 @@ const CharacterForm = ({ setOpen }) => {
               name="homeworld"
               label="HomeWorld"
               placeholder="Enter homeworld"
+              rules={rules.homeworld}
+              errors={errors}
             />
           </Grid>
         </Grid>
@@ -225,6 +275,8 @@ const CharacterForm = ({ setOpen }) => {
               label="Number Of Films"
               placeholder="Enter number of films appeared"
               type="number"
+              rules={rules.numberOfFilms}
+              errors={errors}
             />
           </Grid>
         </Grid>
@@ -232,7 +284,7 @@ const CharacterForm = ({ setOpen }) => {
       <div className={classes.buttonBox}>
         <Button
           variant="contained"
-          onClick={handleSubmit(onSubmit)}
+          onClick={submit}
           size="large"
         >
           Submit
