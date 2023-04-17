@@ -26,6 +26,7 @@ const ControlledSelectInputField = ({
   options,
   rules,
   error,
+  required,
 }) => {
   const classes = useStyles()
   const theme = useTheme()
@@ -77,7 +78,10 @@ const ControlledSelectInputField = ({
       <Controller
         control={control}
         name={name}
-        rules={rules}
+        rules={{
+          ...rules,
+          ...(required && { required: "This field is required" }),
+        }}
         render={({ value, onChange }) => {
           return (
             <>

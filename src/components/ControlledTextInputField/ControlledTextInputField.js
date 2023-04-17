@@ -28,6 +28,7 @@ const ControlledTextInputField = ({
   placeholder,
   rules,
   error,
+  required,
 }) => {
   const classes = useStyles()
 
@@ -38,7 +39,10 @@ const ControlledTextInputField = ({
       <Controller
         control={control}
         name={name}
-        rules={rules}
+        rules={{
+          ...rules,
+          ...(required && { required: "This field is required" }),
+        }}
         render={({ value, onChange }) => {
           return (
             <>

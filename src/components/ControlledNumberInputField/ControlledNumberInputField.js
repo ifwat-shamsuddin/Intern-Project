@@ -39,6 +39,7 @@ const ControlledNumberInputField = ({
   placeholder,
   rules,
   error,
+  required,
 }) => {
   const classes = useStyles()
 
@@ -54,7 +55,10 @@ const ControlledNumberInputField = ({
       <Controller
         control={control}
         name={name}
-        rules={rules}
+        rules={{
+          ...rules,
+          ...(required && { required: "This field is required" }),
+        }}
         render={({ value, onChange }) => {
           return (
             <>
