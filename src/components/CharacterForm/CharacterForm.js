@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux"
 import { nanoid } from "@reduxjs/toolkit"
 import { addCharacter } from "@/reducers/characterReducer"
 
+import { requiredEnum } from "@/enums/requiredEnum"
 import { genderEnum } from "@/enums/genderEnum"
 import { speciesEnum } from "@/enums/speciesEnum"
 import ControlledTextInputField from "../ControlledTextInputField"
@@ -105,7 +106,7 @@ const CharacterForm = ({ setOpen }) => {
 
   const rules = {
     name: {
-      required: "This field is required",
+      ...requiredEnum,
       minLength: {
         value: 3,
         message: "This field should contain at least 3 characters",
@@ -116,7 +117,7 @@ const CharacterForm = ({ setOpen }) => {
       },
     },
     eyeColor: {
-      required: "This field is required",
+      ...requiredEnum,
     },
     height: {
       min: {
@@ -129,10 +130,10 @@ const CharacterForm = ({ setOpen }) => {
       },
     },
     homeworld: {
-      required: "This field is required",
+      ...requiredEnum,
     },
     numberOfFilms: {
-      required: "This field is required",
+      ...requiredEnum,
       min: {
         value: 1,
         message: "The minimum value is 1",
