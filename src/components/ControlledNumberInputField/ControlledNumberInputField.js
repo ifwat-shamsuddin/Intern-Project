@@ -38,7 +38,7 @@ const ControlledNumberInputField = ({
   label,
   placeholder,
   rules,
-  errors,
+  error,
 }) => {
   const classes = useStyles()
 
@@ -64,9 +64,9 @@ const ControlledNumberInputField = ({
                     event.target.validity.valid || event.target.value === ""
                   if (isValidData) onChange(event.target.value)
                 }}
-                error={!!errors}
+                error={!!error}
               />
-              <InputErrorMessage errorMessage={errors?.message} />
+              <InputErrorMessage errorMessage={error?.message} />
             </>
           )
         }}

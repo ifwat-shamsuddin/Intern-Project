@@ -164,7 +164,7 @@ const CharacterForm = ({ setOpen }) => {
               label="Name"
               placeholder="Enter name"
               rules={rules.name}
-              errors={errors.name}
+              error={errors.name}
             />
           </Grid>
           <Grid
@@ -177,7 +177,7 @@ const CharacterForm = ({ setOpen }) => {
               label="Eye Color"
               placeholder="Enter eye color"
               rules={rules.eyeColor}
-              errors={errors.eyeColor}
+              error={errors.eyeColor}
             />
           </Grid>
         </Grid>
@@ -197,7 +197,7 @@ const CharacterForm = ({ setOpen }) => {
               placeholder="Enter height"
               type="number"
               rules={rules.height}
-              errors={errors.height}
+              error={errors.height}
             />
           </Grid>
           <Grid
@@ -242,7 +242,7 @@ const CharacterForm = ({ setOpen }) => {
               label="HomeWorld"
               placeholder="Enter homeworld"
               rules={rules.homeworld}
-              errors={errors.homeworld}
+              error={errors.homeworld}
             />
           </Grid>
         </Grid>
@@ -277,7 +277,7 @@ const CharacterForm = ({ setOpen }) => {
               placeholder="Enter number of films appeared"
               type="number"
               rules={rules.numberOfFilms}
-              errors={errors.numberOfFilms}
+              error={errors.numberOfFilms}
             />
           </Grid>
         </Grid>

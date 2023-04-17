@@ -25,7 +25,7 @@ const ControlledSelectInputField = ({
   placeholder,
   options,
   rules,
-  errors,
+  error,
 }) => {
   const classes = useStyles()
   const theme = useTheme()
@@ -33,7 +33,7 @@ const ControlledSelectInputField = ({
   const customStyles = useMemo(() => {
     return {
       control: (baseStyles, { isFocused }) => {
-        const borderColor = !!errors
+        const borderColor = !!error
           ? theme.palette.error.main
           : isFocused
           ? theme.palette.primary.main
@@ -68,7 +68,7 @@ const ControlledSelectInputField = ({
         color: theme.palette.text.hint,
       }),
     }
-  }, [theme, errors])
+  }, [theme, error])
 
   return (
     <div className={classes.root}>
@@ -88,7 +88,7 @@ const ControlledSelectInputField = ({
                 value={value}
                 onChange={(newValue) => onChange(newValue)}
               />
-              <InputErrorMessage errorMessage={errors?.message} />
+              <InputErrorMessage errorMessage={error?.message} />
             </>
           )
         }}
