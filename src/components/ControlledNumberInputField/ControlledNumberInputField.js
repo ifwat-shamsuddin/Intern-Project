@@ -42,6 +42,11 @@ const ControlledNumberInputField = ({
 }) => {
   const classes = useStyles()
 
+  const handleChange = ({ event, onChange }) => {
+    const isValidData = event.target.validity.valid || event.target.value === ""
+    if (isValidData) onChange(event.target.value)
+  }
+
   return (
     <div className={classes.root}>
       <span className={classes.label}>{label}</span>
@@ -60,9 +65,7 @@ const ControlledNumberInputField = ({
                 size="small"
                 inputProps={{ pattern: "[0-9]*" }}
                 onChange={(event) => {
-                  const isValidData =
-                    event.target.validity.valid || event.target.value === ""
-                  if (isValidData) onChange(event.target.value)
+                  handleChange({ event, onChange })
                 }}
                 error={!!error}
               />
