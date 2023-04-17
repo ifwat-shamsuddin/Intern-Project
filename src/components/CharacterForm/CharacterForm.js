@@ -112,8 +112,8 @@ const CharacterForm = ({ setOpen }) => {
         message: "This field should contain at least 3 characters",
       },
       pattern: {
-        value: /^[^\s]{3}.*/,
-        message: "The first 3 characters shouldn't be space!",
+        value: /^(?=(\s*\S){3})\s*[^\s].*$/,
+        message: "There should be at least 3 non-space characters!",
       },
     },
     eyeColor: {
