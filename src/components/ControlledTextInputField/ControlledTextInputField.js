@@ -1,7 +1,7 @@
 import { makeStyles, TextField } from "@material-ui/core"
 import { Controller } from "react-hook-form"
 
-import ErrorMessagePanel from "../ErrorMessagePanel/ErrorMessagePanel"
+import InputErrorMessage from "../InputErrorMessage/InputErrorMessage"
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -50,7 +50,7 @@ const ControlledTextInputField = ({
                 size="small"
                 error={!!errors}
               />
-              <ErrorMessagePanel errors={errors} />
+              <InputErrorMessage errorMessage={errors?.message} />
             </>
           )
         }}

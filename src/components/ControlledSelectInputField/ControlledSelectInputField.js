@@ -3,7 +3,7 @@ import { useMemo } from "react"
 import { Controller } from "react-hook-form"
 import Select from "react-select"
 
-import ErrorMessagePanel from "../ErrorMessagePanel/ErrorMessagePanel"
+import InputErrorMessage from "../InputErrorMessage/InputErrorMessage"
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -88,7 +88,7 @@ const ControlledSelectInputField = ({
                 value={value}
                 onChange={(newValue) => onChange(newValue)}
               />
-              <ErrorMessagePanel errors={errors} />
+              <InputErrorMessage errorMessage={errors?.message} />
             </>
           )
         }}
