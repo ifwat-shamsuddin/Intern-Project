@@ -1,7 +1,9 @@
-import { Typography, makeStyles, useTheme } from "@material-ui/core"
+import { makeStyles, useTheme } from "@material-ui/core"
 import { useMemo } from "react"
 import { Controller } from "react-hook-form"
 import Select from "react-select"
+
+import ErrorMessagePanel from "../ErrorMessagePanel/ErrorMessagePanel"
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -13,10 +15,6 @@ const useStyles = makeStyles((theme) => ({
   label: {
     fontWeight: theme.typography.fontWeightBold,
     paddingBottom: "4px",
-  },
-  errorMsg: {
-    margin: 0,
-    color: theme.palette.error.main,
   },
 }))
 
@@ -90,13 +88,7 @@ const ControlledSelectInputField = ({
                 value={value}
                 onChange={(newValue) => onChange(newValue)}
               />
-              <Typography
-                variant="caption"
-                display="block"
-                className={classes.errorMsg}
-              >
-                {!!errors && errors.message}
-              </Typography>
+              <ErrorMessagePanel errors={errors} />
             </>
           )
         }}

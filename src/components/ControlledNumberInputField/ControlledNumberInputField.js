@@ -1,16 +1,14 @@
 import { makeStyles, TextField } from "@material-ui/core"
 import { Controller } from "react-hook-form"
 
+import ErrorMessagePanel from "../ErrorMessagePanel/ErrorMessagePanel"
+
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
     flexDirection: "column",
     fontSize: theme.typography.fontSize,
     fontFamily: theme.typography.fontFamily,
-
-    "& .MuiFormHelperText-contained": {
-      margin: "0",
-    },
 
     "& .MuiOutlinedInput-input": {
       padding: "6px 10px 6px 10px",
@@ -54,20 +52,22 @@ const ControlledNumberInputField = ({
         rules={rules}
         render={({ value, onChange }) => {
           return (
-            <TextField
-              value={value}
-              placeholder={placeholder}
-              variant="outlined"
-              size="small"
-              inputProps={{ pattern: "[0-9]*" }}
-              onChange={(event) => {
-                const isValidData =
-                  event.target.validity.valid || event.target.value === ""
-                if (isValidData) onChange(event.target.value)
-              }}
-              error={!!errors}
-              helperText={!!errors && errors.message}
-            />
+            <>
+              <TextField
+                value={value}
+                placeholder={placeholder}
+                variant="outlined"
+                size="small"
+                inputProps={{ pattern: "[0-9]*" }}
+                onChange={(event) => {
+                  const isValidData =
+                    event.target.validity.valid || event.target.value === ""
+                  if (isValidData) onChange(event.target.value)
+                }}
+                error={!!errors}
+              />
+              <ErrorMessagePanel errors={errors} />
+            </>
           )
         }}
       />
