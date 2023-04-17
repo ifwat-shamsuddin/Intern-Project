@@ -1,4 +1,4 @@
-import { makeStyles, useTheme } from "@material-ui/core"
+import { Typography, makeStyles, useTheme } from "@material-ui/core"
 import { useMemo } from "react"
 import { Controller } from "react-hook-form"
 import Select from "react-select"
@@ -14,6 +14,10 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: theme.typography.fontWeightBold,
     paddingBottom: "4px",
   },
+  errorMsg: {
+    margin: 0,
+    color: theme.palette.error.main,
+  },
 }))
 
 const ControlledSelectInputField = ({
@@ -22,17 +26,32 @@ const ControlledSelectInputField = ({
   label,
   placeholder,
   options,
+  rules,
+  errors,
 }) => {
   const classes = useStyles()
   const theme = useTheme()
 
   const customStyles = useMemo(() => {
     return {
-      control: (baseStyles) => ({
-        ...baseStyles,
-        minHeight: 0,
-        height: "30px",
-      }),
+      control: (baseStyles, { isFocused }) => {
+        const borderColor = !!errors?.[name]
+          ? theme.palette.error.main
+          : isFocused
+          ? theme.palette.primary.main
+          : theme.palette.grey[400]
+        return {
+          ...baseStyles,
+          minHeight: 0,
+          height: "30px",
+          borderColor,
+          "&:hover": {
+            borderColor: isFocused
+              ? theme.palette.primary.main
+              : theme.palette.grey[400],
+          },
+        }
+      },
       valueContainer: (baseStyles) => ({
         ...baseStyles,
         padding: "2px 8px 8px 8px",
@@ -51,7 +70,7 @@ const ControlledSelectInputField = ({
         color: theme.palette.text.hint,
       }),
     }
-  }, [theme])
+  }, [theme, errors])
 
   return (
     <div className={classes.root}>
@@ -60,15 +79,25 @@ const ControlledSelectInputField = ({
       <Controller
         control={control}
         name={name}
+        rules={rules}
         render={({ value, onChange }) => {
           return (
-            <Select
-              styles={customStyles}
-              options={options}
-              placeholder={placeholder}
-              value={value}
-              onChange={(newValue) => onChange(newValue)}
-            />
+            <>
+              <Select
+                styles={customStyles}
+                options={options}
+                placeholder={placeholder}
+                value={value}
+                onChange={(newValue) => onChange(newValue)}
+              />
+              <Typography
+                variant="caption"
+                display="block"
+                className={classes.errorMsg}
+              >
+                {!!errors?.[name] && errors[name].message}
+              </Typography>
+            </>
           )
         }}
       />
