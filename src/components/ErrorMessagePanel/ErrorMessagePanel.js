@@ -7,10 +7,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-const InputErrorMessage = ({ errorMessage }) => {
+const ErrorMessagePanel = ({ errors }) => {
   const classes = useStyles()
-
-  if (!errorMessage) return null
 
   return (
     <Typography
@@ -18,9 +16,9 @@ const InputErrorMessage = ({ errorMessage }) => {
       display="block"
       className={classes.root}
     >
-      {errorMessage}
+      {!!errors && errors.message}
     </Typography>
   )
 }
 
-export default InputErrorMessage
+export default ErrorMessagePanel
