@@ -49,8 +49,8 @@ const ControlledTextInputField = ({
               variant="outlined"
               onChange={(event) => onChange(event.target.value)}
               size="small"
-              error={!!errors?.[name]}
-              helperText={!!errors?.[name] && errors[name].message}
+              error={!!errors}
+              helperText={!!errors && errors.message}
             />
           )
         }}

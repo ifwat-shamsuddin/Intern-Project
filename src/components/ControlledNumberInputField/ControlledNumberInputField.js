@@ -65,8 +65,8 @@ const ControlledNumberInputField = ({
                   event.target.validity.valid || event.target.value === ""
                 if (isValidData) onChange(event.target.value)
               }}
-              error={!!errors?.[name]}
-              helperText={!!errors?.[name] && errors[name].message}
+              error={!!errors}
+              helperText={!!errors && errors.message}
             />
           )
         }}

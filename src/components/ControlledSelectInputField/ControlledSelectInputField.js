@@ -35,7 +35,7 @@ const ControlledSelectInputField = ({
   const customStyles = useMemo(() => {
     return {
       control: (baseStyles, { isFocused }) => {
-        const borderColor = !!errors?.[name]
+        const borderColor = !!errors
           ? theme.palette.error.main
           : isFocused
           ? theme.palette.primary.main
@@ -95,7 +95,7 @@ const ControlledSelectInputField = ({
                 display="block"
                 className={classes.errorMsg}
               >
-                {!!errors?.[name] && errors[name].message}
+                {!!errors && errors.message}
               </Typography>
             </>
           )
