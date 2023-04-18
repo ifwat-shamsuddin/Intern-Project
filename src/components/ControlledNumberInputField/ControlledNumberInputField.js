@@ -56,8 +56,8 @@ const ControlledNumberInputField = ({
         control={control}
         name={name}
         rules={{
-          ...rules,
           ...(required && { required: "This field is required" }),
+          ...rules,
         }}
         render={({ value, onChange }) => {
           return (
