@@ -1,16 +1,14 @@
 import { makeStyles, TextField } from "@material-ui/core"
 import { Controller } from "react-hook-form"
 
+import InputErrorMessage from "../InputErrorMessage/InputErrorMessage"
+
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
     flexDirection: "column",
     fontSize: theme.typography.fontSize,
     fontFamily: theme.typography.fontFamily,
-
-    "& .MuiFormHelperText-contained": {
-      margin: "0",
-    },
 
     "& .MuiOutlinedInput-input": {
       padding: "6px 10px 6px 10px",
@@ -34,8 +32,21 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-const ControlledNumberInputField = ({ control, name, label, placeholder }) => {
+const ControlledNumberInputField = ({
+  control,
+  name,
+  label,
+  placeholder,
+  rules,
+  error,
+  required,
+}) => {
   const classes = useStyles()
+
+  const handleChange = ({ event, onChange }) => {
+    const isValidData = event.target.validity.valid || event.target.value === ""
+    if (isValidData) onChange(event.target.value)
+  }
 
   return (
     <div className={classes.root}>
@@ -44,20 +55,26 @@ const ControlledNumberInputField = ({ control, name, label, placeholder }) => {
       <Controller
         control={control}
         name={name}
+        rules={{
+          ...(required && { required: "This field is required" }),
+          ...rules,
+        }}
         render={({ value, onChange }) => {
           return (
-            <TextField
-              value={value}
-              placeholder={placeholder}
-              variant="outlined"
-              size="small"
-              inputProps={{ pattern: "[0-9]*" }}
-              onChange={(event) => {
-                const isValidData =
-                  event.target.validity.valid || event.target.value === ""
-                if (isValidData) onChange(event.target.value)
-              }}
-            />
+            <>
+              <TextField
+                value={value}
+                placeholder={placeholder}
+                variant="outlined"
+                size="small"
+                inputProps={{ pattern: "[0-9]*" }}
+                onChange={(event) => {
+                  handleChange({ event, onChange })
+                }}
+                error={!!error}
+              />
+              <InputErrorMessage errorMessage={error?.message} />
+            </>
           )
         }}
       />

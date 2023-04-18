@@ -3,6 +3,8 @@ import { useMemo } from "react"
 import { Controller } from "react-hook-form"
 import Select from "react-select"
 
+import InputErrorMessage from "../InputErrorMessage/InputErrorMessage"
+
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
@@ -22,17 +24,33 @@ const ControlledSelectInputField = ({
   label,
   placeholder,
   options,
+  rules,
+  error,
+  required,
 }) => {
   const classes = useStyles()
   const theme = useTheme()
 
   const customStyles = useMemo(() => {
     return {
-      control: (baseStyles) => ({
-        ...baseStyles,
-        minHeight: 0,
-        height: "30px",
-      }),
+      control: (baseStyles, { isFocused }) => {
+        const borderColor = !!error
+          ? theme.palette.error.main
+          : isFocused
+          ? theme.palette.primary.main
+          : theme.palette.grey[400]
+        return {
+          ...baseStyles,
+          minHeight: 0,
+          height: "30px",
+          borderColor,
+          "&:hover": {
+            borderColor: isFocused
+              ? theme.palette.primary.main
+              : theme.palette.grey[400],
+          },
+        }
+      },
       valueContainer: (baseStyles) => ({
         ...baseStyles,
         padding: "2px 8px 8px 8px",
@@ -51,7 +69,7 @@ const ControlledSelectInputField = ({
         color: theme.palette.text.hint,
       }),
     }
-  }, [theme])
+  }, [theme, error])
 
   return (
     <div className={classes.root}>
@@ -60,15 +78,22 @@ const ControlledSelectInputField = ({
       <Controller
         control={control}
         name={name}
+        rules={{
+          ...(required && { required: "This field is required" }),
+          ...rules,
+        }}
         render={({ value, onChange }) => {
           return (
-            <Select
-              styles={customStyles}
-              options={options}
-              placeholder={placeholder}
-              value={value}
-              onChange={(newValue) => onChange(newValue)}
-            />
+            <>
+              <Select
+                styles={customStyles}
+                options={options}
+                placeholder={placeholder}
+                value={value}
+                onChange={(newValue) => onChange(newValue)}
+              />
+              <InputErrorMessage errorMessage={error?.message} />
+            </>
           )
         }}
       />

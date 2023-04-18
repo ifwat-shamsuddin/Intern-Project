@@ -1,16 +1,14 @@
 import { makeStyles, TextField } from "@material-ui/core"
 import { Controller } from "react-hook-form"
 
+import InputErrorMessage from "../InputErrorMessage/InputErrorMessage"
+
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
     flexDirection: "column",
     fontSize: theme.typography.fontSize,
     fontFamily: theme.typography.fontFamily,
-
-    "& .MuiFormHelperText-contained": {
-      margin: "0",
-    },
 
     "& .MuiOutlinedInput-input": {
       padding: "6px 10px 6px 10px",
@@ -23,7 +21,15 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-const ControlledTextInputField = ({ control, name, label, placeholder }) => {
+const ControlledTextInputField = ({
+  control,
+  name,
+  label,
+  placeholder,
+  rules,
+  error,
+  required,
+}) => {
   const classes = useStyles()
 
   return (
@@ -33,15 +39,23 @@ const ControlledTextInputField = ({ control, name, label, placeholder }) => {
       <Controller
         control={control}
         name={name}
+        rules={{
+          ...(required && { required: "This field is required" }),
+          ...rules,
+        }}
         render={({ value, onChange }) => {
           return (
-            <TextField
-              value={value}
-              placeholder={placeholder}
-              variant="outlined"
-              onChange={(event) => onChange(event.target.value)}
-              size="small"
-            />
+            <>
+              <TextField
+                value={value}
+                placeholder={placeholder}
+                variant="outlined"
+                onChange={(event) => onChange(event.target.value)}
+                size="small"
+                error={!!error}
+              />
+              <InputErrorMessage errorMessage={error?.message} />
+            </>
           )
         }}
       />
