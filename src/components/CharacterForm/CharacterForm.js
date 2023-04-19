@@ -52,17 +52,34 @@ const CharacterForm = ({ onClose }) => {
   const classes = useStyles()
   const [errors, setErrors] = useState({})
 
+  const router = useRouter()
+  const { mode, id } = router.query
+
+  const character = useSelector((state) => getCharacterById(state, id))
+
+  const defaultValues = {
+    name: character?.name || "",
+    eyeColor: character?.eyeColor || "",
+    height: character?.height || "",
+    gender: character
+      ? {
+          value: character.gender,
+          label: character.gender,
+        }
+      : null,
+    birthYear: character?.birthYear || "",
+    homeworld: character?.homeworld?.name || "",
+    species: character
+      ? {
+          value: character.species?.name,
+          label: character.species?.name,
+        }
+      : null,
+    numberOfFilms: character?.filmConnection?.totalCount || "",
+  }
+
   const { control, handleSubmit } = useForm({
-    defaultValues: {
-      name: "",
-      eyeColor: "",
-      height: "",
-      gender: null,
-      birthYear: "",
-      homeworld: "",
-      species: null,
-      numberOfFilms: "",
-    },
+    defaultValues,
     reValidateMode: "onSubmit",
   })
 
@@ -134,11 +151,6 @@ const CharacterForm = ({ onClose }) => {
       },
     },
   }
-
-  const router = useRouter()
-  const { mode, id } = router.query
-
-  const character = useSelector((state) => getCharacterById(state, id))
 
   return (
     <>
