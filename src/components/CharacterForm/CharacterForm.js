@@ -97,6 +97,7 @@ const CharacterForm = ({ onClose }) => {
         },
       })
     )
+    onClose()
   }
 
   const submit = handleSubmit(onSubmit, (errors) => {
