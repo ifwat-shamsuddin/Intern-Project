@@ -1,15 +1,17 @@
 import { Button, Container, Grid, makeStyles } from "@material-ui/core"
 import { useState } from "react"
 import { useForm } from "react-hook-form"
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { nanoid } from "@reduxjs/toolkit"
 import { addCharacter } from "@/reducers/characterReducer"
+import { useRouter } from "next/router"
 
 import { genderEnum } from "@/enums/genderEnum"
 import { speciesEnum } from "@/enums/speciesEnum"
 import ControlledTextInputField from "../ControlledTextInputField"
 import ControlledNumberInputField from "../ControlledNumberInputField/ControlledNumberInputField"
 import ControlledSelectInputField from "../ControlledSelectInputField/ControlledSelectInputField"
+import { getCharacterById } from "@/selectors/characterSelectors"
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -133,13 +135,20 @@ const CharacterForm = ({ onClose }) => {
     },
   }
 
+  const router = useRouter()
+  const { mode, id } = router.query
+
+  const character = useSelector((state) => getCharacterById(state, id))
+
   return (
     <>
       <Container
         className={classes.title}
         color="text.disabled"
       >
-        Add New Character
+        {mode === "new"
+          ? "Add New Character"
+          : `Edit Character - ${character?.name}`}
       </Container>
       <div className={classes.body}>
         <Grid
