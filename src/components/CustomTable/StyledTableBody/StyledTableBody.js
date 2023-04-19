@@ -1,5 +1,6 @@
 import { TableBody, TableRow, makeStyles } from "@material-ui/core"
 import { get } from "lodash"
+import { useRouter } from "next/router"
 
 import StyledTableCell from "../StyledTableCell"
 
@@ -17,6 +18,7 @@ const useStyles = makeStyles((theme) => ({
 
 const StyledTableBody = ({ columns, data }) => {
   const classes = useStyles()
+  const router = useRouter()
 
   return (
     <TableBody>
@@ -25,7 +27,9 @@ const StyledTableBody = ({ columns, data }) => {
           hover
           key={row.id}
           classes={{ root: classes.root, hover: classes.hover }}
-          onClick={() => alert("You have clicked row " + row.name)}
+          onClick={() =>
+            router.push(`/?mode=edit&id=${row.id}`, `edit/${row.id}`)
+          }
         >
           {columns.map((column) => (
             <StyledTableCell

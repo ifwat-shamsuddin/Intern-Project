@@ -46,7 +46,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-const CharacterForm = ({ setOpen }) => {
+const CharacterForm = ({ onClose }) => {
   const classes = useStyles()
   const [errors, setErrors] = useState({})
 
@@ -287,7 +287,7 @@ const CharacterForm = ({ setOpen }) => {
         </Button>
         <Button
           variant="contained"
-          onClick={() => setOpen(false)}
+          onClick={onClose}
           size="large"
         >
           Cancel

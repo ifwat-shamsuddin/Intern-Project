@@ -1,7 +1,7 @@
 import { makeStyles } from "@material-ui/core/styles"
 import { Typography } from "@material-ui/core"
 import { useSelector } from "react-redux"
-import { useState } from "react"
+import { useRouter } from "next/router"
 
 import CustomTable from "@/components/CustomTable"
 import AddNewButton from "@/components/AddNewButton"
@@ -25,7 +25,9 @@ export default function Home() {
   const classes = useStyles()
 
   const data = useSelector(characters)
-  const [open, setOpen] = useState(false)
+
+  const router = useRouter()
+  const { mode } = router.query
 
   const columns = [
     { header: "Name", field: "name" },
@@ -41,19 +43,21 @@ export default function Home() {
     },
   ]
 
+  const isOpen = mode === "new" || mode === "edit"
+
   return (
     <div className={classes.body}>
       <RightSideDrawer
-        open={open}
-        setOpen={setOpen}
+        isOpen={isOpen}
+        onClose={() => router.push("/")}
       >
-        <CharacterForm setOpen={setOpen} />
+        <CharacterForm onClose={() => router.push("/")} />
       </RightSideDrawer>
       <Typography variant="h2">Star Wars</Typography>
       <div className={classes.button}>
         <AddNewButton
           label="Add New Character"
-          onClick={() => setOpen(true)}
+          onClick={() => router.push("/?mode=new", `new`)}
         />
       </div>
       <CustomTable
