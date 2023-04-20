@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form"
 import { useDispatch } from "react-redux"
 import { nanoid } from "@reduxjs/toolkit"
 import { addCharacter } from "@/reducers/characterReducer"
+import { useRouter } from "next/router"
 
 import { genderEnum } from "@/enums/genderEnum"
 import { speciesEnum } from "@/enums/speciesEnum"
@@ -48,7 +49,9 @@ const useStyles = makeStyles((theme) => ({
 
 const CharacterForm = ({ onClose }) => {
   const classes = useStyles()
+  const router = useRouter()
   const [errors, setErrors] = useState({})
+  const { mode, id } = router.query
 
   const { control, handleSubmit } = useForm({
     defaultValues: {
@@ -139,7 +142,7 @@ const CharacterForm = ({ onClose }) => {
         className={classes.title}
         color="text.disabled"
       >
-        Add New Character
+        {mode === "edit" ? `Edit Character - ${id}` : "Add New Character"}
       </Container>
       <div className={classes.body}>
         <Grid
