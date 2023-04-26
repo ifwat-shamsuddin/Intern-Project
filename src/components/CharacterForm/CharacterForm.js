@@ -8,6 +8,7 @@ import { useRouter } from "next/router"
 
 import { genderEnum } from "@/enums/genderEnum"
 import { speciesEnum } from "@/enums/speciesEnum"
+import { formEnum } from "@/enums/formEnum"
 import ControlledTextInputField from "../ControlledTextInputField"
 import ControlledNumberInputField from "../ControlledNumberInputField/ControlledNumberInputField"
 import ControlledSelectInputField from "../ControlledSelectInputField/ControlledSelectInputField"
@@ -51,7 +52,7 @@ const CharacterForm = ({ onClose }) => {
   const classes = useStyles()
   const router = useRouter()
   const [errors, setErrors] = useState({})
-  const { mode, id } = router.query
+  const { params } = router.query
 
   const { control, handleSubmit } = useForm({
     defaultValues: {
@@ -136,13 +137,17 @@ const CharacterForm = ({ onClose }) => {
     },
   }
 
+  if (!params) return
+
   return (
     <>
       <Container
         className={classes.title}
         color="text.disabled"
       >
-        {mode === "edit" ? `Edit Character - ${id}` : "Add New Character"}
+        {params[0] === formEnum.edit
+          ? `Edit Character - ${params[1]}`
+          : "Add New Character"}
       </Container>
       <div className={classes.body}>
         <Grid

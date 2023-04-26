@@ -28,7 +28,10 @@ const StyledTableBody = ({ columns, data }) => {
           key={row.id}
           classes={{ root: classes.root, hover: classes.hover }}
           onClick={() =>
-            router.push(`/?mode=edit&id=${row.id}`, `edit/${row.id}`)
+            router.push({
+              pathname: "/characters",
+              query: { params: ["edit", row.id] },
+            })
           }
         >
           {columns.map((column) => (
