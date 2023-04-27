@@ -8,6 +8,7 @@ import { useRouter } from "next/router"
 
 import { genderEnum } from "@/enums/genderEnum"
 import { speciesEnum } from "@/enums/speciesEnum"
+import { wordsToRemoveEnum } from "@/enums/wordsToRemoveEnum"
 import ControlledTextInputField from "../ControlledTextInputField"
 import ControlledNumberInputField from "../ControlledNumberInputField/ControlledNumberInputField"
 import ControlledSelectInputField from "../ControlledSelectInputField/ControlledSelectInputField"
@@ -61,20 +62,25 @@ const CharacterForm = ({ onClose }) => {
     name: character?.name || "",
     eyeColor: character?.eyeColor || "",
     height: character?.height || "",
-    gender: character
-      ? {
-          value: character.gender,
-          label: character.gender,
-        }
-      : null,
-    birthYear: character?.birthYear || "",
+    gender:
+      character && !wordsToRemoveEnum.words.includes(character.gender)
+        ? {
+            value: character.gender,
+            label: character.gender,
+          }
+        : null,
+    birthYear:
+      character && !wordsToRemoveEnum.words.includes(character.birthYear)
+        ? character.birthYear
+        : "",
     homeworld: character?.homeworld?.name || "",
-    species: character
-      ? {
-          value: character.species?.name,
-          label: character.species?.name,
-        }
-      : null,
+    species:
+      character && character.species
+        ? {
+            value: character.species.name,
+            label: character.species.name,
+          }
+        : null,
     numberOfFilms: character?.filmConnection?.totalCount || "",
   }
 
