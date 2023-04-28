@@ -52,13 +52,17 @@ export default function Home() {
       : false
   }, [params])
 
+  const routeHome = () => {
+    router.push("/")
+  }
+
   return (
     <div className={classes.body}>
       <RightSideDrawer
         isOpen={isOpen}
-        onClose={() => router.push("/")}
+        onClose={routeHome}
       >
-        <CharacterForm onClose={() => router.push("/")} />
+        <CharacterForm onClose={routeHome} />
       </RightSideDrawer>
       <Typography variant="h2">Star Wars</Typography>
       <div className={classes.button}>
