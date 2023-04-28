@@ -8,7 +8,7 @@ import { useRouter } from "next/router"
 
 import { genderEnum } from "@/enums/genderEnum"
 import { speciesEnum } from "@/enums/speciesEnum"
-import { formEnum } from "@/enums/formEnum"
+import { formModeEnum } from "@/enums/formModeEnum"
 import ControlledTextInputField from "../ControlledTextInputField"
 import ControlledNumberInputField from "../ControlledNumberInputField/ControlledNumberInputField"
 import ControlledSelectInputField from "../ControlledSelectInputField/ControlledSelectInputField"
@@ -145,7 +145,7 @@ const CharacterForm = ({ onClose }) => {
         className={classes.title}
         color="text.disabled"
       >
-        {params[0] === formEnum.edit
+        {params[0] === formModeEnum.edit
           ? `Edit Character - ${params[1]}`
           : "Add New Character"}
       </Container>

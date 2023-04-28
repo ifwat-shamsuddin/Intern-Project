@@ -9,7 +9,7 @@ import AddNewButton from "@/components/AddNewButton"
 import RightSideDrawer from "@/components/RightSideDrawer"
 import CharacterForm from "@/components/CharacterForm"
 import { characters } from "@/selectors/characterSelectors"
-import { formEnum } from "@/enums/formEnum"
+import { formModeEnum } from "@/enums/formModeEnum"
 
 const useStyles = makeStyles((theme) => ({
   body: {
@@ -46,7 +46,8 @@ export default function Home() {
   ]
 
   let isOpen = false
-  if (params) isOpen = !!find(formEnum, (value) => value.includes(params[0]))
+  if (params)
+    isOpen = !!find(formModeEnum, (value) => value.includes(params[0]))
 
   return (
     <div className={classes.body}>
