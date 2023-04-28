@@ -10,6 +10,7 @@ import RightSideDrawer from "@/components/RightSideDrawer"
 import CharacterForm from "@/components/CharacterForm"
 import { formModeEnum } from "@/enums/formModeEnum"
 import { charactersSelectors } from "@/selectors/characterSelectors"
+import { useMemo } from "react"
 
 const useStyles = makeStyles((theme) => ({
   body: {
@@ -45,9 +46,11 @@ export default function Home() {
     },
   ]
 
-  let isOpen = false
-  if (params)
-    isOpen = !!find(formModeEnum, (value) => value.includes(params[0]))
+  const isOpen = useMemo(() => {
+    return params && !!find(formModeEnum, (value) => value.includes(params[0]))
+      ? true
+      : false
+  }, [params])
 
   return (
     <div className={classes.body}>
