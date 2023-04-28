@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-const StyledTableBody = ({ columns, data }) => {
+const StyledTableBody = ({ columns, data, routeParams }) => {
   const classes = useStyles()
   const router = useRouter()
 
@@ -30,7 +30,7 @@ const StyledTableBody = ({ columns, data }) => {
           onClick={() =>
             router.push({
               pathname: "/characters",
-              query: { params: ["edit", row.id] },
+              query: { params: [...routeParams, row.id] },
             })
           }
         >

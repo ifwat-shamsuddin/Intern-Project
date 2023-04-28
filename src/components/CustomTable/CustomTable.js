@@ -15,6 +15,7 @@ const CustomTable = ({ columns, data }) => {
         <StyledTableBody
           columns={columns}
           data={data}
+          routeParams={["edit"]}
         />
       </Table>
     </TableContainer>
