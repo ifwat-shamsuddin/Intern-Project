@@ -8,8 +8,8 @@ import CustomTable from "@/components/CustomTable"
 import AddNewButton from "@/components/AddNewButton"
 import RightSideDrawer from "@/components/RightSideDrawer"
 import CharacterForm from "@/components/CharacterForm"
-import { characters } from "@/selectors/characterSelectors"
 import { formModeEnum } from "@/enums/formModeEnum"
+import { charactersSelectors } from "@/selectors/characterSelectors"
 
 const useStyles = makeStyles((theme) => ({
   body: {
@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
 export default function Home() {
   const classes = useStyles()
 
-  const data = useSelector(characters)
+  const characters = useSelector(charactersSelectors)
 
   const router = useRouter()
   const { params } = router.query
@@ -71,7 +71,7 @@ export default function Home() {
       </div>
       <CustomTable
         columns={columns}
-        data={data}
+        data={characters}
       />
     </div>
   )
