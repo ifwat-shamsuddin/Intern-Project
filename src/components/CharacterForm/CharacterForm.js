@@ -137,15 +137,13 @@ const CharacterForm = ({ onClose }) => {
     },
   }
 
-  if (!params) return
-
   return (
     <>
       <Container
         className={classes.title}
         color="text.disabled"
       >
-        {params[0] === formModeEnum.edit
+        {params && params[0] === formModeEnum.edit
           ? `Edit Character - ${params[1]}`
           : "Add New Character"}
       </Container>
