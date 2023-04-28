@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-export default function Home() {
+export default function Characters() {
   const classes = useStyles()
 
   const characters = useSelector(characterSelectors.characters)
@@ -48,39 +48,40 @@ export default function Home() {
 
   const isOpen = useMemo(() => {
     return params && !!find(formModeEnum, (value) => value.includes(params[0]))
-      ? true
-      : false
   }, [params])
 
-  const routeHome = () => {
-    router.push("/")
-  }
+  const handleOpenForm = (id) => {
+    const params = id ? [formModeEnum.edit, id] : [formModeEnum.new]
 
-  const routeFormNewCharacter = () => {
     router.push({
       pathname: "/characters",
-      query: { params: ["new"] },
+      query: { params },
     })
+  }
+
+  const handleCloseForm = () => {
+    router.push("/characters")
   }
 
   return (
     <div className={classes.body}>
       <RightSideDrawer
         isOpen={isOpen}
-        onClose={routeHome}
+        onClose={handleCloseForm}
       >
-        <CharacterForm onClose={routeHome} />
+        <CharacterForm onClose={handleCloseForm} />
       </RightSideDrawer>
       <Typography variant="h2">Star Wars</Typography>
       <div className={classes.button}>
         <AddNewButton
           label="Add New Character"
-          onClick={routeFormNewCharacter}
+          onClick={() => handleOpenForm()}
         />
       </div>
       <CustomTable
         columns={columns}
         data={characters}
+        onRowClick={({ id }) => handleOpenForm(id)}
       />
     </div>
   )

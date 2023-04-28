@@ -3,7 +3,7 @@ import { Table, TableContainer, Paper } from "@material-ui/core"
 import CustomisedTableHead from "./CustomisedTableHead"
 import StyledTableBody from "./StyledTableBody"
 
-const CustomTable = ({ columns, data }) => {
+const CustomTable = ({ columns, data, onRowClick }) => {
   return (
     <TableContainer
       component={Paper}
@@ -15,7 +15,7 @@ const CustomTable = ({ columns, data }) => {
         <StyledTableBody
           columns={columns}
           data={data}
-          routeParams={["edit"]}
+          onRowClick={onRowClick}
         />
       </Table>
     </TableContainer>
