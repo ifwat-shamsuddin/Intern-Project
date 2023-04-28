@@ -3,14 +3,14 @@ import { Typography } from "@material-ui/core"
 import { useSelector } from "react-redux"
 import { useRouter } from "next/router"
 import { find } from "lodash"
+import { useMemo } from "react"
 
 import CustomTable from "@/components/CustomTable"
 import AddNewButton from "@/components/AddNewButton"
 import RightSideDrawer from "@/components/RightSideDrawer"
 import CharacterForm from "@/components/CharacterForm"
 import { formModeEnum } from "@/enums/formModeEnum"
-import { charactersSelectors } from "@/selectors/characterSelectors"
-import { useMemo } from "react"
+import * as characterSelectors from "@/selectors/characterSelectors"
 
 const useStyles = makeStyles((theme) => ({
   body: {
@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
 export default function Home() {
   const classes = useStyles()
 
-  const characters = useSelector(charactersSelectors)
+  const characters = useSelector(characterSelectors.characters)
 
   const router = useRouter()
   const { params } = router.query
