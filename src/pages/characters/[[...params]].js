@@ -56,6 +56,13 @@ export default function Home() {
     router.push("/")
   }
 
+  const routeFormNewCharacter = () => {
+    router.push({
+      pathname: "/characters",
+      query: { params: ["new"] },
+    })
+  }
+
   return (
     <div className={classes.body}>
       <RightSideDrawer
@@ -68,12 +75,7 @@ export default function Home() {
       <div className={classes.button}>
         <AddNewButton
           label="Add New Character"
-          onClick={() =>
-            router.push({
-              pathname: "/characters",
-              query: { params: ["new"] },
-            })
-          }
+          onClick={routeFormNewCharacter}
         />
       </div>
       <CustomTable
