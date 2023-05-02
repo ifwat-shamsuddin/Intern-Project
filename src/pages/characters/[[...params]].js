@@ -2,8 +2,7 @@ import { makeStyles } from "@material-ui/core/styles"
 import { Typography } from "@material-ui/core"
 import { useSelector } from "react-redux"
 import { useRouter } from "next/router"
-import { find } from "lodash"
-import { useMemo } from "react"
+import { useEffect, useMemo } from "react"
 
 import CustomTable from "@/components/CustomTable"
 import AddNewButton from "@/components/AddNewButton"
@@ -47,11 +46,11 @@ export default function Characters() {
   ]
 
   const isOpen = useMemo(() => {
-    return params && !!find(formModeEnum, (value) => value.includes(params[0]))
+    return params && Object.values(formModeEnum).includes(params[0])
   }, [params])
 
   const handleOpenForm = (id) => {
-    const params = id ? [formModeEnum.edit, id] : [formModeEnum.new]
+    const params = id ? [formModeEnum.edit, id] : [formModeEnum.new, null]
 
     router.push({
       pathname: "/characters",
@@ -62,6 +61,18 @@ export default function Characters() {
   const handleCloseForm = () => {
     router.push("/characters")
   }
+
+  useEffect(() => {
+    if (!params) return
+
+    if (params.length > 2) {
+      handleCloseForm()
+    }
+
+    if (params.length > 0 && !Object.values(formModeEnum).includes(params[0])) {
+      handleCloseForm()
+    }
+  }, [params])
 
   return (
     <div className={classes.body}>
