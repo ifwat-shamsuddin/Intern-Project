@@ -5,7 +5,7 @@ export default function Page() {
 export async function getServerSideProps(context) {
   return {
     redirect: {
-      destination: "/characters",
+      destination: "/characters/[..params]]",
       permanent: false,
     },
   }
