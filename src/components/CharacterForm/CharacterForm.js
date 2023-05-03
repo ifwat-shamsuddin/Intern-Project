@@ -1,5 +1,5 @@
 import { Button, Container, Grid, makeStyles } from "@material-ui/core"
-import { useState } from "react"
+import { useMemo, useState } from "react"
 import { useForm } from "react-hook-form"
 import { useDispatch } from "react-redux"
 import { nanoid } from "@reduxjs/toolkit"
@@ -137,15 +137,17 @@ const CharacterForm = ({ onClose }) => {
     },
   }
 
+  const isEdit = useMemo(() => {
+    return params && params[0] === formModeEnum.edit
+  }, [params])
+
   return (
     <>
       <Container
         className={classes.title}
         color="text.disabled"
       >
-        {params && params[0] === formModeEnum.edit
-          ? `Edit Character - ${params[1]}`
-          : "Add New Character"}
+        {isEdit ? `Edit Character - ${params[1]}` : "Add New Character"}
       </Container>
       <div className={classes.body}>
         <Grid
