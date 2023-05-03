@@ -1,5 +1,5 @@
 import { Button, Container, Grid, makeStyles } from "@material-ui/core"
-import { useState } from "react"
+import { useMemo, useState } from "react"
 import { useForm } from "react-hook-form"
 import { useDispatch, useSelector } from "react-redux"
 import { nanoid } from "@reduxjs/toolkit"
@@ -8,6 +8,7 @@ import { useRouter } from "next/router"
 
 import { genderEnum } from "@/enums/genderEnum"
 import { speciesEnum } from "@/enums/speciesEnum"
+import { formModeEnum } from "@/enums/formModeEnum"
 import { wordsToRemoveEnum } from "@/enums/wordsToRemoveEnum"
 import ControlledTextInputField from "../ControlledTextInputField"
 import ControlledNumberInputField from "../ControlledNumberInputField/ControlledNumberInputField"
@@ -51,10 +52,9 @@ const useStyles = makeStyles((theme) => ({
 
 const CharacterForm = ({ onClose }) => {
   const classes = useStyles()
-  const [errors, setErrors] = useState({})
-
   const router = useRouter()
-  const { mode, id } = router.query
+  const [errors, setErrors] = useState({})
+  const { params } = router.query
 
   const character = useSelector((state) => getCharacterById(state, id))
 
@@ -158,15 +158,17 @@ const CharacterForm = ({ onClose }) => {
     },
   }
 
+  const isEdit = useMemo(() => {
+    return params && params[0] === formModeEnum.edit
+  }, [params])
+
   return (
     <>
       <Container
         className={classes.title}
         color="text.disabled"
       >
-        {mode === "new"
-          ? "Add New Character"
-          : `Edit Character - ${character?.name}`}
+        {isEdit ? `Edit Character - ${params[1]}` : "Add New Character"}
       </Container>
       <div className={classes.body}>
         <Grid

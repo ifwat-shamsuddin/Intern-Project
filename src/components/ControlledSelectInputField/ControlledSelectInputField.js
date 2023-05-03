@@ -73,7 +73,10 @@ const ControlledSelectInputField = ({
 
   return (
     <div className={classes.root}>
-      <span className={classes.label}>{label}</span>
+      <span className={classes.label}>
+        {label}
+        {required && "*"}
+      </span>
 
       <Controller
         control={control}
