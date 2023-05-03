@@ -27,21 +27,21 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-const RightSideDrawer = ({ open, setOpen, children }) => {
+const RightSideDrawer = ({ isOpen, onClose, children }) => {
   const classes = useStyles()
 
   return (
     <Drawer
       anchor="right"
-      open={open}
-      onClose={() => setOpen(false)}
+      open={isOpen}
+      onClose={onClose}
       classes={{ paperAnchorRight: classes.paperAnchorRight }}
       elevation={0}
     >
       <div className={classes.root}>
         <div
           className={classes.closeContainer}
-          onClick={() => setOpen(false)}
+          onClick={onClose}
         >
           <div>X</div>
         </div>

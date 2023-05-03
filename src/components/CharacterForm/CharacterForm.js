@@ -1,12 +1,14 @@
 import { Button, Container, Grid, makeStyles } from "@material-ui/core"
-import { useState } from "react"
+import { useMemo, useState } from "react"
 import { useForm } from "react-hook-form"
 import { useDispatch } from "react-redux"
 import { nanoid } from "@reduxjs/toolkit"
 import { addCharacter } from "@/reducers/characterReducer"
+import { useRouter } from "next/router"
 
 import { genderEnum } from "@/enums/genderEnum"
 import { speciesEnum } from "@/enums/speciesEnum"
+import { formModeEnum } from "@/enums/formModeEnum"
 import ControlledTextInputField from "../ControlledTextInputField"
 import ControlledNumberInputField from "../ControlledNumberInputField/ControlledNumberInputField"
 import ControlledSelectInputField from "../ControlledSelectInputField/ControlledSelectInputField"
@@ -46,9 +48,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-const CharacterForm = ({ setOpen }) => {
+const CharacterForm = ({ onClose }) => {
   const classes = useStyles()
+  const router = useRouter()
   const [errors, setErrors] = useState({})
+  const { params } = router.query
 
   const { control, handleSubmit } = useForm({
     defaultValues: {
@@ -97,6 +101,7 @@ const CharacterForm = ({ setOpen }) => {
         },
       })
     )
+    onClose()
   }
 
   const submit = handleSubmit(onSubmit, (errors) => {
@@ -132,13 +137,17 @@ const CharacterForm = ({ setOpen }) => {
     },
   }
 
+  const isEdit = useMemo(() => {
+    return params && params[0] === formModeEnum.edit
+  }, [params])
+
   return (
     <>
       <Container
         className={classes.title}
         color="text.disabled"
       >
-        Add New Character
+        {isEdit ? `Edit Character - ${params[1]}` : "Add New Character"}
       </Container>
       <div className={classes.body}>
         <Grid
@@ -287,7 +296,7 @@ const CharacterForm = ({ setOpen }) => {
         </Button>
         <Button
           variant="contained"
-          onClick={() => setOpen(false)}
+          onClick={onClose}
           size="large"
         >
           Cancel

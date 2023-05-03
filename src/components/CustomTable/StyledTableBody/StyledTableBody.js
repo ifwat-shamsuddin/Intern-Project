@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-const StyledTableBody = ({ columns, data }) => {
+const StyledTableBody = ({ columns, data, onRowClick }) => {
   const classes = useStyles()
 
   return (
@@ -25,7 +25,7 @@ const StyledTableBody = ({ columns, data }) => {
           hover
           key={row.id}
           classes={{ root: classes.root, hover: classes.hover }}
-          onClick={() => alert("You have clicked row " + row.name)}
+          onClick={() => onRowClick(row)}
         >
           {columns.map((column) => (
             <StyledTableCell
