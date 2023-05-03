@@ -11,7 +11,7 @@ import CharacterForm from "@/components/CharacterForm"
 import { formModeEnum } from "@/enums/formModeEnum"
 import * as characterSelectors from "@/selectors/characterSelectors"
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   body: {
     display: "grid",
     placeItems: "center",
@@ -69,7 +69,7 @@ export default function Characters() {
       handleCloseForm()
     }
 
-    if (params.length > 0 && !Object.values(formModeEnum).includes(params[0])) {
+    if (params.length > 0 && !isOpen) {
       handleCloseForm()
     }
   }, [params])
