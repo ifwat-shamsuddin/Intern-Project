@@ -50,16 +50,16 @@ export default function Characters() {
   }, [params])
 
   const handleOpenForm = (id) => {
-    const params = id ? [formModeEnum.edit, id] : [formModeEnum.new, null]
+    const params = id ? [formModeEnum.edit, id] : [formModeEnum.new]
 
     router.push({
-      pathname: "/characters",
+      pathname: "/characters/[[...params]]",
       query: { params },
     })
   }
 
   const handleCloseForm = () => {
-    router.push("/characters")
+    router.push("/characters/[[...params]]")
   }
 
   useEffect(() => {
