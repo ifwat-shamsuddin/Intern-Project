@@ -72,7 +72,7 @@ export default function Characters() {
     if (params.length > 0 && !isOpen) {
       handleCloseForm()
     }
-  }, [params])
+  }, [params, isOpen])
 
   return (
     <div className={classes.body}>
