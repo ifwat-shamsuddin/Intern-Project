@@ -3,7 +3,7 @@ import { useMemo, useState } from "react"
 import { useForm } from "react-hook-form"
 import { useDispatch, useSelector } from "react-redux"
 import { nanoid } from "@reduxjs/toolkit"
-import { addCharacter } from "@/reducers/characterReducer"
+import { addCharacter, editCharacter } from "@/reducers/characterReducer"
 import { useRouter } from "next/router"
 
 import { genderEnum } from "@/enums/genderEnum"
@@ -77,7 +77,7 @@ const CharacterForm = ({ onClose }) => {
     birthYear: character ? character.birthYear : "",
     homeworld: character?.homeworld?.name || "",
     species:
-      character && character.species
+      character && character.species?.name
         ? {
             value: character.species.name,
             label: character.species.name,
@@ -104,25 +104,43 @@ const CharacterForm = ({ onClose }) => {
     numberOfFilms,
   }) => {
     dispatch(
-      addCharacter({
-        id: nanoid(),
-        name,
-        eyeColor,
-        height,
-        gender: gender?.value,
-        birthYear,
-        homeworld: {
-          id: nanoid(),
-          name: homeworld,
-        },
-        species: {
-          id: nanoid(),
-          name: species?.value,
-        },
-        filmConnection: {
-          totalCount: numberOfFilms,
-        },
-      })
+      isEdit
+        ? editCharacter({
+            id: character.id,
+            name,
+            eyeColor,
+            height,
+            gender: gender?.value,
+            birthYear,
+            homeworld: {
+              name: homeworld,
+            },
+            species: {
+              name: species?.value,
+            },
+            filmConnection: {
+              totalCount: numberOfFilms,
+            },
+          })
+        : addCharacter({
+            id: nanoid(),
+            name,
+            eyeColor,
+            height,
+            gender: gender?.value,
+            birthYear,
+            homeworld: {
+              id: nanoid(),
+              name: homeworld,
+            },
+            species: {
+              id: nanoid(),
+              name: species?.value,
+            },
+            filmConnection: {
+              totalCount: numberOfFilms,
+            },
+          })
     )
     onClose()
   }
