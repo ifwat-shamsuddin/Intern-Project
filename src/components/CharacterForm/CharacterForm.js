@@ -9,11 +9,10 @@ import { useRouter } from "next/router"
 import { genderEnum } from "@/enums/genderEnum"
 import { speciesEnum } from "@/enums/speciesEnum"
 import { formModeEnum } from "@/enums/formModeEnum"
-import { wordsToRemoveEnum } from "@/enums/wordsToRemoveEnum"
+import { getCharacterById } from "@/selectors/characterSelectors"
 import ControlledTextInputField from "../ControlledTextInputField"
 import ControlledNumberInputField from "../ControlledNumberInputField/ControlledNumberInputField"
 import ControlledSelectInputField from "../ControlledSelectInputField/ControlledSelectInputField"
-import { getCharacterById } from "@/selectors/characterSelectors"
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -56,23 +55,26 @@ const CharacterForm = ({ onClose }) => {
   const [errors, setErrors] = useState({})
   const { params } = router.query
 
-  const character = useSelector((state) => getCharacterById(state, id))
+  const isEdit = useMemo(() => {
+    return params && params[0] === formModeEnum.edit
+  }, [params])
+
+  const character = useSelector((state) =>
+    isEdit ? getCharacterById(state, params[1]) : null
+  )
 
   const defaultValues = {
     name: character?.name || "",
     eyeColor: character?.eyeColor || "",
     height: character?.height || "",
     gender:
-      character && !wordsToRemoveEnum.words.includes(character.gender)
+      character && character.gender
         ? {
             value: character.gender,
             label: character.gender,
           }
         : null,
-    birthYear:
-      character && !wordsToRemoveEnum.words.includes(character.birthYear)
-        ? character.birthYear
-        : "",
+    birthYear: character ? character.birthYear : "",
     homeworld: character?.homeworld?.name || "",
     species:
       character && character.species
@@ -158,17 +160,13 @@ const CharacterForm = ({ onClose }) => {
     },
   }
 
-  const isEdit = useMemo(() => {
-    return params && params[0] === formModeEnum.edit
-  }, [params])
-
   return (
     <>
       <Container
         className={classes.title}
         color="text.disabled"
       >
-        {isEdit ? `Edit Character - ${params[1]}` : "Add New Character"}
+        {isEdit ? `Edit Character - ${character.name}` : "Add New Character"}
       </Container>
       <div className={classes.body}>
         <Grid
