@@ -181,9 +181,36 @@ const characterReducer = createSlice({
     addCharacter: (state, action) => {
       state.characters.push(action.payload)
     },
+    editCharacter: (state, action) => {
+      const {
+        id,
+        name,
+        eyeColor,
+        height,
+        gender,
+        birthYear,
+        homeworld,
+        species,
+        filmConnection,
+      } = action.payload
+      const existingCharacter = state.characters.find(
+        (existingCharacter) => existingCharacter.id === id
+      )
+
+      if (existingCharacter) {
+        ;(existingCharacter.name = name),
+          (existingCharacter.eyeColor = eyeColor),
+          (existingCharacter.height = height),
+          (existingCharacter.gender = gender),
+          (existingCharacter.birthYear = birthYear),
+          (existingCharacter.homeworld = homeworld),
+          (existingCharacter.species = species),
+          (existingCharacter.filmConnection = filmConnection)
+      }
+    },
   },
 })
 
-export const { addCharacter } = characterReducer.actions
+export const { addCharacter, editCharacter } = characterReducer.actions
 
 export default characterReducer.reducer
