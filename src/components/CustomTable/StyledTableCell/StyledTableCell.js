@@ -1,6 +1,7 @@
 import { TableCell, withStyles } from "@material-ui/core"
 
 import replaceIfNull from "@/utils/replaceIfNullUtils"
+import EditButton from "@/components/EditButton/EditButton"
 
 const NewTableCell = withStyles((theme) => ({
   root: {
@@ -17,8 +18,19 @@ const NewTableCell = withStyles((theme) => ({
   },
 }))(TableCell)
 
-const StyledTableCell = ({ value }) => {
-  return <NewTableCell>{replaceIfNull(value)}</NewTableCell>
+const StyledTableCell = ({ value, editableRow, onRowClick }) => {
+  return (
+    <NewTableCell>
+      {editableRow ? (
+        <EditButton
+          tooltipTitle="Edit Character"
+          onClick={onRowClick}
+        />
+      ) : (
+        replaceIfNull(value)
+      )}
+    </NewTableCell>
+  )
 }
 
 export default StyledTableCell

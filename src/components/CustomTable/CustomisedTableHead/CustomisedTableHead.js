@@ -2,7 +2,7 @@ import { TableHead, TableRow } from "@material-ui/core"
 
 import StyledTableCell from "../StyledTableCell"
 
-const CustomisedTableHead = ({ columns }) => {
+const CustomisedTableHead = ({ columns, editableRow }) => {
   return (
     <TableHead>
       <TableRow>
@@ -12,6 +12,12 @@ const CustomisedTableHead = ({ columns }) => {
             value={column.header}
           />
         ))}
+        {editableRow && (
+          <StyledTableCell
+            key={"editCharacterButton"}
+            value={null}
+          />
+        )}
       </TableRow>
     </TableHead>
   )

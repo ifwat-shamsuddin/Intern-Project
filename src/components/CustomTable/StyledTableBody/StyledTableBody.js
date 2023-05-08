@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-const StyledTableBody = ({ columns, data, onRowClick }) => {
+const StyledTableBody = ({ columns, data, onRowClick, editableRow }) => {
   const classes = useStyles()
 
   return (
@@ -33,6 +33,12 @@ const StyledTableBody = ({ columns, data, onRowClick }) => {
               value={get(row, column.field, "-")}
             />
           ))}
+          {editableRow && (
+            <StyledTableCell
+              editableRow={editableRow}
+              onRowClick={() => onRowClick(row)}
+            />
+          )}
         </TableRow>
       ))}
     </TableBody>
