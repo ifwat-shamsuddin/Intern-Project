@@ -93,6 +93,7 @@ export default function Characters() {
         columns={columns}
         data={characters}
         onRowClick={({ id }) => handleOpenForm(id)}
+        editableRow
       />
     </div>
   )
