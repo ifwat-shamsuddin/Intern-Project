@@ -11,7 +11,7 @@ const CustomisedTableHead = ({ columns }) => {
           column === editableRowEnum ? (
             <StyledTableCell
               key={column.header}
-              value={null}
+              value={" "}
             />
           ) : (
             <StyledTableCell
