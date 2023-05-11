@@ -1,7 +1,7 @@
-import { wordsToRemoveEnum } from "@/enums/wordsToRemoveEnum"
+const wordsToReplace = ["n/a", "unknown", ""]
 
 const replaceIfNull = (string) => {
-  return wordsToRemoveEnum.words.includes(string) ? "-" : string
+  return wordsToReplace.includes(string) ? "-" : string
 }
 
 export default replaceIfNull
