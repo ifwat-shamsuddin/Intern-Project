@@ -2,6 +2,7 @@ import { TableBody, TableRow, makeStyles } from "@material-ui/core"
 import { get } from "lodash"
 
 import StyledTableCell from "../StyledTableCell"
+import { editableRowEnum } from "@/enums/editableRowEnum"
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -15,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-const StyledTableBody = ({ columns, data, onRowClick, editableRow }) => {
+const StyledTableBody = ({ columns, data, onRowClick, hasEditableRow }) => {
   const classes = useStyles()
 
   return (
@@ -27,17 +28,19 @@ const StyledTableBody = ({ columns, data, onRowClick, editableRow }) => {
           classes={{ root: classes.root, hover: classes.hover }}
           onClick={() => onRowClick(row)}
         >
-          {columns.map((column) => (
-            <StyledTableCell
-              key={row.id + column.header}
-              value={get(row, column.field, "-")}
-            />
-          ))}
-          {editableRow && (
-            <StyledTableCell
-              editableRow={editableRow}
-              onRowClick={() => onRowClick(row)}
-            />
+          {columns.map((column) =>
+            column === editableRowEnum ? (
+              <StyledTableCell
+                key={row.id + column.header}
+                hasEditableRow={hasEditableRow}
+                onRowClick={() => onRowClick(row)}
+              />
+            ) : (
+              <StyledTableCell
+                key={row.id + column.header}
+                value={get(row, column.field, "-")}
+              />
+            )
           )}
         </TableRow>
       ))}

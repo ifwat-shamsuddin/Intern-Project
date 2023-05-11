@@ -1,22 +1,24 @@
 import { TableHead, TableRow } from "@material-ui/core"
 
 import StyledTableCell from "../StyledTableCell"
+import { editableRowEnum } from "@/enums/editableRowEnum"
 
-const CustomisedTableHead = ({ columns, editableRow }) => {
+const CustomisedTableHead = ({ columns }) => {
   return (
     <TableHead>
       <TableRow>
-        {columns.map((column) => (
-          <StyledTableCell
-            key={column.header}
-            value={column.header}
-          />
-        ))}
-        {editableRow && (
-          <StyledTableCell
-            key={"editCharacterButton"}
-            value={null}
-          />
+        {columns.map((column) =>
+          column === editableRowEnum ? (
+            <StyledTableCell
+              key={column.header}
+              value={null}
+            />
+          ) : (
+            <StyledTableCell
+              key={column.header}
+              value={column.header}
+            />
+          )
         )}
       </TableRow>
     </TableHead>

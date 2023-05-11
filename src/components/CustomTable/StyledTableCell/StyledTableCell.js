@@ -18,10 +18,10 @@ const NewTableCell = withStyles((theme) => ({
   },
 }))(TableCell)
 
-const StyledTableCell = ({ value, editableRow, onRowClick }) => {
+const StyledTableCell = ({ value, hasEditableRow, onRowClick }) => {
   return (
     <NewTableCell>
-      {editableRow ? (
+      {hasEditableRow ? (
         <EditButton
           tooltipTitle="Edit Character"
           onClick={onRowClick}
