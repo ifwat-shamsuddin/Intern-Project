@@ -59,22 +59,21 @@ const CharacterForm = ({ onClose }) => {
     return params && params[0] === formModeEnum.edit
   }, [params])
 
-  const character = useSelector((state) =>
-    isEdit ? getCharacterById(state, params[1]) : null
-  )
+  const character = useSelector(getCharacterById(params ? params[1] : null))
 
   const defaultValues = {
     name: character?.name || "",
     eyeColor: character?.eyeColor || "",
     height: character?.height || "",
     gender:
-      character && character.gender
+      character && character.gender !== "n/a"
         ? {
             value: character.gender,
             label: character.gender,
           }
         : null,
-    birthYear: character ? character.birthYear : "",
+    birthYear:
+      character && character.birthYear !== "unknown" ? character.birthYear : "",
     homeworld: character?.homeworld?.name || "",
     species:
       character && character.species?.name
