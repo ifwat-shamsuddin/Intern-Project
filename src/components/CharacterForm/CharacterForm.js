@@ -102,32 +102,31 @@ const CharacterForm = ({ onClose }) => {
     species,
     numberOfFilms,
   }) => {
+    const commonAttributes = {
+      name,
+      eyeColor,
+      height,
+      gender: gender?.value,
+      birthYear,
+      filmConnection: {
+        totalCount: numberOfFilms,
+      },
+    }
+
     dispatch(
       isEdit
         ? editCharacter({
             id: character.id,
-            name,
-            eyeColor,
-            height,
-            gender: gender?.value,
-            birthYear,
             homeworld: {
               name: homeworld,
             },
             species: {
               name: species?.value,
             },
-            filmConnection: {
-              totalCount: numberOfFilms,
-            },
+            ...commonAttributes,
           })
         : addCharacter({
             id: nanoid(),
-            name,
-            eyeColor,
-            height,
-            gender: gender?.value,
-            birthYear,
             homeworld: {
               id: nanoid(),
               name: homeworld,
@@ -136,9 +135,7 @@ const CharacterForm = ({ onClose }) => {
               id: nanoid(),
               name: species?.value,
             },
-            filmConnection: {
-              totalCount: numberOfFilms,
-            },
+            ...commonAttributes,
           })
     )
     onClose()
