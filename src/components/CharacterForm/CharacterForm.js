@@ -1,5 +1,5 @@
 import { Button, Container, Grid, makeStyles } from "@material-ui/core"
-import { useMemo, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import { useForm } from "react-hook-form"
 import { useDispatch, useSelector } from "react-redux"
 import { nanoid } from "@reduxjs/toolkit"
@@ -61,34 +61,47 @@ const CharacterForm = ({ onClose }) => {
 
   const character = useSelector(getCharacterById(params ? params[1] : null))
 
-  const defaultValues = {
-    name: character?.name || "",
-    eyeColor: character?.eyeColor || "",
-    height: character?.height || "",
-    gender:
-      character && character.gender !== "n/a"
-        ? {
-            value: character.gender,
-            label: character.gender,
-          }
-        : null,
-    birthYear:
-      character && character.birthYear !== "unknown" ? character.birthYear : "",
-    homeworld: character?.homeworld?.name || "",
-    species:
-      character && character.species?.name
-        ? {
-            value: character.species.name,
-            label: character.species.name,
-          }
-        : null,
-    numberOfFilms: character?.filmConnection?.totalCount || "",
-  }
-
-  const { control, handleSubmit } = useForm({
-    defaultValues,
+  const { control, handleSubmit, reset } = useForm({
+    defaultValues: {
+      name: "",
+      eyeColor: "",
+      height: "",
+      gender: null,
+      birthYear: "",
+      homeworld: "",
+      species: null,
+      numberOfFilms: "",
+    },
     reValidateMode: "onSubmit",
   })
+
+  useEffect(() => {
+    reset({
+      name: character?.name || "",
+      eyeColor: character?.eyeColor || "",
+      height: character?.height || "",
+      gender:
+        character && character.gender !== "n/a"
+          ? {
+              value: character.gender,
+              label: character.gender,
+            }
+          : null,
+      birthYear:
+        character && character.birthYear !== "unknown"
+          ? character.birthYear
+          : "",
+      homeworld: character?.homeworld?.name || "",
+      species:
+        character && character.species?.name
+          ? {
+              value: character.species.name,
+              label: character.species.name,
+            }
+          : null,
+      numberOfFilms: character?.filmConnection?.totalCount || "",
+    })
+  }, [character])
 
   const dispatch = useDispatch()
 
