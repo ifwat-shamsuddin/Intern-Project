@@ -3,7 +3,7 @@ import { useMemo, useState } from "react"
 import { useForm } from "react-hook-form"
 import { useDispatch } from "react-redux"
 import { nanoid } from "@reduxjs/toolkit"
-import { addCharacter } from "@/reducers/characterReducer"
+import { addCharacter } from "@/actions/characterActions"
 import { useRouter } from "next/router"
 
 import { genderEnum } from "@/enums/genderEnum"
