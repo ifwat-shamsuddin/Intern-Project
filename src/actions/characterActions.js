@@ -1,4 +1,6 @@
-export const ADD_CHARACTER = "ADD_CHARACTER"
+const actionPrefix = "characterActions/"
+
+export const ADD_CHARACTER = actionPrefix + "ADD_CHARACTER"
 
 export const addCharacter = (character) => {
   return {
