@@ -136,7 +136,11 @@ const CharacterForm = ({ onClose }) => {
   }
 
   const handleNumberOfFilmValidation = (value) => {
-    return validateNumberMin({ min: 1, value, errorReturn: "The minimum is 1" })
+    return validateNumberWithinRange({
+      min: 1,
+      value,
+      errorReturn: "The minimum is 1",
+    })
   }
 
   const isEdit = useMemo(() => {
