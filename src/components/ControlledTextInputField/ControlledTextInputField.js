@@ -34,12 +34,10 @@ const ControlledTextInputField = ({
   const classes = useStyles()
 
   const validateRequired = (value) => {
-    if (required && !value) return "This field is required"
-
     if (required)
       return formValidationUtils.validateNonSpaceInput({
         value,
-        errorReturn: "This field should not be only space",
+        errorReturn: "This field is required",
       })
 
     return true
