@@ -12,10 +12,7 @@ import { formModeEnum } from "@/enums/formModeEnum"
 import ControlledTextInputField from "../ControlledTextInputField"
 import ControlledNumberInputField from "../ControlledNumberInputField/ControlledNumberInputField"
 import ControlledSelectInputField from "../ControlledSelectInputField/ControlledSelectInputField"
-import {
-  validateNumberMin,
-  validateNumberWithinRange,
-} from "@/utils/formValidationUtils"
+import * as formValidationUtils from "@/utils/formValidationUtils"
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -127,7 +124,7 @@ const CharacterForm = ({ onClose }) => {
   }
 
   const handleHeightValidation = (value) => {
-    return validateNumberWithinRange({
+    return formValidationUtils.validateNumberWithinRange({
       min: 1,
       max: 300,
       value,
@@ -136,7 +133,7 @@ const CharacterForm = ({ onClose }) => {
   }
 
   const handleNumberOfFilmValidation = (value) => {
-    return validateNumberWithinRange({
+    return formValidationUtils.validateNumberWithinRange({
       min: 1,
       value,
       errorReturn: "The minimum is 1",
