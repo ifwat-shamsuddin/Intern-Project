@@ -169,7 +169,7 @@ const CharacterForm = ({ onClose }) => {
               name="name"
               label="Name"
               placeholder="Enter name"
-              customValidationFunction={{
+              customValidationFunctions={{
                 validateNameMinLength,
                 validateNamePattern,
               }}
@@ -206,7 +206,7 @@ const CharacterForm = ({ onClose }) => {
               label="Height"
               placeholder="Enter height"
               type="number"
-              customValidationFunction={{ handleHeightValidation }}
+              customValidationFunctions={{ handleHeightValidation }}
               error={errors.height}
             />
           </Grid>
@@ -286,7 +286,7 @@ const CharacterForm = ({ onClose }) => {
               label="Number Of Films"
               placeholder="Enter number of films appeared"
               type="number"
-              customValidationFunction={{ handleNumberOfFilmValidation }}
+              customValidationFunctions={{ handleNumberOfFilmValidation }}
               error={errors.numberOfFilms}
               required
             />

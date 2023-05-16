@@ -24,7 +24,7 @@ const ControlledSelectInputField = ({
   label,
   placeholder,
   options,
-  customValidationFunction,
+  customValidationFunctions,
   error,
   required,
 }) => {
@@ -86,7 +86,7 @@ const ControlledSelectInputField = ({
       <Controller
         control={control}
         name={name}
-        rules={{ validate: { validateRequired, ...customValidationFunction } }}
+        rules={{ validate: { validateRequired, ...customValidationFunctions } }}
         render={({ value, onChange }) => {
           return (
             <>
