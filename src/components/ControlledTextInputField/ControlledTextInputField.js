@@ -32,6 +32,16 @@ const ControlledTextInputField = ({
 }) => {
   const classes = useStyles()
 
+  const validateRequired = (value) => {
+    if (required && !value) return "This field is required"
+
+    const nonSpaceRegex = /\S/
+    if (required && !nonSpaceRegex.test(value))
+      return "This field should not be only space"
+
+    return true
+  }
+
   return (
     <div className={classes.root}>
       <span className={classes.label}>
@@ -42,10 +52,7 @@ const ControlledTextInputField = ({
       <Controller
         control={control}
         name={name}
-        rules={{
-          ...(required && { required: "This field is required" }),
-          ...rules,
-        }}
+        rules={{ validate: validateRequired }}
         render={({ value, onChange }) => {
           return (
             <>

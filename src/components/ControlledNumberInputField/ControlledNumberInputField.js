@@ -48,6 +48,11 @@ const ControlledNumberInputField = ({
     if (isValidData) onChange(event.target.value)
   }
 
+  const validateRequired = (value) => {
+    if (required && !value) return "This field is required"
+    return true
+  }
+
   return (
     <div className={classes.root}>
       <span className={classes.label}>
@@ -58,10 +63,7 @@ const ControlledNumberInputField = ({
       <Controller
         control={control}
         name={name}
-        rules={{
-          ...(required && { required: "This field is required" }),
-          ...rules,
-        }}
+        rules={{ validate: validateRequired }}
         render={({ value, onChange }) => {
           return (
             <>
