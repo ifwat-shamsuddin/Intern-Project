@@ -3,9 +3,9 @@ export const validateNumberWithinRange = ({
   max,
   value,
   errorReturn = false,
+  isOptional = false,
 }) => {
-  if (!value) return
-  if (value == 0) return "This field should not be 0!"
+  if (!value && isOptional) return true
   if (value < min || value > max) return errorReturn
   return true
 }

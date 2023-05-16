@@ -129,6 +129,7 @@ const CharacterForm = ({ onClose }) => {
       max: 300,
       value,
       errorReturn: "The height should range from 1 - 300",
+      isOptional: true,
     })
   }
 
