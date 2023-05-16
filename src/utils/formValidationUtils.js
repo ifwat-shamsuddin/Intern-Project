@@ -5,6 +5,7 @@ export const validateNumberWithinRange = ({
   errorReturn = false,
 }) => {
   if (!value) return
+  if (value == 0) return "This field should not be 0!"
   if (value < min || value > max) return errorReturn
   return true
 }
