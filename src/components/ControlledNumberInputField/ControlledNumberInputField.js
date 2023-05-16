@@ -37,7 +37,7 @@ const ControlledNumberInputField = ({
   name,
   label,
   placeholder,
-  rules,
+  customValidationFunction,
   error,
   required,
 }) => {
@@ -63,7 +63,7 @@ const ControlledNumberInputField = ({
       <Controller
         control={control}
         name={name}
-        rules={{ validate: validateRequired }}
+        rules={{ validate: { validateRequired, ...customValidationFunction } }}
         render={({ value, onChange }) => {
           return (
             <>

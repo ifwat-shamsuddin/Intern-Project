@@ -26,7 +26,7 @@ const ControlledTextInputField = ({
   name,
   label,
   placeholder,
-  rules,
+  customValidationFunction,
   error,
   required,
 }) => {
@@ -52,7 +52,9 @@ const ControlledTextInputField = ({
       <Controller
         control={control}
         name={name}
-        rules={{ validate: validateRequired }}
+        rules={{
+          validate: { validateRequired, ...customValidationFunction },
+        }}
         render={({ value, onChange }) => {
           return (
             <>
