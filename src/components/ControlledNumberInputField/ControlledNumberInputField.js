@@ -50,6 +50,9 @@ const ControlledNumberInputField = ({
 
   const validateRequired = (value) => {
     if (required && !value) return "This field is required"
+
+    if (required && value == 0) return "The value must be more than 0!"
+
     return true
   }
 
