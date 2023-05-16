@@ -8,3 +8,10 @@ export const validateNumberWithinRange = ({
   if (value < min || value > max) return errorReturn
   return true
 }
+
+export const validateNonSpaceInput = ({ value, errorReturn = false }) => {
+  const nonSpaceRegex = /\S/
+
+  if (!nonSpaceRegex.test(value)) return errorReturn
+  return true
+}

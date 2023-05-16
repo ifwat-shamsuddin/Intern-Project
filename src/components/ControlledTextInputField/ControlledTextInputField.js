@@ -2,6 +2,7 @@ import { makeStyles, TextField } from "@material-ui/core"
 import { Controller } from "react-hook-form"
 
 import InputErrorMessage from "../InputErrorMessage/InputErrorMessage"
+import { validateNonSpaceInput } from "@/utils/formValidationUtils"
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -35,9 +36,11 @@ const ControlledTextInputField = ({
   const validateRequired = (value) => {
     if (required && !value) return "This field is required"
 
-    const nonSpaceRegex = /\S/
-    if (required && !nonSpaceRegex.test(value))
-      return "This field should not be only space"
+    if (required)
+      return validateNonSpaceInput({
+        value,
+        errorReturn: "This field should not be only space",
+      })
 
     return true
   }
