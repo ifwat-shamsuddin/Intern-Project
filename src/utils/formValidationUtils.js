@@ -1,11 +1,12 @@
+import { isFinite, isNumber } from "lodash"
+
 export const validateNumberWithinRange = ({
-  min,
-  max,
+  min = Infinity,
+  max = Infinity,
   value,
   errorReturn = false,
-  isOptional = false,
 }) => {
-  if (!value && isOptional) return true
+  if (!isNumber(min) || !isNumber(max) || !isFinite(value)) return errorReturn
   if (value < min || value > max) return errorReturn
   return true
 }
