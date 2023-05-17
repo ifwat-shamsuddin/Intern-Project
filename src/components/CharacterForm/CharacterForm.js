@@ -124,12 +124,13 @@ const CharacterForm = ({ onClose }) => {
   }
 
   const handleHeightValidation = (value) => {
+    if (value === "") return true
+
     return formValidationUtils.validateNumberWithinRange({
       min: 1,
       max: 300,
       value,
       errorReturn: "The height should range from 1 - 300",
-      isOptional: true,
     })
   }
 
