@@ -49,10 +49,15 @@ const ControlledNumberInputField = ({
   }
 
   const validateRequired = (value) => {
-    if (required && !value && value !== 0) {
+    if (required && value === "") {
       return "This field is required"
     }
     return true
+  }
+
+  const setValueAs = (value) => {
+    if (value === "") return ""
+    return parseInt(value)
   }
 
   return (
@@ -65,7 +70,10 @@ const ControlledNumberInputField = ({
       <Controller
         control={control}
         name={name}
-        rules={{ validate: { validateRequired, ...customValidationFunctions } }}
+        rules={{
+          setValueAs,
+          validate: { validateRequired, ...customValidationFunctions },
+        }}
         render={({ value, onChange }) => {
           return (
             <>
