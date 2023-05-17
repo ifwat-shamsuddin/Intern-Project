@@ -10,9 +10,9 @@ export const validateNumberWithinRange = ({
   return true
 }
 
-export const validateNonSpaceInput = ({ value, errorReturn = false }) => {
-  const nonSpaceRegex = /\S/
+export const validateNotEmptyString = ({ value, errorReturn = false }) => {
+  const notEmptyStringRegex = /\S/
 
-  if (!nonSpaceRegex.test(value)) return errorReturn
+  if (!notEmptyStringRegex.test(value)) return errorReturn
   return true
 }

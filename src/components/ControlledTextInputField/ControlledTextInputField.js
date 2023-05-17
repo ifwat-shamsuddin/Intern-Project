@@ -35,7 +35,7 @@ const ControlledTextInputField = ({
 
   const validateRequired = (value) => {
     if (required)
-      return formValidationUtils.validateNonSpaceInput({
+      return formValidationUtils.validateNotEmptyString({
         value,
         errorReturn: "This field is required",
       })
