@@ -1,7 +1,7 @@
 import { isFinite, isNumber } from "lodash"
 
 export const validateNumberWithinRange = ({
-  min = Infinity,
+  min = -Infinity,
   max = Infinity,
   value,
   errorReturn = false,
