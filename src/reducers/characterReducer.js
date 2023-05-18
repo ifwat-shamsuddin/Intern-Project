@@ -185,7 +185,7 @@ function characterReducer(state = initialState, action) {
     case characterActions.EDIT_CHARACTER: {
       return {
         ...state,
-        characters: [...state.characters, action.updatedCharacters],
+        characters: [...action.updatedCharacters],
       }
     }
     default: {
