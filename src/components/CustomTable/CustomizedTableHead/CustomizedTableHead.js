@@ -2,7 +2,7 @@ import { TableHead, TableRow } from "@material-ui/core"
 
 import StyledTableCell from "../StyledTableCell"
 
-const CustomisedTableHead = ({ columns }) => {
+const CustomizedTableHead = ({ columns }) => {
   return (
     <TableHead>
       <TableRow>
@@ -17,4 +17,4 @@ const CustomisedTableHead = ({ columns }) => {
   )
 }
 
-export default CustomisedTableHead
+export default CustomizedTableHead
