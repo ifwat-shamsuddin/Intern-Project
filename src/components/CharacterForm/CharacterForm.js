@@ -12,6 +12,7 @@ import { formModeEnum } from "@/enums/formModeEnum"
 import ControlledTextInputField from "../ControlledTextInputField"
 import ControlledNumberInputField from "../ControlledNumberInputField/ControlledNumberInputField"
 import ControlledSelectInputField from "../ControlledSelectInputField/ControlledSelectInputField"
+import * as formValidationUtils from "@/utils/formValidationUtils"
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -108,33 +109,37 @@ const CharacterForm = ({ onClose }) => {
     setErrors(errors)
   })
 
-  const rules = {
-    name: {
-      minLength: {
-        value: 3,
-        message: "This field should contain at least 3 characters",
-      },
-      pattern: {
-        value: /^(?=(\s*\S){3})\s*[^\s].*$/,
-        message: "There should be at least 3 non-space characters!",
-      },
-    },
-    height: {
-      min: {
-        value: 1,
-        message: "The height should range from 1 - 300",
-      },
-      max: {
-        value: 300,
-        message: "The height should range from 1 - 300",
-      },
-    },
-    numberOfFilms: {
-      min: {
-        value: 1,
-        message: "The minimum value is 1",
-      },
-    },
+  const validateNameMinLength = (value) => {
+    if (value.length < 3)
+      return "This field should contain at least 3 characters"
+    return true
+  }
+
+  const validateNamePattern = (value) => {
+    const namePatternRegex = /^(?=(\s*\S){3})\s*[^\s].*$/
+    if (!namePatternRegex.test(value))
+      return "There should be at least 3 non-space characters!"
+
+    return true
+  }
+
+  const handleHeightValidation = (value) => {
+    if (value === "") return true
+
+    return formValidationUtils.validateNumberWithinRange({
+      min: 1,
+      max: 300,
+      value,
+      errorReturn: "The height should range from 1 - 300",
+    })
+  }
+
+  const handleNumberOfFilmValidation = (value) => {
+    return formValidationUtils.validateNumberWithinRange({
+      min: 1,
+      value,
+      errorReturn: "The minimum is 1",
+    })
   }
 
   const isEdit = useMemo(() => {
@@ -163,7 +168,10 @@ const CharacterForm = ({ onClose }) => {
               name="name"
               label="Name"
               placeholder="Enter name"
-              rules={rules.name}
+              customValidationFunctions={{
+                validateNameMinLength,
+                validateNamePattern,
+              }}
               error={errors.name}
               required
             />
@@ -177,7 +185,6 @@ const CharacterForm = ({ onClose }) => {
               name="eyeColor"
               label="Eye Color"
               placeholder="Enter eye color"
-              rules={rules.eyeColor}
               error={errors.eyeColor}
               required
             />
@@ -198,7 +205,7 @@ const CharacterForm = ({ onClose }) => {
               label="Height"
               placeholder="Enter height"
               type="number"
-              rules={rules.height}
+              customValidationFunctions={{ handleHeightValidation }}
               error={errors.height}
             />
           </Grid>
@@ -243,7 +250,6 @@ const CharacterForm = ({ onClose }) => {
               name="homeworld"
               label="HomeWorld"
               placeholder="Enter homeworld"
-              rules={rules.homeworld}
               error={errors.homeworld}
               required
             />
@@ -279,7 +285,7 @@ const CharacterForm = ({ onClose }) => {
               label="Number Of Films"
               placeholder="Enter number of films appeared"
               type="number"
-              rules={rules.numberOfFilms}
+              customValidationFunctions={{ handleNumberOfFilmValidation }}
               error={errors.numberOfFilms}
               required
             />

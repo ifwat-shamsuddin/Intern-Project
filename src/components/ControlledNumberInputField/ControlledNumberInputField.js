@@ -37,7 +37,7 @@ const ControlledNumberInputField = ({
   name,
   label,
   placeholder,
-  rules,
+  customValidationFunctions,
   error,
   required,
 }) => {
@@ -46,6 +46,18 @@ const ControlledNumberInputField = ({
   const handleChange = ({ event, onChange }) => {
     const isValidData = event.target.validity.valid || event.target.value === ""
     if (isValidData) onChange(event.target.value)
+  }
+
+  const validateRequired = (value) => {
+    if (required && value === "") {
+      return "This field is required"
+    }
+    return true
+  }
+
+  const setValueAs = (value) => {
+    if (value === "") return ""
+    return parseInt(value)
   }
 
   return (
@@ -59,8 +71,8 @@ const ControlledNumberInputField = ({
         control={control}
         name={name}
         rules={{
-          ...(required && { required: "This field is required" }),
-          ...rules,
+          setValueAs,
+          validate: { validateRequired, ...customValidationFunctions },
         }}
         render={({ value, onChange }) => {
           return (
