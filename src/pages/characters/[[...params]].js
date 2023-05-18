@@ -1,15 +1,13 @@
 import { makeStyles } from "@material-ui/core/styles"
 import { Typography } from "@material-ui/core"
-import { useSelector } from "react-redux"
 import { useRouter } from "next/router"
 import { useEffect, useMemo } from "react"
 
-import CustomTable from "@/components/CustomTable"
 import AddNewButton from "@/components/AddNewButton"
 import RightSideDrawer from "@/components/RightSideDrawer"
 import CharacterForm from "@/components/CharacterForm"
 import { formModeEnum } from "@/enums/formModeEnum"
-import * as characterSelectors from "@/selectors/characterSelectors"
+import CharactersTable from "@/components/CharactersTable/CharactersTable"
 
 const useStyles = makeStyles(() => ({
   body: {
@@ -26,24 +24,8 @@ const useStyles = makeStyles(() => ({
 export default function Characters() {
   const classes = useStyles()
 
-  const characters = useSelector(characterSelectors.characters)
-
   const router = useRouter()
   const { params } = router.query
-
-  const columns = [
-    { header: "Name", field: "name" },
-    { header: "Eye Color", field: "eyeColor" },
-    { header: "Height", field: "height" },
-    { header: "Gender", field: "gender" },
-    { header: "Birth Year", field: "birthYear" },
-    { header: "Homeworld", field: "homeworld.name" },
-    { header: "Species", field: "species.name" },
-    {
-      header: "Number of Films",
-      field: "filmConnection.totalCount",
-    },
-  ]
 
   const isOpen = useMemo(() => {
     return params && Object.values(formModeEnum).includes(params[0])
@@ -89,11 +71,7 @@ export default function Characters() {
           onClick={() => handleOpenForm()}
         />
       </div>
-      <CustomTable
-        columns={columns}
-        data={characters}
-        onRowClick={({ id }) => handleOpenForm(id)}
-      />
+      <CharactersTable onRowClick={({ id }) => handleOpenForm(id)} />
     </div>
   )
 }
