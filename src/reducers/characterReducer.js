@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit"
+import * as characterActions from "@/actions/characterActions"
 
 const initialState = {
   characters: [
@@ -174,32 +174,24 @@ const initialState = {
   ],
 }
 
-const characterReducer = createSlice({
-  name: "character",
-  initialState,
-  reducers: {
-    addCharacter: (state, action) => {
-      state.characters.push(action.payload)
-    },
-    editCharacter: (state, action) => {
-      const updatedCharacter = action.payload
-      const updatedCharacters = state.characters.map((existingCharacter) => {
-        if (existingCharacter.id === updatedCharacter.id) {
-          return {
-            ...existingCharacter,
-            ...updatedCharacter,
-          }
-        }
-        return existingCharacter
-      })
+function characterReducer(state = initialState, action) {
+  switch (action.type) {
+    case characterActions.ADD_CHARACTER: {
       return {
         ...state,
-        characters: updatedCharacters,
+        characters: [...state.characters, action.newCharacter],
       }
-    },
-  },
-})
+    }
+    case characterActions.EDIT_CHARACTER: {
+      return {
+        ...state,
+        characters: [...state.characters, action.updatedCharacters],
+      }
+    }
+    default: {
+      return state
+    }
+  }
+}
 
-export const { addCharacter, editCharacter } = characterReducer.actions
-
-export default characterReducer.reducer
+export default characterReducer

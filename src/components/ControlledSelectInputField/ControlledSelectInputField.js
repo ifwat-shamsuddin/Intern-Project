@@ -24,7 +24,7 @@ const ControlledSelectInputField = ({
   label,
   placeholder,
   options,
-  rules,
+  customValidationFunctions,
   error,
   required,
 }) => {
@@ -71,6 +71,11 @@ const ControlledSelectInputField = ({
     }
   }, [theme, error])
 
+  const validateRequired = (value) => {
+    if (required && !value) return "This field is required"
+    return true
+  }
+
   return (
     <div className={classes.root}>
       <span className={classes.label}>
@@ -81,10 +86,7 @@ const ControlledSelectInputField = ({
       <Controller
         control={control}
         name={name}
-        rules={{
-          ...(required && { required: "This field is required" }),
-          ...rules,
-        }}
+        rules={{ validate: { validateRequired, ...customValidationFunctions } }}
         render={({ value, onChange }) => {
           return (
             <>

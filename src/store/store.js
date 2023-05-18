@@ -1,15 +1,7 @@
-import { configureStore } from "@reduxjs/toolkit"
+import { createStore } from "redux"
 
 import characterReducer from "@/reducers/characterReducer"
 
-export const makeStore = () => {
-  return configureStore({
-    reducer: {
-      character: characterReducer,
-    },
-  })
-}
-
-const store = makeStore()
+const store = createStore(characterReducer)
 
 export default store

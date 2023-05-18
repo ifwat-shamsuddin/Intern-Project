@@ -2,6 +2,7 @@ import { makeStyles, TextField } from "@material-ui/core"
 import { Controller } from "react-hook-form"
 
 import InputErrorMessage from "../InputErrorMessage/InputErrorMessage"
+import * as formValidationUtils from "@/utils/formValidationUtils"
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -26,11 +27,21 @@ const ControlledTextInputField = ({
   name,
   label,
   placeholder,
-  rules,
+  customValidationFunctions,
   error,
   required,
 }) => {
   const classes = useStyles()
+
+  const validateRequired = (value) => {
+    if (required)
+      return formValidationUtils.validateNotEmptyString({
+        value,
+        errorReturn: "This field is required",
+      })
+
+    return true
+  }
 
   return (
     <div className={classes.root}>
@@ -43,8 +54,7 @@ const ControlledTextInputField = ({
         control={control}
         name={name}
         rules={{
-          ...(required && { required: "This field is required" }),
-          ...rules,
+          validate: { validateRequired, ...customValidationFunctions },
         }}
         render={({ value, onChange }) => {
           return (

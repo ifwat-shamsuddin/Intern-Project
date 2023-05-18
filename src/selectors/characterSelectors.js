@@ -1,4 +1,4 @@
-export const characters = (state) => state.character.characters
+export const characters = (state) => state.characters
 
 export const getCharacterById = (id) => (state) =>
-  state.character.characters.find((character) => character.id === id)
+  state.characters.find((character) => character.id === id)
