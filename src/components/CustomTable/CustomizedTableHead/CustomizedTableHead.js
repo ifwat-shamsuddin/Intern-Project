@@ -1,6 +1,6 @@
 import { TableHead, TableRow } from "@material-ui/core"
 
-import StyledTableCell from "../StyledTableCell"
+import { StyledTableCell } from "../Cells"
 
 const CustomizedTableHead = ({ columns }) => {
   return (
