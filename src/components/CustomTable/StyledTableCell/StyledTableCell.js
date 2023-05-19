@@ -1,7 +1,5 @@
 import { TableCell, withStyles } from "@material-ui/core"
 
-import replaceIfNull from "@/utils/replaceIfNullUtils"
-
 const NewTableCell = withStyles((theme) => ({
   root: {
     padding: "10px",
