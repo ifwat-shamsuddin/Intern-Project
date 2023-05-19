@@ -32,7 +32,7 @@ const StyledTableBody = ({ columns, data, onRowClick }) => {
             return (
               <React.Fragment key={row.id + header}>
                 {cellRenderer({
-                  cellData: get(row, field, "-"),
+                  cellData: get(row, field),
                   rowData: row,
                 })}
               </React.Fragment>

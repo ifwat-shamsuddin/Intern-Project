@@ -1,7 +1,8 @@
 import { useSelector } from "react-redux"
+import { isFinite } from "lodash"
 
 import CustomTable from "@/components/CustomTable"
-import StyledTableCell from "../CustomTable/StyledTableCell/StyledTableCell"
+import { StyledTableCell, NoValueCell } from "../CustomTable/Cells"
 import * as characterSelectors from "@/selectors/characterSelectors"
 import replaceIfNull from "@/utils/replaceIfNullUtils"
 
@@ -12,46 +13,66 @@ const CharactersTable = ({ onRowClick }) => {
     {
       header: "Name",
       field: "name",
-      cellRenderer: ({ cellData }) => <StyledTableCell value={cellData} />,
+      cellRenderer: ({ cellData }) => {
+        if (!cellData) return <NoValueCell />
+        return <StyledTableCell value={cellData} />
+      },
     },
     {
       header: "Eye Color",
       field: "eyeColor",
-      cellRenderer: ({ cellData }) => <StyledTableCell value={cellData} />,
+      cellRenderer: ({ cellData }) => {
+        if (!cellData) return <NoValueCell />
+        return <StyledTableCell value={cellData} />
+      },
     },
     {
       header: "Height",
       field: "height",
-      cellRenderer: ({ cellData }) => <StyledTableCell value={cellData} />,
+      cellRenderer: ({ cellData }) => {
+        if (!isFinite(cellData)) return <NoValueCell />
+        return <StyledTableCell value={cellData} />
+      },
     },
     {
       header: "Gender",
       field: "gender",
-      cellRenderer: ({ cellData }) => (
-        <StyledTableCell value={replaceIfNull(cellData)} />
-      ),
+      cellRenderer: ({ cellData }) => {
+        if (!cellData) return <NoValueCell />
+        return <StyledTableCell value={replaceIfNull(cellData)} />
+      },
     },
     {
       header: "Birth Year",
       field: "birthYear",
-      cellRenderer: ({ cellData }) => (
-        <StyledTableCell value={replaceIfNull(cellData)} />
-      ),
+      cellRenderer: ({ cellData }) => {
+        if (!cellData) return <NoValueCell />
+        return <StyledTableCell value={replaceIfNull(cellData)} />
+      },
     },
     {
       header: "Homeworld",
       field: "homeworld.name",
-      cellRenderer: ({ cellData }) => <StyledTableCell value={cellData} />,
+      cellRenderer: ({ cellData }) => {
+        if (!cellData) return <NoValueCell />
+        return <StyledTableCell value={cellData} />
+      },
     },
     {
       header: "Species",
       field: "species.name",
-      cellRenderer: ({ cellData }) => <StyledTableCell value={cellData} />,
+      cellRenderer: ({ cellData }) => {
+        if (!cellData) return <NoValueCell />
+        return <StyledTableCell value={cellData} />
+      },
     },
     {
       header: "Number of Films",
       field: "filmConnection.totalCount",
-      cellRenderer: ({ cellData }) => <StyledTableCell value={cellData} />,
+      cellRenderer: ({ cellData }) => {
+        if (!isFinite(cellData)) return <NoValueCell />
+        return <StyledTableCell value={cellData} />
+      },
     },
   ]
 
