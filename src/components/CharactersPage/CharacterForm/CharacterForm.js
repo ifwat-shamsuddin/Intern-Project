@@ -9,9 +9,11 @@ import { useRouter } from "next/router"
 import { genderEnum } from "@/enums/genderEnum"
 import { speciesEnum } from "@/enums/speciesEnum"
 import { formModeEnum } from "@/enums/formModeEnum"
-import ControlledTextInputField from "../ControlledTextInputField"
-import ControlledNumberInputField from "../ControlledNumberInputField/ControlledNumberInputField"
-import ControlledSelectInputField from "../ControlledSelectInputField/ControlledSelectInputField"
+import {
+  ControlledTextInputField,
+  ControlledNumberInputField,
+  ControlledSelectInputField,
+} from "@/components/ControlledInputFields"
 import * as formValidationUtils from "@/utils/formValidationUtils"
 
 const useStyles = makeStyles((theme) => ({
