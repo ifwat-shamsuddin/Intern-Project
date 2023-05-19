@@ -29,8 +29,6 @@ const StyledTableBody = ({ columns, data, onRowClick }) => {
           {columns.map((column) => {
             const { header, field, cellRenderer } = column
 
-            if (!cellRenderer) return
-
             return (
               <React.Fragment key={row.id + header}>
                 {cellRenderer({
