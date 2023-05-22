@@ -1,8 +1,6 @@
+import React from "react"
 import { TableBody, TableRow, makeStyles } from "@material-ui/core"
 import { get } from "lodash"
-
-import StyledTableCell from "../StyledTableCell"
-import { editableRowEnum } from "@/enums/editableRowEnum"
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -28,20 +26,18 @@ const StyledTableBody = ({ columns, data, onRowClick, hasEditableRow }) => {
           classes={{ root: classes.root, hover: classes.hover }}
           onClick={() => onRowClick(row)}
         >
-          {columns.map((column) =>
-            column === editableRowEnum ? (
-              <StyledTableCell
-                key={row.id + column.header}
-                hasEditableRow={hasEditableRow}
-                onRowClick={() => onRowClick(row)}
-              />
-            ) : (
-              <StyledTableCell
-                key={row.id + column.header}
-                value={get(row, column.field, "-")}
-              />
+          {columns.map((column) => {
+            const { header, field, CellRenderer } = column
+
+            return (
+              <React.Fragment key={row.id + header}>
+                <CellRenderer
+                  cellData={get(row, field)}
+                  rowData={row}
+                />
+              </React.Fragment>
             )
-          )}
+          })}
         </TableRow>
       ))}
     </TableBody>

@@ -3,7 +3,7 @@ import { useMemo } from "react"
 import { Controller } from "react-hook-form"
 import Select from "react-select"
 
-import InputErrorMessage from "../InputErrorMessage/InputErrorMessage"
+import InputErrorMessage from "../../InputErrorMessage/InputErrorMessage"
 
 const useStyles = makeStyles((theme) => ({
   root: {

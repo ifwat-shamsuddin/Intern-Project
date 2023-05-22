@@ -1,23 +1,17 @@
 import { Table, TableContainer, Paper } from "@material-ui/core"
 
-import CustomisedTableHead from "./CustomisedTableHead"
+import CustomizedTableHead from "./CustomizedTableHead"
 import StyledTableBody from "./StyledTableBody"
 import { editableRowEnum } from "@/enums/editableRowEnum"
 
-const CustomTable = ({ columns, data, onRowClick, hasEditableRow }) => {
-  const modifiedColumns = [...columns]
-
-  if (hasEditableRow) {
-    modifiedColumns.push(editableRowEnum)
-  }
-
+const CustomTable = ({ columns, data, onRowClick }) => {
   return (
     <TableContainer
       component={Paper}
       elevation={0}
     >
       <Table>
-        <CustomisedTableHead columns={modifiedColumns} />
+        <CustomizedTableHead columns={columns} />
 
         <StyledTableBody
           columns={modifiedColumns}

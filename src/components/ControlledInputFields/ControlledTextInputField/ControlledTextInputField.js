@@ -1,7 +1,8 @@
 import { makeStyles, TextField } from "@material-ui/core"
 import { Controller } from "react-hook-form"
 
-import InputErrorMessage from "../InputErrorMessage/InputErrorMessage"
+import InputErrorMessage from "../../InputErrorMessage/InputErrorMessage"
+import * as formValidationUtils from "@/utils/formValidationUtils"
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -14,17 +15,6 @@ const useStyles = makeStyles((theme) => ({
       padding: "6px 10px 6px 10px",
       fontSize: theme.typography.fontSize,
     },
-    "& input[type=number]": {
-      "-moz-appearance": "textfield",
-    },
-    "& input[type=number]::-webkit-outer-spin-button": {
-      "-webkit-appearance": "none",
-      margin: 0,
-    },
-    "& input[type=number]::-webkit-inner-spin-button": {
-      "-webkit-appearance": "none",
-      margin: 0,
-    },
   },
   label: {
     fontWeight: theme.typography.fontWeightBold,
@@ -32,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-const ControlledNumberInputField = ({
+const ControlledTextInputField = ({
   control,
   name,
   label,
@@ -43,21 +33,14 @@ const ControlledNumberInputField = ({
 }) => {
   const classes = useStyles()
 
-  const handleChange = ({ event, onChange }) => {
-    const isValidData = event.target.validity.valid || event.target.value === ""
-    if (isValidData) onChange(event.target.value)
-  }
-
   const validateRequired = (value) => {
-    if (required && value === "") {
-      return "This field is required"
-    }
-    return true
-  }
+    if (required)
+      return formValidationUtils.validateNotEmptyString({
+        value,
+        errorReturn: "This field is required",
+      })
 
-  const setValueAs = (value) => {
-    if (value === "") return ""
-    return parseInt(value)
+    return true
   }
 
   return (
@@ -71,7 +54,6 @@ const ControlledNumberInputField = ({
         control={control}
         name={name}
         rules={{
-          setValueAs,
           validate: { validateRequired, ...customValidationFunctions },
         }}
         render={({ value, onChange }) => {
@@ -81,11 +63,8 @@ const ControlledNumberInputField = ({
                 value={value}
                 placeholder={placeholder}
                 variant="outlined"
+                onChange={(event) => onChange(event.target.value)}
                 size="small"
-                inputProps={{ pattern: "[0-9]*" }}
-                onChange={(event) => {
-                  handleChange({ event, onChange })
-                }}
                 error={!!error}
               />
               <InputErrorMessage errorMessage={error?.message} />
@@ -97,4 +76,4 @@ const ControlledNumberInputField = ({
   )
 }
 
-export default ControlledNumberInputField
+export default ControlledTextInputField

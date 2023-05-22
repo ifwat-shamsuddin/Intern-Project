@@ -1,18 +1,19 @@
 import { Button, Container, Grid, makeStyles } from "@material-ui/core"
-import { useEffect, useMemo, useState } from "react"
+import { useMemo, useState } from "react"
 import { useForm } from "react-hook-form"
-import { useDispatch, useSelector } from "react-redux"
+import { useDispatch } from "react-redux"
 import { nanoid } from "@reduxjs/toolkit"
-import { addCharacter, editCharacter } from "@/actions/characterActions"
+import { addCharacter } from "@/actions/characterActions"
 import { useRouter } from "next/router"
 
 import { genderEnum } from "@/enums/genderEnum"
 import { speciesEnum } from "@/enums/speciesEnum"
 import { formModeEnum } from "@/enums/formModeEnum"
-import { getCharacterById } from "@/selectors/characterSelectors"
-import ControlledTextInputField from "../ControlledTextInputField"
-import ControlledNumberInputField from "../ControlledNumberInputField/ControlledNumberInputField"
-import ControlledSelectInputField from "../ControlledSelectInputField/ControlledSelectInputField"
+import {
+  ControlledTextInputField,
+  ControlledNumberInputField,
+  ControlledSelectInputField,
+} from "@/components/ControlledInputFields"
 import * as formValidationUtils from "@/utils/formValidationUtils"
 
 const useStyles = makeStyles((theme) => ({
@@ -56,13 +57,7 @@ const CharacterForm = ({ onClose }) => {
   const [errors, setErrors] = useState({})
   const { params } = router.query
 
-  const isEdit = useMemo(() => {
-    return params && params[0] === formModeEnum.edit
-  }, [params])
-
-  const character = useSelector(getCharacterById(params ? params[1] : null))
-
-  const { control, handleSubmit, reset } = useForm({
+  const { control, handleSubmit } = useForm({
     defaultValues: {
       name: "",
       eyeColor: "",
@@ -76,34 +71,6 @@ const CharacterForm = ({ onClose }) => {
     reValidateMode: "onSubmit",
   })
 
-  useEffect(() => {
-    reset({
-      name: character?.name || "",
-      eyeColor: character?.eyeColor || "",
-      height: character?.height || "",
-      gender:
-        character && character.gender !== "n/a"
-          ? {
-              value: character.gender,
-              label: character.gender,
-            }
-          : null,
-      birthYear:
-        character && character.birthYear !== "unknown"
-          ? character.birthYear
-          : "",
-      homeworld: character?.homeworld?.name || "",
-      species:
-        character && character.species?.name
-          ? {
-              value: character.species.name,
-              label: character.species.name,
-            }
-          : null,
-      numberOfFilms: character?.filmConnection?.totalCount || "",
-    })
-  }, [character])
-
   const dispatch = useDispatch()
 
   const onSubmit = ({
@@ -116,41 +83,26 @@ const CharacterForm = ({ onClose }) => {
     species,
     numberOfFilms,
   }) => {
-    const commonAttributes = {
-      name,
-      eyeColor,
-      height,
-      gender: gender?.value,
-      birthYear,
-      filmConnection: {
-        totalCount: numberOfFilms,
-      },
-    }
-
     dispatch(
-      isEdit
-        ? editCharacter({
-            id: character.id,
-            homeworld: {
-              name: homeworld,
-            },
-            species: {
-              name: species?.value,
-            },
-            ...commonAttributes,
-          })
-        : addCharacter({
-            id: nanoid(),
-            homeworld: {
-              id: nanoid(),
-              name: homeworld,
-            },
-            species: {
-              id: nanoid(),
-              name: species?.value,
-            },
-            ...commonAttributes,
-          })
+      addCharacter({
+        id: nanoid(),
+        name,
+        eyeColor,
+        height,
+        gender: gender?.value,
+        birthYear,
+        homeworld: {
+          id: nanoid(),
+          name: homeworld,
+        },
+        species: {
+          id: nanoid(),
+          name: species?.value,
+        },
+        filmConnection: {
+          totalCount: numberOfFilms,
+        },
+      })
     )
     onClose()
   }
@@ -192,13 +144,17 @@ const CharacterForm = ({ onClose }) => {
     })
   }
 
+  const isEdit = useMemo(() => {
+    return params && params[0] === formModeEnum.edit
+  }, [params])
+
   return (
     <>
       <Container
         className={classes.title}
         color="text.disabled"
       >
-        {isEdit ? `Edit Character - ${character.name}` : "Add New Character"}
+        {isEdit ? `Edit Character - ${params[1]}` : "Add New Character"}
       </Container>
       <div className={classes.body}>
         <Grid
