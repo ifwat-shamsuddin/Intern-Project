@@ -2,7 +2,11 @@ import { useSelector } from "react-redux"
 import { isFinite } from "lodash"
 
 import CustomTable from "@/components/CustomTable"
-import { StyledTableCell, NoValueCell } from "../../CustomTable/Cells"
+import {
+  StyledTableCell,
+  NoValueCell,
+  EditButtonCell,
+} from "../../CustomTable/Cells"
 import * as characterSelectors from "@/selectors/characterSelectors"
 import replaceIfNull from "@/utils/replaceIfNullUtils"
 
@@ -66,6 +70,18 @@ const CharactersTable = ({ onRowClick }) => {
       CellRenderer: ({ cellData }) => {
         if (!isFinite(cellData)) return <NoValueCell />
         return <StyledTableCell value={cellData} />
+      },
+    },
+    {
+      header: " ",
+      field: null,
+      CellRenderer: () => {
+        return (
+          <EditButtonCell
+            tooltipTitle={"Edit Character"}
+            onClick={onRowClick}
+          />
+        )
       },
     },
   ]
