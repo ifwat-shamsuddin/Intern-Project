@@ -1,6 +1,6 @@
 import { Table, TableContainer, Paper } from "@material-ui/core"
 
-import CustomisedTableHead from "./CustomisedTableHead"
+import CustomizedTableHead from "./CustomizedTableHead"
 import StyledTableBody from "./StyledTableBody"
 
 const CustomTable = ({ columns, data, onRowClick }) => {
@@ -10,7 +10,7 @@ const CustomTable = ({ columns, data, onRowClick }) => {
       elevation={0}
     >
       <Table>
-        <CustomisedTableHead columns={columns} />
+        <CustomizedTableHead columns={columns} />
 
         <StyledTableBody
           columns={columns}

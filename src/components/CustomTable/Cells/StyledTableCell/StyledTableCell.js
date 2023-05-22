@@ -1,6 +1,6 @@
 import { TableCell, withStyles } from "@material-ui/core"
 
-import replaceIfNull from "@/utils/replaceIfNullUtils"
+import NoValueCell from "../NoValueCell/NoValueCell"
 
 const NewTableCell = withStyles((theme) => ({
   root: {
@@ -18,7 +18,8 @@ const NewTableCell = withStyles((theme) => ({
 }))(TableCell)
 
 const StyledTableCell = ({ value }) => {
-  return <NewTableCell>{replaceIfNull(value)}</NewTableCell>
+  if (!value) return <NoValueCell />
+  return <NewTableCell>{value}</NewTableCell>
 }
 
 export default StyledTableCell
