@@ -1,5 +1,7 @@
 import { TableCell, withStyles } from "@material-ui/core"
 
+import NoValueCell from "../NoValueCell/NoValueCell"
+
 const NewTableCell = withStyles((theme) => ({
   root: {
     padding: "10px",
@@ -16,6 +18,7 @@ const NewTableCell = withStyles((theme) => ({
 }))(TableCell)
 
 const StyledTableCell = ({ value }) => {
+  if (!value) return <NoValueCell />
   return <NewTableCell>{value}</NewTableCell>
 }
 

@@ -14,7 +14,6 @@ const CharactersTable = ({ onRowClick }) => {
       header: "Name",
       field: "name",
       cellRenderer: ({ cellData }) => {
-        if (!cellData) return <NoValueCell />
         return <StyledTableCell value={cellData} />
       },
     },
@@ -22,7 +21,6 @@ const CharactersTable = ({ onRowClick }) => {
       header: "Eye Color",
       field: "eyeColor",
       cellRenderer: ({ cellData }) => {
-        if (!cellData) return <NoValueCell />
         return <StyledTableCell value={cellData} />
       },
     },
@@ -38,7 +36,6 @@ const CharactersTable = ({ onRowClick }) => {
       header: "Gender",
       field: "gender",
       cellRenderer: ({ cellData }) => {
-        if (!cellData) return <NoValueCell />
         return <StyledTableCell value={replaceIfNull(cellData)} />
       },
     },
@@ -46,7 +43,6 @@ const CharactersTable = ({ onRowClick }) => {
       header: "Birth Year",
       field: "birthYear",
       cellRenderer: ({ cellData }) => {
-        if (!cellData) return <NoValueCell />
         return <StyledTableCell value={replaceIfNull(cellData)} />
       },
     },
@@ -54,7 +50,6 @@ const CharactersTable = ({ onRowClick }) => {
       header: "Homeworld",
       field: "homeworld.name",
       cellRenderer: ({ cellData }) => {
-        if (!cellData) return <NoValueCell />
         return <StyledTableCell value={cellData} />
       },
     },
@@ -62,7 +57,6 @@ const CharactersTable = ({ onRowClick }) => {
       header: "Species",
       field: "species.name",
       cellRenderer: ({ cellData }) => {
-        if (!cellData) return <NoValueCell />
         return <StyledTableCell value={cellData} />
       },
     },
