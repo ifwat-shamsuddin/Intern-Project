@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-const StyledTableBody = ({ columns, data, onRowClick, hasEditableRow }) => {
+const StyledTableBody = ({ columns, data, onRowClick }) => {
   const classes = useStyles()
 
   return (
