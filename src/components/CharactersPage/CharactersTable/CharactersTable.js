@@ -13,21 +13,21 @@ const CharactersTable = ({ onRowClick }) => {
     {
       header: "Name",
       field: "name",
-      cellRenderer: ({ cellData }) => {
+      CellRenderer: ({ cellData }) => {
         return <StyledTableCell value={cellData} />
       },
     },
     {
       header: "Eye Color",
       field: "eyeColor",
-      cellRenderer: ({ cellData }) => {
+      CellRenderer: ({ cellData }) => {
         return <StyledTableCell value={cellData} />
       },
     },
     {
       header: "Height",
       field: "height",
-      cellRenderer: ({ cellData }) => {
+      CellRenderer: ({ cellData }) => {
         if (!isFinite(cellData)) return <NoValueCell />
         return <StyledTableCell value={cellData} />
       },
@@ -35,35 +35,35 @@ const CharactersTable = ({ onRowClick }) => {
     {
       header: "Gender",
       field: "gender",
-      cellRenderer: ({ cellData }) => {
+      CellRenderer: ({ cellData }) => {
         return <StyledTableCell value={replaceIfNull(cellData)} />
       },
     },
     {
       header: "Birth Year",
       field: "birthYear",
-      cellRenderer: ({ cellData }) => {
+      CellRenderer: ({ cellData }) => {
         return <StyledTableCell value={replaceIfNull(cellData)} />
       },
     },
     {
       header: "Homeworld",
       field: "homeworld.name",
-      cellRenderer: ({ cellData }) => {
+      CellRenderer: ({ cellData }) => {
         return <StyledTableCell value={cellData} />
       },
     },
     {
       header: "Species",
       field: "species.name",
-      cellRenderer: ({ cellData }) => {
+      CellRenderer: ({ cellData }) => {
         return <StyledTableCell value={cellData} />
       },
     },
     {
       header: "Number of Films",
       field: "filmConnection.totalCount",
-      cellRenderer: ({ cellData }) => {
+      CellRenderer: ({ cellData }) => {
         if (!isFinite(cellData)) return <NoValueCell />
         return <StyledTableCell value={cellData} />
       },

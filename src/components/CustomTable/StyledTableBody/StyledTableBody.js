@@ -27,14 +27,14 @@ const StyledTableBody = ({ columns, data, onRowClick }) => {
           onClick={() => onRowClick(row)}
         >
           {columns.map((column) => {
-            const { header, field, cellRenderer } = column
+            const { header, field, CellRenderer } = column
 
             return (
               <React.Fragment key={row.id + header}>
-                {cellRenderer({
-                  cellData: get(row, field),
-                  rowData: row,
-                })}
+                <CellRenderer
+                  cellData={get(row, field)}
+                  rowData={row}
+                />
               </React.Fragment>
             )
           })}
