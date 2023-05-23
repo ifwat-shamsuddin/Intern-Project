@@ -9,7 +9,7 @@ import { useRouter } from "next/router"
 import { genderEnum } from "@/enums/genderEnum"
 import { speciesEnum } from "@/enums/speciesEnum"
 import { formModeEnum } from "@/enums/formModeEnum"
-import { getCharacterById } from "@/selectors/characterSelectors"
+import { character } from "@/selectors/characterSelectors"
 import {
   ControlledTextInputField,
   ControlledNumberInputField,
@@ -62,7 +62,7 @@ const CharacterForm = ({ onClose }) => {
     return params && params[0] === formModeEnum.edit
   }, [params])
 
-  const character = useSelector(getCharacterById(params ? params[1] : null))
+  const character = useSelector(character(params ? params[1] : null))
 
   const { control, handleSubmit, reset } = useForm({
     defaultValues: {
