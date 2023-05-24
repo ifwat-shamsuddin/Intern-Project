@@ -183,9 +183,19 @@ function characterReducer(state = initialState, action) {
       }
     }
     case characterActions.EDIT_CHARACTER: {
+      const updatedCharacters = state.characters.map((existingCharacter) => {
+        if (existingCharacter.id === action.updatedCharacter.id) {
+          return {
+            ...existingCharacter,
+            ...action.updatedCharacter,
+          }
+        }
+        return existingCharacter
+      })
+
       return {
         ...state,
-        characters: [...action.updatedCharacters],
+        characters: [...updatedCharacters],
       }
     }
     default: {
