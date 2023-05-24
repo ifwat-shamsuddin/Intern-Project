@@ -56,15 +56,13 @@ const CharacterForm = ({ onClose }) => {
   const classes = useStyles()
   const router = useRouter()
   const [errors, setErrors] = useState({})
-  const { params } = router.query
+  const { params = [] } = router.query
 
   const isEdit = useMemo(() => {
-    return params && params[0] === formModeEnum.edit
+    return params[0] === formModeEnum.edit
   }, [params])
 
-  const character = useSelector(
-    characterSelectors.character(params ? params[1] : null)
-  )
+  const character = useSelector(characterSelectors.character(params[1]))
 
   const { control, handleSubmit, reset } = useForm({
     defaultValues: {
