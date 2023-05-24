@@ -16,6 +16,10 @@ import {
   ControlledSelectInputField,
 } from "@/components/ControlledInputFields"
 import * as formValidationUtils from "@/utils/formValidationUtils"
+import {
+  prepareCharacterForFormReset,
+  transformCharacterForSubmit,
+} from "@/utils/CharactersPageUtils"
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -80,90 +84,17 @@ const CharacterForm = ({ onClose }) => {
 
   useEffect(() => {
     if (!character) return
-
-    const {
-      name,
-      eyeColor,
-      height,
-      gender,
-      birthYear,
-      homeworld,
-      species,
-      filmConnection,
-    } = character
-    reset({
-      name,
-      eyeColor,
-      height: height || "",
-      gender:
-        gender !== "n/a"
-          ? {
-              value: gender,
-              label: gender,
-            }
-          : null,
-      birthYear: birthYear !== "unknown" ? birthYear : "",
-      homeworld: homeworld.name,
-      species: species?.name
-        ? {
-            value: species.name,
-            label: species.name,
-          }
-        : null,
-      numberOfFilms: filmConnection.totalCount,
-    })
+    reset(prepareCharacterForFormReset(character))
   }, [character])
 
   const dispatch = useDispatch()
 
-  const getCharacterData = ({
-    name,
-    eyeColor,
-    height,
-    gender,
-    birthYear,
-    homeworld,
-    species,
-    numberOfFilms,
-  }) => {
-    const commonAttributes = {
-      name,
-      eyeColor,
-      height,
-      gender: gender?.value,
-      birthYear,
-      filmConnection: {
-        totalCount: numberOfFilms,
-      },
-    }
-
-    return isEdit
-      ? {
-          id: character.id,
-          homeworld: {
-            name: homeworld,
-          },
-          species: {
-            name: species?.value,
-          },
-          ...commonAttributes,
-        }
-      : {
-          id: nanoid(),
-          homeworld: {
-            id: nanoid(),
-            name: homeworld,
-          },
-          species: {
-            id: nanoid(),
-            name: species?.value,
-          },
-          ...commonAttributes,
-        }
-  }
-
-  const onSubmit = (character) => {
-    const compiledCharacterData = getCharacterData(character)
+  const onSubmit = (submittedCharacter) => {
+    const compiledCharacterData = transformCharacterForSubmit(
+      isEdit,
+      character?.id,
+      submittedCharacter
+    )
     dispatch(
       isEdit
         ? editCharacter(compiledCharacterData)
