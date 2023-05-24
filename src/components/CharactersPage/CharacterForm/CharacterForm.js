@@ -118,7 +118,7 @@ const CharacterForm = ({ onClose }) => {
 
   const dispatch = useDispatch()
 
-  const onSubmit = ({
+  const getCharacterData = ({
     name,
     eyeColor,
     height,
@@ -139,30 +139,37 @@ const CharacterForm = ({ onClose }) => {
       },
     }
 
+    return isEdit
+      ? {
+          id: character.id,
+          homeworld: {
+            name: homeworld,
+          },
+          species: {
+            name: species?.value,
+          },
+          ...commonAttributes,
+        }
+      : {
+          id: nanoid(),
+          homeworld: {
+            id: nanoid(),
+            name: homeworld,
+          },
+          species: {
+            id: nanoid(),
+            name: species?.value,
+          },
+          ...commonAttributes,
+        }
+  }
+
+  const onSubmit = (character) => {
+    const compiledCharacterData = getCharacterData(character)
     dispatch(
       isEdit
-        ? editCharacter({
-            id: character.id,
-            homeworld: {
-              name: homeworld,
-            },
-            species: {
-              name: species?.value,
-            },
-            ...commonAttributes,
-          })
-        : addCharacter({
-            id: nanoid(),
-            homeworld: {
-              id: nanoid(),
-              name: homeworld,
-            },
-            species: {
-              id: nanoid(),
-              name: species?.value,
-            },
-            ...commonAttributes,
-          })
+        ? editCharacter(compiledCharacterData)
+        : addCharacter(compiledCharacterData)
     )
     onClose()
   }
