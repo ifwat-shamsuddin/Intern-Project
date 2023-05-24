@@ -92,8 +92,8 @@ const CharacterForm = ({ onClose }) => {
       filmConnection,
     } = character
     reset({
-      name: name || "",
-      eyeColor: eyeColor || "",
+      name,
+      eyeColor,
       height: height || "",
       gender:
         gender !== "n/a"
@@ -103,14 +103,14 @@ const CharacterForm = ({ onClose }) => {
             }
           : null,
       birthYear: birthYear !== "unknown" ? birthYear : "",
-      homeworld: homeworld?.name || "",
+      homeworld: homeworld.name,
       species: species?.name
         ? {
             value: species.name,
             label: species.name,
           }
         : null,
-      numberOfFilms: filmConnection?.totalCount || "",
+      numberOfFilms: filmConnection.totalCount,
     })
   }, [character])
 
