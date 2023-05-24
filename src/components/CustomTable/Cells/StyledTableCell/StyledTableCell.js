@@ -12,7 +12,6 @@ const NewTableCell = withStyles((theme) => ({
     fontWeight: theme.typography.fontWeightBold,
   },
   body: {
-    borderBottomColor: theme.palette.primary.dark,
     textTransform: "capitalize",
   },
 }))(TableCell)

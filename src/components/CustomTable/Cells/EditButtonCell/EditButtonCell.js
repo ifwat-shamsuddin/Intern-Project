@@ -5,9 +5,6 @@ const NewTableCell = withStyles((theme) => ({
   root: {
     padding: "10px",
   },
-  body: {
-    borderBottomColor: theme.palette.primary.dark,
-  },
 }))(TableCell)
 
 const EditButtonCell = ({ tooltipTitle, onClick }) => {
