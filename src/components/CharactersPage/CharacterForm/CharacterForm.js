@@ -81,30 +81,38 @@ const CharacterForm = ({ onClose }) => {
   })
 
   useEffect(() => {
+    if (!character) return
+
+    const {
+      name,
+      eyeColor,
+      height,
+      gender,
+      birthYear,
+      homeworld,
+      species,
+      filmConnection,
+    } = character
     reset({
-      name: character?.name || "",
-      eyeColor: character?.eyeColor || "",
-      height: character?.height || "",
+      name: name || "",
+      eyeColor: eyeColor || "",
+      height: height || "",
       gender:
-        character && character.gender !== "n/a"
+        gender !== "n/a"
           ? {
-              value: character.gender,
-              label: character.gender,
+              value: gender,
+              label: gender,
             }
           : null,
-      birthYear:
-        character && character.birthYear !== "unknown"
-          ? character.birthYear
-          : "",
-      homeworld: character?.homeworld?.name || "",
-      species:
-        character && character.species?.name
-          ? {
-              value: character.species.name,
-              label: character.species.name,
-            }
-          : null,
-      numberOfFilms: character?.filmConnection?.totalCount || "",
+      birthYear: birthYear !== "unknown" ? birthYear : "",
+      homeworld: homeworld?.name || "",
+      species: species?.name
+        ? {
+            value: species.name,
+            label: species.name,
+          }
+        : null,
+      numberOfFilms: filmConnection?.totalCount || "",
     })
   }, [character])
 
