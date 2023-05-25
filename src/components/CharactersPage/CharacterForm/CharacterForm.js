@@ -2,7 +2,6 @@ import { Button, Container, Grid, makeStyles } from "@material-ui/core"
 import { useEffect, useMemo, useState } from "react"
 import { useForm } from "react-hook-form"
 import { useDispatch, useSelector } from "react-redux"
-import { nanoid } from "@reduxjs/toolkit"
 import { addCharacter, editCharacter } from "@/actions/characterActions"
 import { useRouter } from "next/router"
 
@@ -18,7 +17,8 @@ import {
 import * as formValidationUtils from "@/utils/formValidationUtils"
 import {
   prepareCharacterForFormReset,
-  transformCharacterForSubmit,
+  prepareEditCharacterData,
+  prepareNewCharacterData,
 } from "@/utils/CharactersPageUtils"
 
 const useStyles = makeStyles((theme) => ({
@@ -89,17 +89,14 @@ const CharacterForm = ({ onClose }) => {
 
   const dispatch = useDispatch()
 
-  const onSubmit = (submittedCharacter) => {
-    const compiledCharacterData = transformCharacterForSubmit(
-      isEdit,
-      character?.id,
-      submittedCharacter
-    )
-    dispatch(
-      isEdit
-        ? editCharacter(compiledCharacterData)
-        : addCharacter(compiledCharacterData)
-    )
+  const onSubmit = (formData) => {
+    if (isEdit) {
+      const characterData = prepareEditCharacterData({ formData, character })
+      dispatch(editCharacter(characterData))
+    } else {
+      const characterData = prepareNewCharacterData({ formData })
+      dispatch(addCharacter(characterData))
+    }
     onClose()
   }
 
