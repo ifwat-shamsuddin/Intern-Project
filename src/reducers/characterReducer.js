@@ -182,7 +182,21 @@ function characterReducer(state = initialState, action) {
         characters: [...state.characters, action.newCharacter],
       }
     }
+    case characterActions.EDIT_CHARACTER: {
+      const characterIndex = state.characters.findIndex((character) => {
+        return character.id === action.updatedCharacter.id
+      })
 
+      if (characterIndex === -1) return state
+
+      const newCharactersArray = [...state.characters]
+      newCharactersArray[characterIndex] = action.updatedCharacter
+
+      return {
+        ...state,
+        characters: newCharactersArray,
+      }
+    }
     default: {
       return state
     }

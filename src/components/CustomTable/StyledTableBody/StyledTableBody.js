@@ -11,6 +11,9 @@ const useStyles = makeStyles((theme) => ({
       backgroundColor: theme.palette.primary.main,
       cursor: "pointer",
     },
+    "& > *": {
+      borderBottomColor: theme.palette.primary.dark,
+    },
   },
 }))
 
