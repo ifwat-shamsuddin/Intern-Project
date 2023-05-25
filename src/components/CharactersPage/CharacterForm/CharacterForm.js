@@ -68,13 +68,6 @@ const CharacterForm = ({ onClose }) => {
 
   const character = useSelector(characterSelectors.character(params[1]))
 
-  if (isEdit && !character) {
-    router.push({
-      pathname: "/characters/[[...params]]",
-      query: undefined,
-    })
-  }
-
   const { control, handleSubmit, reset } = useForm({
     defaultValues: {
       name: "",
@@ -92,7 +85,16 @@ const CharacterForm = ({ onClose }) => {
   useEffect(() => {
     if (!character) return
     reset(prepareCharacterForFormReset(character))
-  }, [character, isEdit])
+  }, [character])
+
+  useEffect(() => {
+    if (isEdit && !character) {
+      router.push({
+        pathname: "/characters/[[...params]]",
+        query: undefined,
+      })
+    }
+  }, [isEdit, character])
 
   const dispatch = useDispatch()
 
