@@ -68,6 +68,13 @@ const CharacterForm = ({ onClose }) => {
 
   const character = useSelector(characterSelectors.character(params[1]))
 
+  if (isEdit && !character) {
+    router.push({
+      pathname: "/characters/[[...params]]",
+      query: undefined,
+    })
+  }
+
   const { control, handleSubmit, reset } = useForm({
     defaultValues: {
       name: "",
@@ -85,7 +92,7 @@ const CharacterForm = ({ onClose }) => {
   useEffect(() => {
     if (!character) return
     reset(prepareCharacterForFormReset(character))
-  }, [character])
+  }, [character, isEdit])
 
   const dispatch = useDispatch()
 
@@ -143,7 +150,7 @@ const CharacterForm = ({ onClose }) => {
         className={classes.title}
         color="text.disabled"
       >
-        {isEdit ? `Edit Character - ${character.name}` : "Add New Character"}
+        {isEdit ? `Edit Character - ${character?.name}` : "Add New Character"}
       </Container>
       <div className={classes.body}>
         <Grid
