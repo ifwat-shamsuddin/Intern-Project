@@ -3,32 +3,36 @@ import { nanoid } from "@reduxjs/toolkit"
 export const prepareCharacterForFormReset = ({
   name,
   eyeColor,
-  height,
+  height = "",
   gender,
   birthYear,
   homeworld,
   species,
   filmConnection,
 }) => {
+  const characterGender =
+    gender !== "n/a"
+      ? {
+          value: gender,
+          label: gender,
+        }
+      : null
+
+  const characterSpecies = species?.name
+    ? {
+        value: species.name,
+        label: species.name,
+      }
+    : null
+
   return {
     name,
     eyeColor,
-    height: height || "",
-    gender:
-      gender !== "n/a"
-        ? {
-            value: gender,
-            label: gender,
-          }
-        : null,
+    height,
+    gender: characterGender,
     birthYear: birthYear !== "unknown" ? birthYear : "",
     homeworld: homeworld.name,
-    species: species?.name
-      ? {
-          value: species.name,
-          label: species.name,
-        }
-      : null,
+    species: characterSpecies,
     numberOfFilms: filmConnection.totalCount,
   }
 }
