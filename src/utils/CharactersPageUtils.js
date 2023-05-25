@@ -37,10 +37,8 @@ export const prepareCharacterForFormReset = ({
   }
 }
 
-export const transformCharacterForSubmit = (
-  isEdit,
-  id,
-  {
+export const prepareNewCharacterData = ({ formData }) => {
+  const {
     name,
     eyeColor,
     height,
@@ -49,42 +47,57 @@ export const transformCharacterForSubmit = (
     homeworld,
     species,
     numberOfFilms,
-  }
-) => {
-  const commonAttributes = {
+  } = formData
+
+  return {
+    id: nanoid(),
+    homeworld: {
+      id: nanoid(),
+      name: homeworld,
+    },
+    species: {
+      id: nanoid(),
+      name: species?.value,
+    },
+    filmConnection: {
+      totalCount: numberOfFilms,
+    },
     name,
     eyeColor,
     height,
     gender: gender?.value,
     birthYear,
+  }
+}
+
+export const prepareEditCharacterData = ({ formData, character }) => {
+  const {
+    name,
+    eyeColor,
+    height,
+    gender,
+    birthYear,
+    homeworld,
+    species,
+    numberOfFilms,
+  } = formData
+  const { id } = character
+
+  return {
+    id,
+    homeworld: {
+      name: homeworld,
+    },
+    species: {
+      name: species?.value,
+    },
     filmConnection: {
       totalCount: numberOfFilms,
     },
-  }
-
-  if (isEdit) {
-    return {
-      id,
-      homeworld: {
-        name: homeworld,
-      },
-      species: {
-        name: species?.value,
-      },
-      ...commonAttributes,
-    }
-  } else {
-    return {
-      id: nanoid(),
-      homeworld: {
-        id: nanoid(),
-        name: homeworld,
-      },
-      species: {
-        id: nanoid(),
-        name: species?.value,
-      },
-      ...commonAttributes,
-    }
+    name,
+    eyeColor,
+    height,
+    gender: gender?.value,
+    birthYear,
   }
 }
