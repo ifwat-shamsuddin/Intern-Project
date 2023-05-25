@@ -187,14 +187,14 @@ function characterReducer(state = initialState, action) {
         return character.id === action.updatedCharacter.id
       })
 
-      if (characterIndex === -1) return
+      if (characterIndex === -1) return state
 
-      const newCharactersArray = state.characters
+      const newCharactersArray = [...state.characters]
       newCharactersArray[characterIndex] = action.updatedCharacter
 
       return {
         ...state,
-        characters: [...newCharactersArray],
+        characters: newCharactersArray,
       }
     }
     default: {
