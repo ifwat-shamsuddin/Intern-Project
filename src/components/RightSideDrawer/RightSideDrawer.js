@@ -28,13 +28,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-const RightSideDrawer = ({ isOpen, onClose, children }) => {
+const RightSideDrawer = ({ isFormOpen, onClose, children }) => {
   const classes = useStyles()
 
   return (
     <Drawer
       anchor="right"
-      open={isOpen}
+      open={isFormOpen}
       onClose={onClose}
       classes={{ paperAnchorRight: classes.paperAnchorRight }}
       elevation={0}

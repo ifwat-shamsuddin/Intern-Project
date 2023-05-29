@@ -27,7 +27,7 @@ export default function CharactersPage() {
   const router = useRouter()
   const { params } = router.query
 
-  const isOpen = useMemo(() => {
+  const isFormOpen = useMemo(() => {
     return params && Object.values(formModeEnum).includes(params[0])
   }, [params])
 
@@ -51,15 +51,15 @@ export default function CharactersPage() {
       handleCloseForm()
     }
 
-    if (params.length > 0 && !isOpen) {
+    if (params.length > 0 && !isFormOpen) {
       handleCloseForm()
     }
-  }, [params, isOpen])
+  }, [params, isFormOpen])
 
   return (
     <div className={classes.body}>
       <RightSideDrawer
-        isOpen={isOpen}
+        isFormOpen={isFormOpen}
         onClose={handleCloseForm}
       >
         <CharacterForm onClose={handleCloseForm} />
