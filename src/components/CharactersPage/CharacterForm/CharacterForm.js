@@ -20,6 +20,7 @@ import {
   prepareEditCharacterData,
   prepareNewCharacterData,
 } from "@/utils/CharactersPageUtils"
+import DeleteButton from "@/components/DeleteButton"
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -44,14 +45,18 @@ const useStyles = makeStyles((theme) => ({
     position: "absolute",
     bottom: 0,
     padding: theme.spacing(2),
+    width: "88%",
     "& > *": {
       color: theme.palette.common.white,
     },
     "& > :first-child": {
       backgroundColor: theme.palette.button.main,
     },
-    "& > :last-child": {
+    "& > :2nd-child": {
       backgroundColor: theme.palette.grey[400],
+    },
+    "& > :last-child": {
+      marginLeft: "auto",
     },
   },
 }))
@@ -307,6 +312,10 @@ const CharacterForm = ({ onClose }) => {
         >
           Cancel
         </Button>
+        <DeleteButton
+          label="Delete Character"
+          onClick={() => console.log("Delete clicked")}
+        />
       </div>
     </>
   )
