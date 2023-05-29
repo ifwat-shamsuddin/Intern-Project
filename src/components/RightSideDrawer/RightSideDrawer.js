@@ -24,6 +24,7 @@ const useStyles = makeStyles((theme) => ({
   },
   form: {
     backgroundColor: theme.palette.common.white,
+    width: "550px",
   },
 }))
 
