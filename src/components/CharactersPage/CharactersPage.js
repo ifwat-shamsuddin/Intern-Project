@@ -59,7 +59,7 @@ export default function CharactersPage() {
   return (
     <div className={classes.body}>
       <RightSideDrawer
-        isFormOpen={isFormOpen}
+        isOpen={isFormOpen}
         onClose={handleCloseForm}
       >
         <CharacterForm onClose={handleCloseForm} />
