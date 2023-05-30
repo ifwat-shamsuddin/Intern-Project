@@ -197,6 +197,16 @@ function characterReducer(state = initialState, action) {
         characters: newCharactersArray,
       }
     }
+    case characterActions.DELETE_CHARACTER: {
+      const updatedCharactersArrays = state.characters.filter(
+        (character) => character.id !== action.character.id
+      )
+
+      return {
+        ...state,
+        characters: updatedCharactersArrays,
+      }
+    }
     default: {
       return state
     }
