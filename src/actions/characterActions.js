@@ -18,9 +18,9 @@ export const editCharacter = (updatedCharacter) => {
   }
 }
 
-export const deleteCharacter = (character) => {
+export const deleteCharacter = (characterId) => {
   return {
     type: DELETE_CHARACTER,
-    character,
+    characterId,
   }
 }

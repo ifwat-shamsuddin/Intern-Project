@@ -29,7 +29,7 @@ const DeleteCharacterModal = ({ isModalOpen, onClose, character }) => {
   const dispatch = useDispatch()
 
   const handleOnClick = () => {
-    dispatch(deleteCharacter(character))
+    dispatch(deleteCharacter(character.id))
   }
 
   if (!character) return
