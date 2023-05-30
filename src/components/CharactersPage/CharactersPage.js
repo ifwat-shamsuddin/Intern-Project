@@ -3,7 +3,7 @@ import { Typography } from "@material-ui/core"
 import { useRouter } from "next/router"
 import { useEffect, useMemo } from "react"
 
-import AddNewButton from "@/components/AddNewButton"
+import AddNewButton from "@/components/Buttons/AddNewButton"
 import RightSideDrawer from "@/components/RightSideDrawer"
 import CharacterForm from "@/components/CharactersPage/CharacterForm"
 import { formModeEnum } from "@/enums/formModeEnum"
