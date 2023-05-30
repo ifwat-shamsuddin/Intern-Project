@@ -7,6 +7,8 @@ const useStyles = makeStyles((theme) => ({
       margin: 0,
       padding: theme.spacing(2),
       alignItems: "center",
+      width: "20%",
+      height: "20%",
     },
   },
   title: {

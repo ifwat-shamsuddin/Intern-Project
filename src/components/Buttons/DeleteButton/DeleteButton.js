@@ -19,6 +19,7 @@ const DeleteButton = ({ label = "Delete", onClick }) => {
       className={classes.button}
       startIcon={<DeleteIcon />}
       onClick={onClick}
+      size="large"
     >
       {label}
     </Button>
