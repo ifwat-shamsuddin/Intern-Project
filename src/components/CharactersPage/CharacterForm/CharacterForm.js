@@ -1,4 +1,4 @@
-import { Button, Container, Grid, makeStyles } from "@material-ui/core"
+import { Container, Grid, makeStyles } from "@material-ui/core"
 import { useEffect, useMemo, useState } from "react"
 import { useForm } from "react-hook-form"
 import { useDispatch, useSelector } from "react-redux"
@@ -20,7 +20,10 @@ import {
   prepareEditCharacterData,
   prepareNewCharacterData,
 } from "@/utils/CharactersPageUtils"
-import DeleteButton from "@/components/DeleteButton"
+import ConfirmButton from "@/components/Buttons/ConfirmButton"
+import CancelButton from "@/components/Buttons/CancelButton"
+import DeleteButton from "@/components/Buttons/DeleteButton"
+import DeleteCharacterModal from "../DeleteCharacterModal"
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -49,13 +52,7 @@ const useStyles = makeStyles((theme) => ({
     "& > *": {
       color: theme.palette.common.white,
     },
-    "& > :first-child": {
-      backgroundColor: theme.palette.button.main,
-    },
-    "& > :2nd-child": {
-      backgroundColor: theme.palette.grey[400],
-    },
-    "& > :last-child": {
+    "& > :nth-child(3)": {
       marginLeft: "auto",
     },
   },
@@ -65,6 +62,8 @@ const CharacterForm = ({ onClose }) => {
   const classes = useStyles()
   const router = useRouter()
   const [errors, setErrors] = useState({})
+  const [deleteCharacterModalOpen, setDeleteCharacterModalOpen] =
+    useState(false)
   const { params = [] } = router.query
 
   const isEdit = useMemo(() => {
@@ -151,8 +150,21 @@ const CharacterForm = ({ onClose }) => {
     })
   }
 
+  const handleOpenDeleteCharacterModal = () => {
+    setDeleteCharacterModalOpen(true)
+  }
+
+  const handleCloseDeleteCharacterModal = () => {
+    setDeleteCharacterModalOpen(false)
+  }
+
   return (
     <>
+      <DeleteCharacterModal
+        isModalOpen={deleteCharacterModalOpen}
+        onClose={handleCloseDeleteCharacterModal}
+        character={character}
+      />
       <Container
         className={classes.title}
         color="text.disabled"
@@ -298,24 +310,17 @@ const CharacterForm = ({ onClose }) => {
         </Grid>
       </div>
       <div className={classes.buttonBox}>
-        <Button
-          variant="contained"
+        <ConfirmButton
+          label="Submit"
           onClick={submit}
-          size="large"
-        >
-          Submit
-        </Button>
-        <Button
-          variant="contained"
-          onClick={onClose}
-          size="large"
-        >
-          Cancel
-        </Button>
-        <DeleteButton
-          label="Delete Character"
-          onClick={() => console.log("Delete clicked")}
         />
+        <CancelButton onClick={onClose} />
+        {isEdit && (
+          <DeleteButton
+            label="Delete Character"
+            onClick={handleOpenDeleteCharacterModal}
+          />
+        )}
       </div>
     </>
   )
