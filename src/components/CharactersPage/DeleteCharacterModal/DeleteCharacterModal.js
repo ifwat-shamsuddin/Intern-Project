@@ -12,14 +12,16 @@ import DeleteButton from "@/components/Buttons/DeleteButton/DeleteButton"
 import { deleteCharacter } from "@/actions/characterActions"
 
 const useStyles = makeStyles((theme) => ({
+  body: {
+    fontWeight: theme.typography.fontWeightBold,
+    fontSize: theme.typography.h6.fontSize,
+    fontFamily: theme.typography.fontFamily,
+  },
   button: {
+    display: "flex",
     gap: theme.spacing(2),
-    padding: theme.spacing(2),
-    width: "90%",
     justifyContent: "center",
-    "& > *": {
-      color: theme.palette.common.white,
-    },
+    marginTop: theme.spacing(3),
   },
 }))
 
@@ -40,13 +42,11 @@ const DeleteCharacterModal = ({ isModalOpen, onClose, character }) => {
       onClose={onClose}
       title="Confirm delete character?"
     >
-      <DialogContent>
-        <Typography variant="h6">{character.name}</Typography>
-      </DialogContent>
-      <DialogActions className={classes.button}>
+      <div className={classes.body}>{character.name}</div>
+      <div className={classes.button}>
         <CancelButton onClick={onClose} />
         <DeleteButton onClick={handleOnClick} />
-      </DialogActions>
+      </div>
     </AlertModal>
   )
 }

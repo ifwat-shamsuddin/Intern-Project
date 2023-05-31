@@ -5,10 +5,8 @@ const useStyles = makeStyles((theme) => ({
   root: {
     "& .MuiDialog-paper": {
       margin: 0,
-      padding: theme.spacing(2),
+      padding: theme.spacing(4),
       alignItems: "center",
-      width: "20%",
-      height: "20%",
     },
   },
   title: {
@@ -24,6 +22,7 @@ const AlertModal = ({ isModalOpen, onClose, title = "Warning", children }) => {
       open={isModalOpen}
       onClose={onClose}
       className={classes.root}
+      maxWidth="md"
     >
       <WarningRoundedIcon
         color="error"
