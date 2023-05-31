@@ -3,6 +3,7 @@ import DeleteIcon from "@material-ui/icons/Delete"
 
 const useStyles = makeStyles((theme) => ({
   button: {
+    color: theme.palette.common.white,
     backgroundColor: theme.palette.error.main,
     "&:hover": {
       backgroundColor: theme.palette.error.dark,

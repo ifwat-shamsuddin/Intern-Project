@@ -1,4 +1,4 @@
-import { Container, Grid, makeStyles } from "@material-ui/core"
+import { Box, Grid, makeStyles } from "@material-ui/core"
 import { useEffect, useMemo, useState } from "react"
 import { useForm } from "react-hook-form"
 import { useDispatch, useSelector } from "react-redux"
@@ -26,35 +26,27 @@ import DeleteButton from "@/components/Buttons/DeleteButton"
 import DeleteCharacterModal from "../DeleteCharacterModal"
 
 const useStyles = makeStyles((theme) => ({
-  title: {
+  root: {
+    display: "flex",
+    flexDirection: "column",
+    gap: theme.spacing(1),
+    justifyContent: "center",
+    height: "100%",
+  },
+  formHeader: {
     borderBottom: `1px solid ${theme.palette.grey[800]}`,
     padding: theme.spacing(1),
     fontWeight: theme.typography.fontWeightBold,
   },
-
-  body: {
+  formBody: {
+    flexGrow: 1,
     padding: "15px",
-    display: "flex",
-    flexDirection: "column",
-    gap: theme.spacing(2),
-    width: "92%",
-    height: "78%",
     overflow: "auto",
   },
-
-  buttonBox: {
+  formFooter: {
     display: "flex",
     gap: theme.spacing(2),
-    position: "absolute",
-    bottom: 0,
     padding: theme.spacing(2),
-    width: "88%",
-    "& > *": {
-      color: theme.palette.common.white,
-    },
-    "& > :nth-child(3)": {
-      marginLeft: "auto",
-    },
   },
 }))
 
@@ -165,163 +157,168 @@ const CharacterForm = ({ onClose }) => {
         onClose={handleCloseDeleteCharacterModal}
         character={character}
       />
-      <Container
-        className={classes.title}
-        color="text.disabled"
-      >
-        {isEdit ? `Edit Character - ${character?.name}` : "Add New Character"}
-      </Container>
-      <div className={classes.body}>
-        <Grid
-          container
-          spacing={2}
-        >
-          <Grid
-            item
-            xs
-          >
-            <ControlledTextInputField
-              control={control}
-              name="name"
-              label="Name"
-              placeholder="Enter name"
-              customValidationFunctions={{
-                validateNameMinLength,
-                validateNamePattern,
-              }}
-              error={errors.name}
-              required
-            />
-          </Grid>
-          <Grid
-            item
-            xs
-          >
-            <ControlledTextInputField
-              control={control}
-              name="eyeColor"
-              label="Eye Color"
-              placeholder="Enter eye color"
-              error={errors.eyeColor}
-              required
-            />
-          </Grid>
-        </Grid>
 
-        <Grid
-          container
-          spacing={2}
+      <Box className={classes.root}>
+        <Box
+          className={classes.formHeader}
+          color="text.disabled"
         >
+          {isEdit ? `Edit Character - ${character?.name}` : "Add New Character"}
+        </Box>
+        <Box className={classes.formBody}>
           <Grid
-            item
-            xs
+            container
+            spacing={2}
           >
-            <ControlledNumberInputField
-              control={control}
-              name="height"
-              label="Height"
-              placeholder="Enter height"
-              type="number"
-              customValidationFunctions={{ handleHeightValidation }}
-              error={errors.height}
-            />
+            <Grid
+              item
+              xs
+            >
+              <ControlledTextInputField
+                control={control}
+                name="name"
+                label="Name"
+                placeholder="Enter name"
+                customValidationFunctions={{
+                  validateNameMinLength,
+                  validateNamePattern,
+                }}
+                error={errors.name}
+                required
+              />
+            </Grid>
+            <Grid
+              item
+              xs
+            >
+              <ControlledTextInputField
+                control={control}
+                name="eyeColor"
+                label="Eye Color"
+                placeholder="Enter eye color"
+                error={errors.eyeColor}
+                required
+              />
+            </Grid>
           </Grid>
-          <Grid
-            item
-            xs
-          >
-            <ControlledSelectInputField
-              control={control}
-              name="gender"
-              label="Gender"
-              placeholder="Select gender"
-              options={[
-                { value: genderEnum.male, label: "Male" },
-                { value: genderEnum.female, label: "Female" },
-              ]}
-            />
-          </Grid>
-        </Grid>
 
-        <Grid
-          container
-          spacing={2}
-        >
           <Grid
-            item
-            xs
+            container
+            spacing={2}
           >
-            <ControlledTextInputField
-              control={control}
-              name="birthYear"
-              label="Birth Year"
-              placeholder="Enter birth year"
-            />
+            <Grid
+              item
+              xs
+            >
+              <ControlledNumberInputField
+                control={control}
+                name="height"
+                label="Height"
+                placeholder="Enter height"
+                type="number"
+                customValidationFunctions={{ handleHeightValidation }}
+                error={errors.height}
+              />
+            </Grid>
+            <Grid
+              item
+              xs
+            >
+              <ControlledSelectInputField
+                control={control}
+                name="gender"
+                label="Gender"
+                placeholder="Select gender"
+                options={[
+                  { value: genderEnum.male, label: "Male" },
+                  { value: genderEnum.female, label: "Female" },
+                ]}
+              />
+            </Grid>
           </Grid>
-          <Grid
-            item
-            xs
-          >
-            <ControlledTextInputField
-              control={control}
-              name="homeworld"
-              label="HomeWorld"
-              placeholder="Enter homeworld"
-              error={errors.homeworld}
-              required
-            />
-          </Grid>
-        </Grid>
 
-        <Grid
-          container
-          spacing={2}
-        >
           <Grid
-            item
-            xs
+            container
+            spacing={2}
           >
-            <ControlledSelectInputField
-              control={control}
-              name="species"
-              label="Species"
-              placeholder="Select species"
-              options={[
-                { value: speciesEnum.droid, label: "Droid" },
-                { value: speciesEnum.human, label: "Human" },
-              ]}
-            />
+            <Grid
+              item
+              xs
+            >
+              <ControlledTextInputField
+                control={control}
+                name="birthYear"
+                label="Birth Year"
+                placeholder="Enter birth year"
+              />
+            </Grid>
+            <Grid
+              item
+              xs
+            >
+              <ControlledTextInputField
+                control={control}
+                name="homeworld"
+                label="HomeWorld"
+                placeholder="Enter homeworld"
+                error={errors.homeworld}
+                required
+              />
+            </Grid>
           </Grid>
+
           <Grid
-            item
-            xs
+            container
+            spacing={2}
           >
-            <ControlledNumberInputField
-              control={control}
-              name="numberOfFilms"
-              label="Number Of Films"
-              placeholder="Enter number of films appeared"
-              type="number"
-              customValidationFunctions={{ handleNumberOfFilmValidation }}
-              error={errors.numberOfFilms}
-              required
-            />
+            <Grid
+              item
+              xs
+            >
+              <ControlledSelectInputField
+                control={control}
+                name="species"
+                label="Species"
+                placeholder="Select species"
+                options={[
+                  { value: speciesEnum.droid, label: "Droid" },
+                  { value: speciesEnum.human, label: "Human" },
+                ]}
+              />
+            </Grid>
+            <Grid
+              item
+              xs
+            >
+              <ControlledNumberInputField
+                control={control}
+                name="numberOfFilms"
+                label="Number Of Films"
+                placeholder="Enter number of films appeared"
+                type="number"
+                customValidationFunctions={{ handleNumberOfFilmValidation }}
+                error={errors.numberOfFilms}
+                required
+              />
+            </Grid>
           </Grid>
-        </Grid>
-      </div>
-      <div className={classes.buttonBox}>
-        <ConfirmButton
-          label="Submit"
-          onClick={submit}
-        />
-        <CancelButton onClick={onClose} />
-        {isEdit && (
-          <DeleteButton
-            label="Delete Character"
-            onClick={handleOpenDeleteCharacterModal}
+        </Box>
+        <Box className={classes.formFooter}>
+          <ConfirmButton
+            label="Submit"
+            onClick={submit}
           />
-        )}
-      </div>
+          <CancelButton onClick={onClose} />
+          {isEdit && (
+            <div style={{ marginLeft: "auto" }}>
+              <DeleteButton
+                label="Delete Character"
+                onClick={handleOpenDeleteCharacterModal}
+              />
+            </div>
+          )}
+        </Box>
+      </Box>
     </>
   )
 }

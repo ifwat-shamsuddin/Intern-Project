@@ -2,6 +2,7 @@ import { Button, makeStyles } from "@material-ui/core"
 
 const useStyles = makeStyles((theme) => ({
   root: {
+    color: theme.palette.common.white,
     backgroundColor: theme.palette.button.main,
     "&:hover": {
       backgroundColor: theme.palette.button.dark,

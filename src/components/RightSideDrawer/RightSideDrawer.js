@@ -19,12 +19,11 @@ const useStyles = makeStyles((theme) => ({
       padding: "8px 15px 10px 15px",
       borderRadius: "0 0 0 5px",
       backgroundColor: theme.palette.button.dark,
-      height: "3%",
+      height: "20px",
     },
   },
-  form: {
+  body: {
     backgroundColor: theme.palette.common.white,
-    width: "550px",
   },
 }))
 
@@ -46,7 +45,7 @@ const RightSideDrawer = ({ isOpen, onClose, children }) => {
         >
           <div>X</div>
         </div>
-        <div className={classes.form}>{children}</div>
+        <div className={classes.body}>{children}</div>
       </div>
     </Drawer>
   )
