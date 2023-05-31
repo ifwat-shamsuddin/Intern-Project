@@ -3,7 +3,7 @@ import { Typography } from "@material-ui/core"
 import { useRouter } from "next/router"
 import { useEffect, useMemo } from "react"
 
-import AddNewButton from "@/components/AddNewButton"
+import AddNewButton from "@/components/Buttons/AddNewButton"
 import RightSideDrawer from "@/components/RightSideDrawer"
 import CharacterForm from "@/components/CharactersPage/CharacterForm"
 import { formModeEnum } from "@/enums/formModeEnum"
@@ -27,7 +27,7 @@ export default function CharactersPage() {
   const router = useRouter()
   const { params } = router.query
 
-  const isOpen = useMemo(() => {
+  const isFormOpen = useMemo(() => {
     return params && Object.values(formModeEnum).includes(params[0])
   }, [params])
 
@@ -51,15 +51,15 @@ export default function CharactersPage() {
       handleCloseForm()
     }
 
-    if (params.length > 0 && !isOpen) {
+    if (params.length > 0 && !isFormOpen) {
       handleCloseForm()
     }
-  }, [params, isOpen])
+  }, [params, isFormOpen])
 
   return (
     <div className={classes.body}>
       <RightSideDrawer
-        isOpen={isOpen}
+        isOpen={isFormOpen}
         onClose={handleCloseForm}
       >
         <CharacterForm onClose={handleCloseForm} />
