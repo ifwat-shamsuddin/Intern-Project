@@ -58,20 +58,20 @@ export default function CharactersPage() {
 
   return (
     <div className={classes.body}>
-      <RightSideDrawer
+      {/* <RightSideDrawer
         isOpen={isFormOpen}
         onClose={handleCloseForm}
       >
         <CharacterForm onClose={handleCloseForm} />
-      </RightSideDrawer>
+      </RightSideDrawer> */}
       <Typography variant="h2">Star Wars</Typography>
-      <div className={classes.button}>
+      {/* <div className={classes.button}>
         <AddNewButton
           label="Add New Character"
           onClick={() => handleOpenForm()}
         />
-      </div>
-      <CharactersTable onRowClick={({ id }) => handleOpenForm(id)} />
+      </div> */}
+      <CharactersTable onRowClick={() => console.log("Table clicked")} />
     </div>
   )
 }
