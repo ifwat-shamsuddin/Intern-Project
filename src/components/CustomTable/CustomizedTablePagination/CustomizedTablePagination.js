@@ -2,13 +2,15 @@ import { TableFooter, TablePagination, TableRow } from "@material-ui/core"
 
 const CustomizedTablePagination = ({
   rowsPerPageOptions,
-  rowsCount,
+  totalRowsCount,
   rowsPerPage,
   tablePage,
   setTablePage,
   setRowsPerPage,
+  handleFetchMore,
 }) => {
   const handleChangePage = (event, newPage) => {
+    handleFetchMore()
     setTablePage(newPage)
   }
 
@@ -22,7 +24,7 @@ const CustomizedTablePagination = ({
       <TableRow>
         <TablePagination
           rowsPerPageOptions={rowsPerPageOptions}
-          count={rowsCount}
+          count={totalRowsCount}
           rowsPerPage={rowsPerPage}
           page={tablePage}
           onPageChange={handleChangePage}
