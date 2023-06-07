@@ -17,12 +17,23 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-const StyledTableBody = ({ columns, data, onRowClick }) => {
+const StyledTableBody = ({
+  columns,
+  data,
+  onRowClick,
+  tablePage,
+  rowsPerPage,
+}) => {
   const classes = useStyles()
+
+  const slicedRows = data.slice(
+    tablePage * rowsPerPage,
+    tablePage * rowsPerPage + rowsPerPage
+  )
 
   return (
     <TableBody>
-      {data.map((row) => (
+      {slicedRows.map((row) => (
         <TableRow
           hover
           key={row.id}
