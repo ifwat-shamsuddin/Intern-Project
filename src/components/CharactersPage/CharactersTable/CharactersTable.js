@@ -1,17 +1,20 @@
-import { useSelector } from "react-redux"
 import { isFinite } from "lodash"
+import { useQuery } from "@apollo/client"
 
+import { GET_ALL_CHARACTERS } from "@/graphql/characterQueries"
 import CustomTable from "@/components/CustomTable"
 import {
   StyledTableCell,
   NoValueCell,
   EditButtonCell,
 } from "../../CustomTable/Cells"
-import * as characterSelectors from "@/selectors/characterSelectors"
 import replaceIfNull from "@/utils/replaceIfNullUtils"
 
 const CharactersTable = ({ onRowClick }) => {
-  const characters = useSelector(characterSelectors.characters)
+  const { error, loading, data } = useQuery(GET_ALL_CHARACTERS, {
+    fetchPolicy: "network-only",
+    nextFetchPolicy: "cache-first",
+  })
 
   const columns = [
     {
@@ -86,10 +89,13 @@ const CharactersTable = ({ onRowClick }) => {
     },
   ]
 
+  if (error) console.error(error.message)
+  if (loading) return <div>loading...</div>
+
   return (
     <CustomTable
       columns={columns}
-      data={characters}
+      data={data.allPeople.people}
       onRowClick={onRowClick}
     />
   )
