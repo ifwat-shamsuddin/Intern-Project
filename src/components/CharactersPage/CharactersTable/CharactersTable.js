@@ -1,5 +1,6 @@
 import { isFinite } from "lodash"
 import { useQuery } from "@apollo/client"
+import { useState } from "react"
 
 import { GET_ALL_CHARACTERS } from "@/graphql/characterQueries"
 import CustomTable from "@/components/CustomTable"
@@ -11,9 +12,14 @@ import {
 import replaceIfNull from "@/utils/replaceIfNullUtils"
 
 const CharactersTable = ({ onRowClick }) => {
-  const { error, loading, data } = useQuery(GET_ALL_CHARACTERS, {
+  const [rowsPerPage, setRowsPerPage] = useState(10)
+
+  const { error, loading, data, fetchMore } = useQuery(GET_ALL_CHARACTERS, {
     fetchPolicy: "network-only",
     nextFetchPolicy: "cache-first",
+    variables: {
+      first: rowsPerPage,
+    },
   })
 
   const columns = [
@@ -92,11 +98,29 @@ const CharactersTable = ({ onRowClick }) => {
   if (error) console.error(error.message)
   if (loading) return <div>loading...</div>
 
+  const rows = data.allPeople.edges.map((edge) => edge.node)
+  const pageInfo = data.allPeople.pageInfo
+
+  const handleFetchMore = () => {
+    if (pageInfo.hasNextPage) {
+      fetchMore({
+        variables: {
+          cursor: pageInfo.endCursor,
+        },
+      })
+    }
+  }
+
   return (
     <CustomTable
       columns={columns}
-      data={data.allPeople.people}
+      data={rows}
+      totalRowsCount={data.allPeople.totalCount}
       onRowClick={onRowClick}
+      rowsPerPage={rowsPerPage}
+      setRowsPerPage={setRowsPerPage}
+      rowsPerPageOptions={[5, 10, 15, 25]}
+      handleFetchMore={handleFetchMore}
     />
   )
 }
