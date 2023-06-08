@@ -1,5 +1,4 @@
 import { Table, TableContainer, Paper } from "@material-ui/core"
-import { useState } from "react"
 
 import CustomizedTableHead from "./CustomizedTableHead"
 import StyledTableBody from "./StyledTableBody"
@@ -9,15 +8,9 @@ const CustomTable = ({
   columns,
   data,
   onRowClick,
-  rowsPerPageOptions,
-  totalRowsCount,
-  rowsPerPage,
-  setRowsPerPage,
-  handleFetchMore,
   tablePage,
-  setTablePage,
-  handleChangePage,
-  handleChangeRowsPerPage,
+  rowsPerPage,
+  CustomizedTablePaginationProps = {},
 }) => {
   return (
     <TableContainer
@@ -36,15 +29,9 @@ const CustomTable = ({
         />
 
         <CustomizedTablePagination
-          rowsPerPageOptions={rowsPerPageOptions}
-          totalRowsCount={totalRowsCount}
-          rowsPerPage={rowsPerPage}
           tablePage={tablePage}
-          setTablePage={setTablePage}
-          setRowsPerPage={setRowsPerPage}
-          handleFetchMore={handleFetchMore}
-          handleChangePage={handleChangePage}
-          handleChangeRowsPerPage={handleChangeRowsPerPage}
+          rowsPerPage={rowsPerPage}
+          {...CustomizedTablePaginationProps}
         />
       </Table>
     </TableContainer>

@@ -113,15 +113,14 @@ const CharactersTable = ({ onRowClick, data, fetchMore }) => {
     <CustomTable
       columns={columns}
       data={rows}
-      totalRowsCount={data.allPeople.totalCount}
       onRowClick={onRowClick}
-      rowsPerPage={rowsPerPage}
-      setRowsPerPage={setRowsPerPage}
-      handleFetchMore={handleFetchMore}
       tablePage={tablePage}
-      setTablePage={setTablePage}
-      handleChangePage={handleChangePage}
-      handleChangeRowsPerPage={handleChangeRowsPerPage}
+      rowsPerPage={rowsPerPage}
+      CustomizedTablePaginationProps={{
+        totalRowsCount: data.allPeople.totalCount,
+        handleChangePage,
+        handleChangeRowsPerPage,
+      }}
     />
   )
 }
