@@ -88,6 +88,10 @@ const CharactersTable = ({ onRowClick, data, fetchMore }) => {
 
   const rows = data.allPeople.edges.map((edge) => edge.node)
   const pageInfo = data.allPeople.pageInfo
+  const slicedRows = rows.slice(
+    tablePage * rowsPerPage,
+    tablePage * rowsPerPage + rowsPerPage
+  )
 
   const handleFetchMore = () => {
     if (pageInfo.hasNextPage) {
@@ -112,7 +116,7 @@ const CharactersTable = ({ onRowClick, data, fetchMore }) => {
   return (
     <CustomTable
       columns={columns}
-      data={rows}
+      data={slicedRows}
       onRowClick={onRowClick}
       tablePage={tablePage}
       rowsPerPage={rowsPerPage}
