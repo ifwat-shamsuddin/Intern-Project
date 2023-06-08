@@ -118,9 +118,9 @@ const CharactersTable = ({ onRowClick, data, fetchMore }) => {
       columns={columns}
       data={slicedRows}
       onRowClick={onRowClick}
-      tablePage={tablePage}
-      rowsPerPage={rowsPerPage}
       CustomizedTablePaginationProps={{
+        tablePage,
+        rowsPerPage,
         totalRowsCount: data.allPeople.totalCount,
         handleChangePage,
         handleChangeRowsPerPage,

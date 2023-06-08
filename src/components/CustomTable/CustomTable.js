@@ -8,8 +8,6 @@ const CustomTable = ({
   columns,
   data,
   onRowClick,
-  tablePage,
-  rowsPerPage,
   CustomizedTablePaginationProps = {},
 }) => {
   return (
@@ -24,15 +22,9 @@ const CustomTable = ({
           columns={columns}
           data={data}
           onRowClick={onRowClick}
-          tablePage={tablePage}
-          rowsPerPage={rowsPerPage}
         />
 
-        <CustomizedTablePagination
-          tablePage={tablePage}
-          rowsPerPage={rowsPerPage}
-          {...CustomizedTablePaginationProps}
-        />
+        <CustomizedTablePagination {...CustomizedTablePaginationProps} />
       </Table>
     </TableContainer>
   )
