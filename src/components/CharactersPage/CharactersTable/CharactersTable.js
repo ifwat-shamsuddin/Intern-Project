@@ -99,6 +99,16 @@ const CharactersTable = ({ onRowClick, data, fetchMore }) => {
     }
   }
 
+  const handleChangePage = (event, newPage) => {
+    handleFetchMore()
+    setTablePage(newPage)
+  }
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(parseInt(event.target.value))
+    setTablePage(0)
+  }
+
   return (
     <CustomTable
       columns={columns}
@@ -110,6 +120,8 @@ const CharactersTable = ({ onRowClick, data, fetchMore }) => {
       handleFetchMore={handleFetchMore}
       tablePage={tablePage}
       setTablePage={setTablePage}
+      handleChangePage={handleChangePage}
+      handleChangeRowsPerPage={handleChangeRowsPerPage}
     />
   )
 }

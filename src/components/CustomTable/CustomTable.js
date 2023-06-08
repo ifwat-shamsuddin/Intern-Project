@@ -16,6 +16,8 @@ const CustomTable = ({
   handleFetchMore,
   tablePage,
   setTablePage,
+  handleChangePage,
+  handleChangeRowsPerPage,
 }) => {
   return (
     <TableContainer
@@ -41,6 +43,8 @@ const CustomTable = ({
           setTablePage={setTablePage}
           setRowsPerPage={setRowsPerPage}
           handleFetchMore={handleFetchMore}
+          handleChangePage={handleChangePage}
+          handleChangeRowsPerPage={handleChangeRowsPerPage}
         />
       </Table>
     </TableContainer>

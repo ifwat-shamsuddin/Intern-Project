@@ -5,20 +5,9 @@ const CustomizedTablePagination = ({
   totalRowsCount,
   rowsPerPage,
   tablePage,
-  setTablePage,
-  setRowsPerPage,
-  handleFetchMore,
+  handleChangePage,
+  handleChangeRowsPerPage,
 }) => {
-  const handleChangePage = (event, newPage) => {
-    handleFetchMore()
-    setTablePage(newPage)
-  }
-
-  const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(parseInt(event.target.value))
-    setTablePage(0)
-  }
-
   return (
     <TableFooter>
       <TableRow>
