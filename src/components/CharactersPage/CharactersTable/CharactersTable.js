@@ -11,6 +11,7 @@ import replaceIfNull from "@/utils/replaceIfNullUtils"
 
 const CharactersTable = ({ onRowClick, data, fetchMore }) => {
   const [rowsPerPage, setRowsPerPage] = useState(10)
+  const [tablePage, setTablePage] = useState(0)
 
   const columns = [
     {
@@ -107,6 +108,8 @@ const CharactersTable = ({ onRowClick, data, fetchMore }) => {
       rowsPerPage={rowsPerPage}
       setRowsPerPage={setRowsPerPage}
       handleFetchMore={handleFetchMore}
+      tablePage={tablePage}
+      setTablePage={setTablePage}
     />
   )
 }

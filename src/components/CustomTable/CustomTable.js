@@ -14,9 +14,9 @@ const CustomTable = ({
   rowsPerPage,
   setRowsPerPage,
   handleFetchMore,
+  tablePage,
+  setTablePage,
 }) => {
-  const [tablePage, setTablePage] = useState(0)
-
   return (
     <TableContainer
       component={Paper}
