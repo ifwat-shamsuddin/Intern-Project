@@ -1,7 +1,7 @@
 import { TableFooter, TablePagination, TableRow } from "@material-ui/core"
 
 const CustomizedTablePagination = ({
-  rowsPerPageOptions,
+  rowsPerPageOptions = [5, 10, 15, 25],
   totalRowsCount,
   rowsPerPage,
   tablePage,

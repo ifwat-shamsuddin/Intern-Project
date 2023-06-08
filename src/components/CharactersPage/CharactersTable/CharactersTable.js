@@ -106,7 +106,6 @@ const CharactersTable = ({ onRowClick, data, fetchMore }) => {
       onRowClick={onRowClick}
       rowsPerPage={rowsPerPage}
       setRowsPerPage={setRowsPerPage}
-      rowsPerPageOptions={[5, 10, 15, 25]}
       handleFetchMore={handleFetchMore}
     />
   )
