@@ -1,5 +1,5 @@
 import { isFinite } from "lodash"
-import { useState } from "react"
+import { useMemo, useState } from "react"
 
 import CustomTable from "@/components/CustomTable"
 import {
@@ -86,13 +86,12 @@ const CharactersTable = ({ onRowClick, data, fetchMore }) => {
     },
   ]
 
-  const rows = data.allPeople.edges.map((edge) => edge.node)
+  const rows = useMemo(() => {
+    return data.allPeople.edges.map((edge) => edge.node)
+  }, [data])
+
   const pageInfo = data.allPeople.pageInfo
   const totalRowsCount = data.allPeople.totalCount
-  const slicedRows = rows.slice(
-    tablePage * rowsPerPage,
-    tablePage * rowsPerPage + rowsPerPage
-  )
 
   const handleFetchMore = () => {
     if (pageInfo.hasNextPage) {
@@ -121,7 +120,7 @@ const CharactersTable = ({ onRowClick, data, fetchMore }) => {
   return (
     <CustomTable
       columns={columns}
-      data={slicedRows}
+      data={rows}
       onRowClick={onRowClick}
       CustomizedTablePaginationProps={{
         tablePage,
