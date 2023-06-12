@@ -2,7 +2,7 @@ import { makeStyles } from "@material-ui/core/styles"
 import { Typography } from "@material-ui/core"
 import { useQuery } from "@apollo/client"
 
-import { GET_ALL_CHARACTERS } from "@/queries/characterQueries"
+import { GET_ALL_CHARACTERS } from "@/graphql/queries/characterQueries"
 import CharactersTable from "./CharactersTable/CharactersTable"
 
 const useStyles = makeStyles(() => ({
