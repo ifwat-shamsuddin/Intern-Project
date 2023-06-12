@@ -88,6 +88,7 @@ const CharactersTable = ({ onRowClick, data, fetchMore }) => {
 
   const rows = data.allPeople.edges.map((edge) => edge.node)
   const pageInfo = data.allPeople.pageInfo
+  const totalRowsCount = data.allPeople.totalCount
   const slicedRows = rows.slice(
     tablePage * rowsPerPage,
     tablePage * rowsPerPage + rowsPerPage
@@ -113,6 +114,10 @@ const CharactersTable = ({ onRowClick, data, fetchMore }) => {
     setTablePage(0)
   }
 
+  const labelDisplayedRows = () => {
+    return `Page ${tablePage + 1} of ${Math.ceil(totalRowsCount / rowsPerPage)}`
+  }
+
   return (
     <CustomTable
       columns={columns}
@@ -121,9 +126,10 @@ const CharactersTable = ({ onRowClick, data, fetchMore }) => {
       CustomizedTablePaginationProps={{
         tablePage,
         rowsPerPage,
-        totalRowsCount: data.allPeople.totalCount,
+        totalRowsCount,
         handleChangePage,
         handleChangeRowsPerPage,
+        labelDisplayedRows,
       }}
     />
   )

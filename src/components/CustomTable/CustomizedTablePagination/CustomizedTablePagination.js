@@ -7,6 +7,7 @@ const CustomizedTablePagination = ({
   totalRowsCount,
   handleChangePage,
   handleChangeRowsPerPage,
+  labelDisplayedRows,
 }) => {
   return (
     <TableFooter>
@@ -18,6 +19,7 @@ const CustomizedTablePagination = ({
           page={tablePage}
           onPageChange={handleChangePage}
           onRowsPerPageChange={handleChangeRowsPerPage}
+          labelDisplayedRows={labelDisplayedRows}
         />
       </TableRow>
     </TableFooter>
