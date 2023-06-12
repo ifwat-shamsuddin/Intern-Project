@@ -1,5 +1,4 @@
 import { ApolloClient, InMemoryCache } from "@apollo/client"
-import { relayStylePagination } from "@apollo/client/utilities"
 
 const client = new ApolloClient({
   uri: "https://swapi-graphql.netlify.app/.netlify/functions/index",
@@ -7,7 +6,14 @@ const client = new ApolloClient({
     typePolicies: {
       Query: {
         fields: {
-          allPeople: relayStylePagination(),
+          allPeople: {
+            merge: (existing, incoming) => {
+              return incoming
+            },
+            read: (existing) => {
+              return existing
+            },
+          },
         },
       },
     },
