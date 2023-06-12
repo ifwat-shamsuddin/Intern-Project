@@ -22,7 +22,6 @@ export default function CharactersPage() {
 
   const { error, loading, data, fetchMore } = useQuery(GET_ALL_CHARACTERS, {
     fetchPolicy: "network-only",
-    nextFetchPolicy: "network-only",
     variables: {
       first: 10,
     },
