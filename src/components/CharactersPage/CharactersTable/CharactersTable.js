@@ -9,7 +9,7 @@ import {
 } from "../../CustomTable/Cells"
 import replaceIfNull from "@/utils/replaceIfNullUtils"
 
-const CharactersTable = ({ onRowClick, data, fetchMore, refetch }) => {
+const CharactersTable = ({ data, onRowClick, onFetchMore, onRefetch }) => {
   const [rowsPerPage, setRowsPerPage] = useState(10)
   const [tablePage, setTablePage] = useState(0)
 
@@ -93,31 +93,24 @@ const CharactersTable = ({ onRowClick, data, fetchMore, refetch }) => {
   const pageInfo = data.allPeople.pageInfo
   const totalRowsCount = data.allPeople.totalCount
 
-  const handleFetchMore = ({ first, last, beforeCursor, afterCursor }) => {
-    fetchMore({
-      variables: {
-        first,
-        last,
-        beforeCursor,
-        afterCursor,
-      },
-    })
-  }
-
   const handleChangePage = (event, newPage) => {
     if (newPage > tablePage) {
-      handleFetchMore({
-        first: rowsPerPage,
-        last: null,
-        beforeCursor: null,
-        afterCursor: pageInfo.endCursor,
+      onFetchMore({
+        variables: {
+          first: rowsPerPage,
+          last: null,
+          beforeCursor: null,
+          afterCursor: pageInfo.endCursor,
+        },
       })
     } else {
-      handleFetchMore({
-        first: null,
-        last: rowsPerPage,
-        beforeCursor: pageInfo.startCursor,
-        afterCursor: null,
+      onFetchMore({
+        variables: {
+          first: null,
+          last: rowsPerPage,
+          beforeCursor: pageInfo.startCursor,
+          afterCursor: null,
+        },
       })
     }
     setTablePage(newPage)
@@ -125,7 +118,7 @@ const CharactersTable = ({ onRowClick, data, fetchMore, refetch }) => {
 
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(parseInt(event.target.value))
-    refetch({
+    onRefetch({
       first: parseInt(event.target.value),
       last: null,
       beforeCursor: null,
