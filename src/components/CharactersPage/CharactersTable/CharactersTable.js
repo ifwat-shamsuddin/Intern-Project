@@ -93,7 +93,7 @@ const CharactersTable = ({ data, onRowClick, onFetchMore, onRefetch }) => {
   const pageInfo = data.allPeople.pageInfo
   const totalRowsCount = data.allPeople.totalCount
 
-  const handleChangePage = (event, newPage) => {
+  const handlePageChange = (event, newPage) => {
     if (newPage > tablePage) {
       onFetchMore({
         variables: {
@@ -116,7 +116,7 @@ const CharactersTable = ({ data, onRowClick, onFetchMore, onRefetch }) => {
     setTablePage(newPage)
   }
 
-  const handleChangeRowsPerPage = (event) => {
+  const handleRowsPerPageChange = (event) => {
     onRefetch({
       first: parseInt(event.target.value),
       last: null,
@@ -140,9 +140,9 @@ const CharactersTable = ({ data, onRowClick, onFetchMore, onRefetch }) => {
         tablePage,
         rowsPerPage,
         totalRowsCount,
-        handleChangePage,
-        handleChangeRowsPerPage,
         labelDisplayedRows,
+        onPageChange: handlePageChange,
+        onRowsPerPageChange: handleRowsPerPageChange,
       }}
     />
   )
