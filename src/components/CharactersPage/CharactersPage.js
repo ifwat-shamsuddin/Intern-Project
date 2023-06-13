@@ -38,10 +38,10 @@ export default function CharactersPage() {
       <Typography variant="h2">Star Wars</Typography>
 
       <CharactersTable
-        onRowClick={() => console.log("Table clicked")}
         data={data}
-        fetchMore={fetchMore}
-        refetch={refetch}
+        onRowClick={() => console.log("Table clicked")}
+        onFetchMore={fetchMore}
+        onRefetch={refetch}
       />
     </div>
   )
