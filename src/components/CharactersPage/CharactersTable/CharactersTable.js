@@ -117,13 +117,13 @@ const CharactersTable = ({ data, onRowClick, onFetchMore, onRefetch }) => {
   }
 
   const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(parseInt(event.target.value))
     onRefetch({
       first: parseInt(event.target.value),
       last: null,
       beforeCursor: null,
       afterCursor: null,
     })
+    setRowsPerPage(parseInt(event.target.value))
     setTablePage(0)
   }
 
