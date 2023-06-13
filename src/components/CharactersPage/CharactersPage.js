@@ -20,12 +20,15 @@ const useStyles = makeStyles(() => ({
 export default function CharactersPage() {
   const classes = useStyles()
 
-  const { error, loading, data, fetchMore } = useQuery(GET_ALL_CHARACTERS, {
-    fetchPolicy: "network-only",
-    variables: {
-      first: 10,
-    },
-  })
+  const { error, loading, data, fetchMore, refetch } = useQuery(
+    GET_ALL_CHARACTERS,
+    {
+      fetchPolicy: "network-only",
+      variables: {
+        first: 10,
+      },
+    }
+  )
 
   if (error) return <div>{error.message}</div>
   if (loading) return <div>loading...</div>
@@ -38,6 +41,7 @@ export default function CharactersPage() {
         onRowClick={() => console.log("Table clicked")}
         data={data}
         fetchMore={fetchMore}
+        refetch={refetch}
       />
     </div>
   )
