@@ -9,7 +9,7 @@ import {
 } from "../../CustomTable/Cells"
 import replaceIfNull from "@/utils/replaceIfNullUtils"
 
-const CharactersTable = ({ onRowClick, data, fetchMore }) => {
+const CharactersTable = ({ onRowClick, data, fetchMore, refetch }) => {
   const [rowsPerPage, setRowsPerPage] = useState(10)
   const [tablePage, setTablePage] = useState(0)
 
@@ -93,23 +93,44 @@ const CharactersTable = ({ onRowClick, data, fetchMore }) => {
   const pageInfo = data.allPeople.pageInfo
   const totalRowsCount = data.allPeople.totalCount
 
-  const handleFetchMore = () => {
-    if (pageInfo.hasNextPage) {
-      fetchMore({
-        variables: {
-          cursor: pageInfo.endCursor,
-        },
-      })
-    }
+  const handleFetchMore = ({ first, last, beforeCursor, afterCursor }) => {
+    fetchMore({
+      variables: {
+        first,
+        last,
+        beforeCursor,
+        afterCursor,
+      },
+    })
   }
 
   const handleChangePage = (event, newPage) => {
-    handleFetchMore()
+    if (newPage > tablePage) {
+      handleFetchMore({
+        first: rowsPerPage,
+        last: null,
+        beforeCursor: null,
+        afterCursor: pageInfo.endCursor,
+      })
+    } else {
+      handleFetchMore({
+        first: null,
+        last: rowsPerPage,
+        beforeCursor: pageInfo.startCursor,
+        afterCursor: null,
+      })
+    }
     setTablePage(newPage)
   }
 
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(parseInt(event.target.value))
+    refetch({
+      first: parseInt(event.target.value),
+      last: null,
+      beforeCursor: null,
+      afterCursor: null,
+    })
     setTablePage(0)
   }
 

@@ -1,8 +1,18 @@
 import { gql } from "@apollo/client"
 
 export const GET_ALL_CHARACTERS = gql`
-  query AllCharacters($first: Int, $cursor: String) {
-    allPeople(first: $first, after: $cursor) {
+  query AllCharacters(
+    $first: Int
+    $last: Int
+    $beforeCursor: String
+    $afterCursor: String
+  ) {
+    allPeople(
+      first: $first
+      last: $last
+      before: $beforeCursor
+      after: $afterCursor
+    ) {
       totalCount
       edges {
         node {
@@ -26,8 +36,10 @@ export const GET_ALL_CHARACTERS = gql`
         }
       }
       pageInfo {
+        startCursor
         endCursor
         hasNextPage
+        hasPreviousPage
       }
     }
   }
