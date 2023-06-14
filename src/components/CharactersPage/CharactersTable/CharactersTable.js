@@ -1,5 +1,5 @@
 import { isFinite } from "lodash"
-import { useMemo, useState } from "react"
+import { useMemo } from "react"
 
 import CustomTable from "@/components/CustomTable"
 import {
@@ -9,10 +9,16 @@ import {
 } from "../../CustomTable/Cells"
 import replaceIfNull from "@/utils/replaceIfNullUtils"
 
-const CharactersTable = ({ data, onRowClick, onFetchMore, onRefetch }) => {
-  const [rowsPerPage, setRowsPerPage] = useState(10)
-  const [tablePage, setTablePage] = useState(0)
-
+const CharactersTable = ({
+  data,
+  rowsPerPage,
+  tablePage,
+  onRowsPerPage,
+  onTablePage,
+  onRowClick,
+  onFetchMore,
+  onRefetch,
+}) => {
   const columns = [
     {
       header: "Name",
@@ -113,7 +119,7 @@ const CharactersTable = ({ data, onRowClick, onFetchMore, onRefetch }) => {
         },
       })
     }
-    setTablePage(newPage)
+    onTablePage(newPage)
   }
 
   const handleRowsPerPageChange = (event) => {
@@ -123,8 +129,8 @@ const CharactersTable = ({ data, onRowClick, onFetchMore, onRefetch }) => {
       beforeCursor: null,
       afterCursor: null,
     })
-    setRowsPerPage(parseInt(event.target.value))
-    setTablePage(0)
+    onRowsPerPage(parseInt(event.target.value))
+    onTablePage(0)
   }
 
   const labelDisplayedRows = () => {
