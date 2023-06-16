@@ -1,6 +1,6 @@
 import { makeStyles } from "@material-ui/core/styles"
 import { Typography } from "@material-ui/core"
-import { useQuery } from "@apollo/client"
+import { useLazyQuery } from "@apollo/client"
 import { useState } from "react"
 
 import { GET_ALL_CHARACTERS } from "@/graphql/queries/characterQueries"
@@ -23,18 +23,20 @@ export default function CharactersPage() {
   const [tablePage, setTablePage] = useState(0)
   const classes = useStyles()
 
-  const { error, loading, data, fetchMore, refetch } = useQuery(
-    GET_ALL_CHARACTERS,
-    {
-      fetchPolicy: "network-only",
-      variables: {
-        first: rowsPerPage,
-      },
-    }
-  )
+  const [
+    fetchCharacters,
+    { error, loading, called, data, networkStatus, fetchMore },
+  ] = useLazyQuery(GET_ALL_CHARACTERS, {
+    fetchPolicy: "network-only",
+    notifyOnNetworkStatusChange: "true",
+    variables: {
+      first: rowsPerPage,
+    },
+  })
 
   if (error) return <div>{error.message}</div>
-  if (loading) return <div>loading...</div>
+  if (called && loading) return <div>loading...</div>
+  if (!called) fetchCharacters()
 
   return (
     <div className={classes.body}>
@@ -48,7 +50,7 @@ export default function CharactersPage() {
         onTablePage={setTablePage}
         onRowClick={() => console.log("Table clicked")}
         onFetchMore={fetchMore}
-        onRefetch={refetch}
+        onFetchCharacters={fetchCharacters}
       />
     </div>
   )
