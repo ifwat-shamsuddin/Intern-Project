@@ -26,7 +26,7 @@ export default function CharactersPage() {
   const [fetchCharacters, { error, loading, called, data, fetchMore }] =
     useLazyQuery(GET_ALL_CHARACTERS, {
       fetchPolicy: "network-only",
-      notifyOnNetworkStatusChange: "true",
+      notifyOnNetworkStatusChange: true,
     })
 
   useEffect(() => {
