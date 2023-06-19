@@ -16,7 +16,7 @@
     "@material-ui/core": "^4.12.4",
     "@material-ui/icons": "^4.11.3",
     "@reduxjs/toolkit": "^1.9.3",
-    "eslint": "8.36.0",
+    "eslint": "^8.0.1",
     "eslint-config-next": "13.2.4",
     "graphql": "^16.6.0",
     "lodash": "^4.17.21",
@@ -27,5 +27,12 @@
     "react-redux": "^8.0.5",
     "react-select": "^5.7.2",
     "redux": "^4.2.1"
+  },
+  "devDependencies": {
+    "eslint-config-standard": "^17.1.0",
+    "eslint-plugin-import": "^2.25.2",
+    "eslint-plugin-n": "^15.0.0 || ^16.0.0 ",
+    "eslint-plugin-promise": "^6.0.0",
+    "eslint-plugin-react": "^7.32.2"
   }
 }
