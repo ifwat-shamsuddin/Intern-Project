@@ -40,3 +40,25 @@ export const GET_ALL_CHARACTERS = gql`
     }
   }
 `
+
+export const GET_A_CHARACTER = gql`
+  fragment PersonDetails on Person {
+    id
+    name
+    eyeColor
+    height
+    gender
+    birthYear
+    homeworld {
+      id
+      name
+    }
+    species {
+      id
+      name
+    }
+    filmConnection {
+      totalCount
+    }
+  }
+`
