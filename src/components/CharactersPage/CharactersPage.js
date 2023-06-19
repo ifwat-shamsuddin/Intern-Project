@@ -23,7 +23,7 @@ export default function CharactersPage() {
   const [tablePage, setTablePage] = useState(0)
   const classes = useStyles()
 
-  const [fetchCharacters, { error, loading, called, data, fetchMore }] =
+  const [fetchCharacters, { error, loading, called, data, refetch }] =
     useLazyQuery(GET_ALL_CHARACTERS, {
       fetchPolicy: "network-only",
       notifyOnNetworkStatusChange: true,
@@ -61,8 +61,7 @@ export default function CharactersPage() {
         onRowsPerPage={setRowsPerPage}
         onTablePage={setTablePage}
         onRowClick={() => console.log("Table clicked")}
-        onFetchMore={fetchMore}
-        onFetchCharacters={fetchCharacters}
+        onRefetch={refetch}
       />
     </div>
   )
