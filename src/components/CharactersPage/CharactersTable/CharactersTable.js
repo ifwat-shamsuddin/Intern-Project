@@ -1,5 +1,4 @@
 import { isFinite } from "lodash"
-import { useMemo } from "react"
 
 import CustomTable from "@/components/CustomTable"
 import {
@@ -18,8 +17,7 @@ const CharactersTable = ({
   onRowsPerPage,
   onTablePage,
   onRowClick,
-  onFetchMore,
-  onFetchCharacters,
+  onRefetch,
 }) => {
   const columns = [
     {
@@ -96,35 +94,29 @@ const CharactersTable = ({
 
   const handlePageChange = (event, newPage) => {
     if (newPage > tablePage) {
-      onFetchMore({
-        variables: {
-          first: rowsPerPage,
-          last: null,
-          beforeCursor: null,
-          afterCursor: tablePageInfo.endCursor,
-        },
+      onRefetch({
+        first: rowsPerPage,
+        last: null,
+        beforeCursor: null,
+        afterCursor: tablePageInfo.endCursor,
       })
     } else {
-      onFetchMore({
-        variables: {
-          first: null,
-          last: rowsPerPage,
-          beforeCursor: tablePageInfo.startCursor,
-          afterCursor: null,
-        },
+      onRefetch({
+        first: null,
+        last: rowsPerPage,
+        beforeCursor: tablePageInfo.startCursor,
+        afterCursor: null,
       })
     }
     onTablePage(newPage)
   }
 
   const handleRowsPerPageChange = (event) => {
-    onFetchCharacters({
-      variables: {
-        first: parseInt(event.target.value),
-        last: null,
-        beforeCursor: null,
-        afterCursor: null,
-      },
+    onRefetch({
+      first: parseInt(event.target.value),
+      last: null,
+      beforeCursor: null,
+      afterCursor: null,
     })
     onRowsPerPage(parseInt(event.target.value))
     onTablePage(0)
