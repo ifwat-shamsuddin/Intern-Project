@@ -1,25 +1,20 @@
 import { Box, Grid, makeStyles } from "@material-ui/core"
 import { useEffect, useMemo, useState } from "react"
 import { useForm } from "react-hook-form"
-import { useDispatch, useSelector } from "react-redux"
-import { addCharacter, editCharacter } from "@/actions/characterActions"
 import { useRouter } from "next/router"
+import { useApolloClient } from "@apollo/client"
 
+import { GET_A_CHARACTER } from "@/graphql/queries/characterQueries"
 import { genderEnum } from "@/enums/genderEnum"
 import { speciesEnum } from "@/enums/speciesEnum"
 import { formModeEnum } from "@/enums/formModeEnum"
-import * as characterSelectors from "@/selectors/characterSelectors"
 import {
   ControlledTextInputField,
   ControlledNumberInputField,
   ControlledSelectInputField,
 } from "@/components/ControlledInputFields"
 import * as formValidationUtils from "@/utils/formValidationUtils"
-import {
-  prepareCharacterForFormReset,
-  prepareEditCharacterData,
-  prepareNewCharacterData,
-} from "@/utils/CharactersPageUtils"
+import { prepareCharacterForFormReset } from "@/utils/CharactersPageUtils"
 import ConfirmButton from "@/components/Buttons/ConfirmButton"
 import CancelButton from "@/components/Buttons/CancelButton"
 import DeleteButton from "@/components/Buttons/DeleteButton"
@@ -53,6 +48,7 @@ const useStyles = makeStyles((theme) => ({
 const CharacterForm = ({ onClose }) => {
   const classes = useStyles()
   const router = useRouter()
+  const client = useApolloClient()
   const [errors, setErrors] = useState({})
   const [deleteCharacterModalOpen, setDeleteCharacterModalOpen] =
     useState(false)
@@ -62,7 +58,13 @@ const CharacterForm = ({ onClose }) => {
     return params[0] === formModeEnum.edit
   }, [params])
 
-  const character = useSelector(characterSelectors.character(params[1]))
+  const character = client.readFragment({
+    id: client.cache.identify({
+      __typename: "Person",
+      id: params[1],
+    }),
+    fragment: GET_A_CHARACTER,
+  })
 
   const { control, handleSubmit, reset } = useForm({
     defaultValues: {
@@ -92,16 +94,8 @@ const CharacterForm = ({ onClose }) => {
     }
   }, [isEdit, character])
 
-  const dispatch = useDispatch()
-
   const onSubmit = (formData) => {
-    if (isEdit) {
-      const characterData = prepareEditCharacterData({ formData, character })
-      dispatch(editCharacter(characterData))
-    } else {
-      const characterData = prepareNewCharacterData({ formData })
-      dispatch(addCharacter(characterData))
-    }
+    console.log(formData)
     onClose()
   }
 
@@ -163,7 +157,7 @@ const CharacterForm = ({ onClose }) => {
           className={classes.formHeader}
           color="text.disabled"
         >
-          {isEdit ? `Edit Character - ${character?.name}` : "Add New Character"}
+          {`Edit Character - ${character?.name}`}
         </Box>
         <Box className={classes.formBody}>
           <Grid
@@ -305,7 +299,7 @@ const CharacterForm = ({ onClose }) => {
         </Box>
         <Box className={classes.formFooter}>
           <ConfirmButton
-            label="Submit"
+            label="Save"
             onClick={submit}
           />
           <CancelButton onClick={onClose} />
