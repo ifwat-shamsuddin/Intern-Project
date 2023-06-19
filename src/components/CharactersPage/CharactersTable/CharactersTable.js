@@ -10,7 +10,9 @@ import {
 import replaceIfNull from "@/utils/replaceIfNullUtils"
 
 const CharactersTable = ({
-  data,
+  characters = [],
+  tablePageInfo = {},
+  totalRowsCount = 1,
   rowsPerPage,
   tablePage,
   onRowsPerPage,
@@ -92,13 +94,6 @@ const CharactersTable = ({
     },
   ]
 
-  const rows = useMemo(() => {
-    return data.allPeople.edges.map((edge) => edge.node)
-  }, [data])
-
-  const pageInfo = data.allPeople.pageInfo
-  const totalRowsCount = data.allPeople.totalCount
-
   const handlePageChange = (event, newPage) => {
     if (newPage > tablePage) {
       onFetchMore({
@@ -106,7 +101,7 @@ const CharactersTable = ({
           first: rowsPerPage,
           last: null,
           beforeCursor: null,
-          afterCursor: pageInfo.endCursor,
+          afterCursor: tablePageInfo.endCursor,
         },
       })
     } else {
@@ -114,7 +109,7 @@ const CharactersTable = ({
         variables: {
           first: null,
           last: rowsPerPage,
-          beforeCursor: pageInfo.startCursor,
+          beforeCursor: tablePageInfo.startCursor,
           afterCursor: null,
         },
       })
@@ -142,7 +137,7 @@ const CharactersTable = ({
   return (
     <CustomTable
       columns={columns}
-      data={rows}
+      data={characters}
       onRowClick={onRowClick}
       CustomizedTablePaginationProps={{
         tablePage,
