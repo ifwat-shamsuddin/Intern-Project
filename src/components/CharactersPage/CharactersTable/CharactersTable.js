@@ -1,4 +1,3 @@
-import { useSelector } from "react-redux"
 import { isFinite } from "lodash"
 
 import CustomTable from "@/components/CustomTable"
@@ -7,12 +6,19 @@ import {
   NoValueCell,
   EditButtonCell,
 } from "../../CustomTable/Cells"
-import * as characterSelectors from "@/selectors/characterSelectors"
 import replaceIfNull from "@/utils/replaceIfNullUtils"
 
-const CharactersTable = ({ onRowClick }) => {
-  const characters = useSelector(characterSelectors.characters)
-
+const CharactersTable = ({
+  characters = [],
+  tablePageInfo = {},
+  totalRowsCount = 1,
+  rowsPerPage,
+  tablePage,
+  onRowsPerPage,
+  onTablePage,
+  onRowClick,
+  onRefetch,
+}) => {
   const columns = [
     {
       header: "Name",
@@ -86,11 +92,53 @@ const CharactersTable = ({ onRowClick }) => {
     },
   ]
 
+  const handlePageChange = (event, newPage) => {
+    if (newPage > tablePage) {
+      onRefetch({
+        first: rowsPerPage,
+        last: null,
+        beforeCursor: null,
+        afterCursor: tablePageInfo.endCursor,
+      })
+    } else {
+      onRefetch({
+        first: null,
+        last: rowsPerPage,
+        beforeCursor: tablePageInfo.startCursor,
+        afterCursor: null,
+      })
+    }
+    onTablePage(newPage)
+  }
+
+  const handleRowsPerPageChange = (event) => {
+    onRefetch({
+      first: parseInt(event.target.value),
+      last: null,
+      beforeCursor: null,
+      afterCursor: null,
+    })
+    onRowsPerPage(parseInt(event.target.value))
+    onTablePage(0)
+  }
+
+  const labelDisplayedRows = () => {
+    return `Page ${tablePage + 1} of ${Math.ceil(totalRowsCount / rowsPerPage)}`
+  }
+
   return (
     <CustomTable
       columns={columns}
       data={characters}
       onRowClick={onRowClick}
+      CustomizedTablePaginationProps={{
+        tablePage,
+        rowsPerPage,
+        totalRowsCount,
+        labelDisplayedRows,
+        onPageChange: handlePageChange,
+        onRowsPerPageChange: handleRowsPerPageChange,
+      }}
     />
   )
 }

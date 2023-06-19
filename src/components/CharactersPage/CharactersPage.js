@@ -1,12 +1,9 @@
 import { makeStyles } from "@material-ui/core/styles"
 import { Typography } from "@material-ui/core"
-import { useRouter } from "next/router"
-import { useEffect, useMemo } from "react"
+import { useLazyQuery } from "@apollo/client"
+import { useEffect, useState, useMemo } from "react"
 
-import AddNewButton from "@/components/Buttons/AddNewButton"
-import RightSideDrawer from "@/components/RightSideDrawer"
-import CharacterForm from "@/components/CharactersPage/CharacterForm"
-import { formModeEnum } from "@/enums/formModeEnum"
+import { GET_ALL_CHARACTERS } from "@/graphql/queries/characterQueries"
 import CharactersTable from "./CharactersTable/CharactersTable"
 
 const useStyles = makeStyles(() => ({
@@ -22,56 +19,50 @@ const useStyles = makeStyles(() => ({
 }))
 
 export default function CharactersPage() {
+  const [rowsPerPage, setRowsPerPage] = useState(10)
+  const [tablePage, setTablePage] = useState(0)
   const classes = useStyles()
 
-  const router = useRouter()
-  const { params } = router.query
-
-  const isFormOpen = useMemo(() => {
-    return params && Object.values(formModeEnum).includes(params[0])
-  }, [params])
-
-  const handleOpenForm = (id) => {
-    const params = id ? [formModeEnum.edit, id] : [formModeEnum.new]
-
-    router.push({
-      pathname: "/characters/[[...params]]",
-      query: { params },
+  const [fetchCharacters, { error, loading, called, data, refetch }] =
+    useLazyQuery(GET_ALL_CHARACTERS, {
+      fetchPolicy: "network-only",
+      notifyOnNetworkStatusChange: true,
     })
-  }
-
-  const handleCloseForm = () => {
-    router.push("/characters/[[...params]]")
-  }
 
   useEffect(() => {
-    if (!params) return
+    fetchCharacters({
+      variables: {
+        first: rowsPerPage,
+      },
+    })
+  }, [])
 
-    if (params.length > 2) {
-      handleCloseForm()
-    }
+  const characters = useMemo(() => {
+    if (!data) return []
+    return data.allPeople.people
+  }, [data])
 
-    if (params.length > 0 && !isFormOpen) {
-      handleCloseForm()
-    }
-  }, [params, isFormOpen])
+  const pageInfo = data?.allPeople.pageInfo
+  const totalRowsCount = data?.allPeople.totalCount
+
+  if (!called && loading) return <div>loading...</div>
+  if (error) return <div>{error.message}</div>
 
   return (
     <div className={classes.body}>
-      <RightSideDrawer
-        isOpen={isFormOpen}
-        onClose={handleCloseForm}
-      >
-        <CharacterForm onClose={handleCloseForm} />
-      </RightSideDrawer>
       <Typography variant="h2">Star Wars</Typography>
-      <div className={classes.button}>
-        <AddNewButton
-          label="Add New Character"
-          onClick={() => handleOpenForm()}
-        />
-      </div>
-      <CharactersTable onRowClick={({ id }) => handleOpenForm(id)} />
+
+      <CharactersTable
+        characters={characters}
+        tablePageInfo={pageInfo}
+        totalRowsCount={totalRowsCount}
+        rowsPerPage={rowsPerPage}
+        tablePage={tablePage}
+        onRowsPerPage={setRowsPerPage}
+        onTablePage={setTablePage}
+        onRowClick={() => console.log("Table clicked")}
+        onRefetch={refetch}
+      />
     </div>
   )
 }
