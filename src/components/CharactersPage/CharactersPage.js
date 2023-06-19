@@ -1,7 +1,7 @@
 import { makeStyles } from "@material-ui/core/styles"
 import { Typography } from "@material-ui/core"
 import { useLazyQuery } from "@apollo/client"
-import { useState } from "react"
+import { useEffect, useState, useMemo } from "react"
 
 import { GET_ALL_CHARACTERS } from "@/graphql/queries/characterQueries"
 import CharactersTable from "./CharactersTable/CharactersTable"
@@ -23,27 +23,39 @@ export default function CharactersPage() {
   const [tablePage, setTablePage] = useState(0)
   const classes = useStyles()
 
-  const [
-    fetchCharacters,
-    { error, loading, called, data, networkStatus, fetchMore },
-  ] = useLazyQuery(GET_ALL_CHARACTERS, {
-    fetchPolicy: "network-only",
-    notifyOnNetworkStatusChange: "true",
-    variables: {
-      first: rowsPerPage,
-    },
-  })
+  const [fetchCharacters, { error, loading, called, data, fetchMore }] =
+    useLazyQuery(GET_ALL_CHARACTERS, {
+      fetchPolicy: "network-only",
+      notifyOnNetworkStatusChange: "true",
+    })
 
+  useEffect(() => {
+    fetchCharacters({
+      variables: {
+        first: rowsPerPage,
+      },
+    })
+  }, [])
+
+  const characters = useMemo(() => {
+    if (!data) return []
+    return data.allPeople.edges.map((edge) => edge.node)
+  }, [data])
+
+  const pageInfo = data?.allPeople.pageInfo
+  const totalRowsCount = data?.allPeople.totalCount
+
+  if (!called && loading) return <div>loading...</div>
   if (error) return <div>{error.message}</div>
-  if (called && loading) return <div>loading...</div>
-  if (!called) fetchCharacters()
 
   return (
     <div className={classes.body}>
       <Typography variant="h2">Star Wars</Typography>
 
       <CharactersTable
-        data={data}
+        characters={characters}
+        tablePageInfo={pageInfo}
+        totalRowsCount={totalRowsCount}
         rowsPerPage={rowsPerPage}
         tablePage={tablePage}
         onRowsPerPage={setRowsPerPage}
