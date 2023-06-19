@@ -31,9 +31,9 @@ export const prepareCharacterForFormReset = ({
     height,
     gender: characterGender,
     birthYear: birthYear !== "unknown" ? birthYear : "",
-    homeworld: homeworld.name,
+    homeworld: homeworld?.name,
     species: characterSpecies,
-    numberOfFilms: filmConnection.totalCount,
+    numberOfFilms: filmConnection?.totalCount,
   }
 }
 
