@@ -39,7 +39,7 @@ export default function CharactersPage() {
 
   const characters = useMemo(() => {
     if (!data) return []
-    return data.allPeople.edges.map((edge) => edge.node)
+    return data.allPeople.people
   }, [data])
 
   const pageInfo = data?.allPeople.pageInfo

@@ -14,32 +14,28 @@ export const GET_ALL_CHARACTERS = gql`
       after: $afterCursor
     ) {
       totalCount
-      edges {
-        node {
-          birthYear
-          eyeColor
-          filmConnection {
-            totalCount
-          }
-          gender
-          height
-          homeworld {
-            id
-            name
-          }
+      people {
+        id
+        name
+        eyeColor
+        height
+        gender
+        birthYear
+        homeworld {
           id
           name
-          species {
-            id
-            name
-          }
+        }
+        species {
+          id
+          name
+        }
+        filmConnection {
+          totalCount
         }
       }
       pageInfo {
         startCursor
         endCursor
-        hasNextPage
-        hasPreviousPage
       }
     }
   }
