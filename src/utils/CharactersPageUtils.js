@@ -33,7 +33,7 @@ export const prepareCharacterForFormReset = ({
     birthYear: birthYear !== "unknown" ? birthYear : "",
     homeworld: homeworld?.name,
     species: characterSpecies,
-    numberOfFilms: filmConnection?.totalCount,
+    numberOfFilms: filmConnection?.totalCount ?? "",
   }
 }
 
@@ -71,27 +71,32 @@ export const prepareNewCharacterData = ({ formData }) => {
 }
 
 export const prepareEditCharacterData = ({ formData, character }) => {
-  const {
-    name,
-    eyeColor,
-    height,
-    gender,
-    birthYear,
-    homeworld,
-    species,
-    numberOfFilms,
-  } = formData
+  const { name, eyeColor, height, gender, birthYear, species, numberOfFilms } =
+    formData
   const { id } = character
+
+  const newHomeworld =
+    formData.homeworld === character.homeworld.name
+      ? {
+          ...character.homeworld,
+        }
+      : {
+          ...character.homeworld,
+          id: nanoid(),
+          name: formData.homeworld,
+        }
 
   return {
     id,
-    homeworld: {
-      name: homeworld,
-    },
-    species: {
-      name: species?.value,
-    },
+    homeworld: newHomeworld,
+    species: species
+      ? {
+          id: species.value,
+          name: species.label,
+        }
+      : null,
     filmConnection: {
+      ...character.filmConnection,
       totalCount: numberOfFilms,
     },
     name,
