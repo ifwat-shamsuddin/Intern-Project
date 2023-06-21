@@ -2,11 +2,11 @@ import { Box, Grid, makeStyles } from "@material-ui/core"
 import { useEffect, useMemo, useState } from "react"
 import { useForm } from "react-hook-form"
 import { useRouter } from "next/router"
-import { useApolloClient } from "@apollo/client"
+import { useApolloClient, useLazyQuery } from "@apollo/client"
 
 import { GET_A_CHARACTER } from "@/graphql/queries/characterQueries"
+import { GET_ALL_SPECIES } from "@/graphql/queries/speciesQueries"
 import { genderEnum } from "@/enums/genderEnum"
-import { speciesEnum } from "@/enums/speciesEnum"
 import { formModeEnum } from "@/enums/formModeEnum"
 import {
   ControlledTextInputField,
@@ -14,7 +14,10 @@ import {
   ControlledSelectInputField,
 } from "@/components/ControlledInputFields"
 import * as formValidationUtils from "@/utils/formValidationUtils"
-import { prepareCharacterForFormReset } from "@/utils/CharactersPageUtils"
+import {
+  prepareCharacterForFormReset,
+  prepareSpeciesOptions,
+} from "@/utils/CharactersPageUtils"
 import ConfirmButton from "@/components/Buttons/ConfirmButton"
 import CancelButton from "@/components/Buttons/CancelButton"
 import DeleteButton from "@/components/Buttons/DeleteButton"
@@ -65,6 +68,9 @@ const CharacterForm = ({ onClose }) => {
     }),
     fragment: GET_A_CHARACTER,
   })
+
+  const [fetchSpecies, { loading, data: speciesOptions }] =
+    useLazyQuery(GET_ALL_SPECIES)
 
   const { control, handleSubmit, reset } = useForm({
     defaultValues: {
@@ -274,10 +280,10 @@ const CharacterForm = ({ onClose }) => {
                 name="species"
                 label="Species"
                 placeholder="Select species"
-                options={[
-                  { value: speciesEnum.droid, label: "Droid" },
-                  { value: speciesEnum.human, label: "Human" },
-                ]}
+                options={prepareSpeciesOptions({ speciesOptions })}
+                isLoading={loading}
+                isSearchable
+                onMenuOpen={fetchSpecies}
               />
             </Grid>
             <Grid
