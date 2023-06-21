@@ -27,6 +27,9 @@ const ControlledSelectInputField = ({
   customValidationFunctions,
   error,
   required,
+  isLoading,
+  isSearchable,
+  onMenuOpen,
 }) => {
   const classes = useStyles()
   const theme = useTheme()
@@ -95,7 +98,10 @@ const ControlledSelectInputField = ({
                 options={options}
                 placeholder={placeholder}
                 value={value}
+                isLoading={isLoading}
+                isSearchable={isSearchable}
                 onChange={(newValue) => onChange(newValue)}
+                onMenuOpen={onMenuOpen}
               />
               <InputErrorMessage errorMessage={error?.message} />
             </>
