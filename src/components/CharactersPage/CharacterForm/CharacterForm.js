@@ -16,6 +16,7 @@ import {
 import * as formValidationUtils from "@/utils/formValidationUtils"
 import {
   prepareCharacterForFormReset,
+  prepareEditCharacterData,
   prepareSpeciesOptions,
 } from "@/utils/CharactersPageUtils"
 import ConfirmButton from "@/components/Buttons/ConfirmButton"
@@ -61,11 +62,13 @@ const CharacterForm = ({ onClose }) => {
     return params[0] === formModeEnum.edit
   }, [params])
 
+  const characterCacheId = client.cache.identify({
+    __typename: "Person",
+    id: params[1],
+  })
+
   const character = client.readFragment({
-    id: client.cache.identify({
-      __typename: "Person",
-      id: params[1],
-    }),
+    id: characterCacheId,
     fragment: GET_A_CHARACTER,
   })
 
@@ -101,7 +104,11 @@ const CharacterForm = ({ onClose }) => {
   }, [isEdit, character])
 
   const onSubmit = (formData) => {
-    console.log(formData)
+    client.writeFragment({
+      id: characterCacheId,
+      fragment: GET_A_CHARACTER,
+      data: prepareEditCharacterData({ formData, character }),
+    })
     onClose()
   }
 
