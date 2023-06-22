@@ -4,8 +4,9 @@ import { useForm } from "react-hook-form"
 import { useRouter } from "next/router"
 import { useApolloClient, useQuery } from "@apollo/client"
 
-import { GET_A_CHARACTER } from "@/graphql/queries/characterQueries"
+import { CHARACTER_FRAGMENT } from "@/graphql/fragments/characterFragments"
 import { GET_ALL_SPECIES } from "@/graphql/queries/speciesQueries"
+import { GET_ALL_HOMEWORLD } from "@/graphql/queries/homeworldQueries"
 import { genderEnum } from "@/enums/genderEnum"
 import { formModeEnum } from "@/enums/formModeEnum"
 import {
@@ -22,7 +23,6 @@ import ConfirmButton from "@/components/Buttons/ConfirmButton"
 import CancelButton from "@/components/Buttons/CancelButton"
 import DeleteButton from "@/components/Buttons/DeleteButton"
 import DeleteCharacterModal from "../DeleteCharacterModal"
-import { GET_ALL_HOMEWORLD } from "@/graphql/queries/homeworldQueries"
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -70,7 +70,7 @@ const CharacterForm = ({ onClose }) => {
 
   const character = client.readFragment({
     id: characterCacheId,
-    fragment: GET_A_CHARACTER,
+    fragment: CHARACTER_FRAGMENT,
   })
 
   const { loading: getAllSpeciesLoading, data: getAllSpeciesData } =
@@ -116,7 +116,7 @@ const CharacterForm = ({ onClose }) => {
   const onSubmit = (formData) => {
     client.writeFragment({
       id: characterCacheId,
-      fragment: GET_A_CHARACTER,
+      fragment: CHARACTER_FRAGMENT,
       data: prepareEditCharacterData({ formData, character }),
     })
     onClose()
