@@ -19,17 +19,13 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const ControlledSelectInputField = ({
+  isRequired = false,
   control,
   name,
   label,
-  placeholder,
-  options,
-  customValidationFunctions,
   error,
-  required,
-  isLoading,
-  isSearchable,
-  onMenuOpen,
+  customValidationFunctions = {},
+  SelectProps = { placeholder: "" },
 }) => {
   const classes = useStyles()
   const theme = useTheme()
@@ -75,7 +71,7 @@ const ControlledSelectInputField = ({
   }, [theme, error])
 
   const validateRequired = (value) => {
-    if (required && !value) return "This field is required"
+    if (isRequired && !value) return "This field is required"
     return true
   }
 
@@ -83,7 +79,7 @@ const ControlledSelectInputField = ({
     <div className={classes.root}>
       <span className={classes.label}>
         {label}
-        {required && "*"}
+        {isRequired && "*"}
       </span>
 
       <Controller
@@ -95,13 +91,9 @@ const ControlledSelectInputField = ({
             <>
               <Select
                 styles={customStyles}
-                options={options}
-                placeholder={placeholder}
                 value={value}
-                isLoading={isLoading}
-                isSearchable={isSearchable}
                 onChange={(newValue) => onChange(newValue)}
-                onMenuOpen={onMenuOpen}
+                {...SelectProps}
               />
               <InputErrorMessage errorMessage={error?.message} />
             </>

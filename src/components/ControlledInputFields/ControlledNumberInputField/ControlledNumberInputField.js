@@ -33,13 +33,13 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const ControlledNumberInputField = ({
+  isRequired = false,
   control,
   name,
   label,
-  placeholder,
-  customValidationFunctions,
+  placeholder = "",
   error,
-  required,
+  customValidationFunctions = {},
 }) => {
   const classes = useStyles()
 
@@ -49,7 +49,7 @@ const ControlledNumberInputField = ({
   }
 
   const validateRequired = (value) => {
-    if (required && value === "") {
+    if (isRequired && value === "") {
       return "This field is required"
     }
     return true
@@ -64,7 +64,7 @@ const ControlledNumberInputField = ({
     <div className={classes.root}>
       <span className={classes.label}>
         {label}
-        {required && "*"}
+        {isRequired && "*"}
       </span>
 
       <Controller

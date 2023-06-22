@@ -23,18 +23,18 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const ControlledTextInputField = ({
+  isRequired = false,
   control,
   name,
   label,
-  placeholder,
-  customValidationFunctions,
+  placeholder = "",
   error,
-  required,
+  customValidationFunctions = {},
 }) => {
   const classes = useStyles()
 
   const validateRequired = (value) => {
-    if (required)
+    if (isRequired)
       return formValidationUtils.validateNotEmptyString({
         value,
         errorReturn: "This field is required",
@@ -47,7 +47,7 @@ const ControlledTextInputField = ({
     <div className={classes.root}>
       <span className={classes.label}>
         {label}
-        {required && "*"}
+        {isRequired && "*"}
       </span>
 
       <Controller
