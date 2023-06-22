@@ -2,7 +2,7 @@ import { Box, Grid, makeStyles } from "@material-ui/core"
 import { useEffect, useMemo, useState } from "react"
 import { useForm } from "react-hook-form"
 import { useRouter } from "next/router"
-import { useApolloClient, useLazyQuery } from "@apollo/client"
+import { useApolloClient, useQuery } from "@apollo/client"
 
 import { GET_A_CHARACTER } from "@/graphql/queries/characterQueries"
 import { GET_ALL_SPECIES } from "@/graphql/queries/speciesQueries"
@@ -53,6 +53,7 @@ const CharacterForm = ({ onClose }) => {
   const router = useRouter()
   const client = useApolloClient()
   const [errors, setErrors] = useState({})
+  const [isLoadingFetch, setIsLoadingFetch] = useState(true)
   const [deleteCharacterModalOpen, setDeleteCharacterModalOpen] =
     useState(false)
   const { params = [] } = router.query
@@ -71,8 +72,8 @@ const CharacterForm = ({ onClose }) => {
     fragment: GET_A_CHARACTER,
   })
 
-  const [fetchSpecies, { loading, data: speciesOptions }] =
-    useLazyQuery(GET_ALL_SPECIES)
+  const { loading: getAllSpeciesLoading, data: getAllSpeciesData } =
+    useQuery(GET_ALL_SPECIES)
 
   const { control, handleSubmit, reset } = useForm({
     defaultValues: {
@@ -101,6 +102,12 @@ const CharacterForm = ({ onClose }) => {
       })
     }
   }, [isEdit, character])
+
+  useEffect(() => {
+    if (!getAllSpeciesLoading) {
+      setIsLoadingFetch(false)
+    }
+  }, [getAllSpeciesLoading])
 
   const onSubmit = (formData) => {
     client.writeFragment({
@@ -293,12 +300,11 @@ const CharacterForm = ({ onClose }) => {
                 label="Species"
                 SelectProps={{
                   isSearchable: true,
-                  isLoading: loading,
+                  isLoading: isLoadingFetch,
                   options: handlePrepareOptionsArray(
-                    speciesOptions?.allSpecies.species
+                    getAllSpeciesData?.allSpecies.species
                   ),
                   placeholder: "Select species",
-                  onMenuOpen: fetchSpecies,
                 }}
               />
             </Grid>
