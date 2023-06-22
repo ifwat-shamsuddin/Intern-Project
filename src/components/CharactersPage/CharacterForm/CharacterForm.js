@@ -191,7 +191,7 @@ const CharacterForm = ({ onClose }) => {
                   validateNamePattern,
                 }}
                 error={errors.name}
-                required
+                isRequired
               />
             </Grid>
             <Grid
@@ -204,7 +204,7 @@ const CharacterForm = ({ onClose }) => {
                 label="Eye Color"
                 placeholder="Enter eye color"
                 error={errors.eyeColor}
-                required
+                isRequired
               />
             </Grid>
           </Grid>
@@ -269,7 +269,7 @@ const CharacterForm = ({ onClose }) => {
                 label="HomeWorld"
                 placeholder="Enter homeworld"
                 error={errors.homeworld}
-                required
+                isRequired
               />
             </Grid>
           </Grid>
@@ -286,11 +286,13 @@ const CharacterForm = ({ onClose }) => {
                 control={control}
                 name="species"
                 label="Species"
-                placeholder="Select species"
-                options={prepareSpeciesOptions({ speciesOptions })}
-                isLoading={loading}
-                isSearchable
-                onMenuOpen={fetchSpecies}
+                SelectProps={{
+                  isSearchable: true,
+                  isLoading: loading,
+                  options: prepareSpeciesOptions({ speciesOptions }),
+                  placeholder: "Select species",
+                  onMenuOpen: fetchSpecies,
+                }}
               />
             </Grid>
             <Grid
@@ -305,7 +307,7 @@ const CharacterForm = ({ onClose }) => {
                 type="number"
                 customValidationFunctions={{ handleNumberOfFilmValidation }}
                 error={errors.numberOfFilms}
-                required
+                isRequired
               />
             </Grid>
           </Grid>
