@@ -18,10 +18,17 @@ export const prepareCharacterForFormReset = ({
         }
       : null
 
-  const characterSpecies = species?.name
+  const characterSpecies = species
     ? {
-        value: species.name,
+        value: species.id,
         label: species.name,
+      }
+    : null
+
+  const characterHomeworld = homeworld
+    ? {
+        value: homeworld.id,
+        label: homeworld.name,
       }
     : null
 
@@ -31,7 +38,7 @@ export const prepareCharacterForFormReset = ({
     height,
     gender: characterGender,
     birthYear: birthYear !== "unknown" ? birthYear : "",
-    homeworld: homeworld?.name,
+    homeworld: characterHomeworld,
     species: characterSpecies,
     numberOfFilms: filmConnection?.totalCount ?? "",
   }
@@ -71,38 +78,46 @@ export const prepareNewCharacterData = ({ formData }) => {
 }
 
 export const prepareEditCharacterData = ({ formData, character }) => {
-  const { name, eyeColor, height, gender, birthYear, species, numberOfFilms } =
-    formData
+  const {
+    name,
+    eyeColor,
+    height,
+    gender,
+    birthYear,
+    homeworld,
+    species,
+    numberOfFilms,
+  } = formData
   const { id } = character
 
-  const newHomeworld =
-    formData.homeworld === character.homeworld.name
-      ? {
-          ...character.homeworld,
-        }
-      : {
-          ...character.homeworld,
-          id: nanoid(),
-          name: formData.homeworld,
-        }
+  const characterSpecies = species
+    ? {
+        ...character.species,
+        id: species.value,
+        name: species.label,
+      }
+    : null
+
+  const characterHomeworld = homeworld
+    ? {
+        ...character.homeworld,
+        id: homeworld.value,
+        name: homeworld.label,
+      }
+    : null
 
   return {
     id,
-    homeworld: newHomeworld,
-    species: species
-      ? {
-          id: species.value,
-          name: species.label,
-        }
-      : null,
-    filmConnection: {
-      ...character.filmConnection,
-      totalCount: numberOfFilms,
-    },
     name,
     eyeColor,
     height,
     gender: gender?.value,
     birthYear,
+    homeworld: characterHomeworld,
+    species: characterSpecies,
+    filmConnection: {
+      ...character.filmConnection,
+      totalCount: numberOfFilms,
+    },
   }
 }
