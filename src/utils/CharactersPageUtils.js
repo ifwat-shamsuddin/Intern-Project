@@ -106,16 +106,3 @@ export const prepareEditCharacterData = ({ formData, character }) => {
     birthYear,
   }
 }
-
-export const prepareSpeciesOptions = ({ speciesOptions }) => {
-  if (!speciesOptions) return []
-
-  const transformedData = speciesOptions.allSpecies.species.map(
-    ({ id, name }) => ({
-      value: id,
-      label: name,
-    })
-  )
-
-  return transformedData
-}
