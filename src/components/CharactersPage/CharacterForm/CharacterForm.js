@@ -17,7 +17,6 @@ import * as formValidationUtils from "@/utils/formValidationUtils"
 import {
   prepareCharacterForFormReset,
   prepareEditCharacterData,
-  prepareSpeciesOptions,
 } from "@/utils/CharactersPageUtils"
 import ConfirmButton from "@/components/Buttons/ConfirmButton"
 import CancelButton from "@/components/Buttons/CancelButton"
@@ -157,6 +156,12 @@ const CharacterForm = ({ onClose }) => {
     setDeleteCharacterModalOpen(false)
   }
 
+  const handlePrepareOptionsArray = (optionsArray = []) =>
+    optionsArray.map((option) => ({
+      value: option.id,
+      label: option.name,
+    }))
+
   return (
     <>
       <DeleteCharacterModal
@@ -289,7 +294,9 @@ const CharacterForm = ({ onClose }) => {
                 SelectProps={{
                   isSearchable: true,
                   isLoading: loading,
-                  options: prepareSpeciesOptions({ speciesOptions }),
+                  options: handlePrepareOptionsArray(
+                    speciesOptions?.allSpecies.species
+                  ),
                   placeholder: "Select species",
                   onMenuOpen: fetchSpecies,
                 }}
