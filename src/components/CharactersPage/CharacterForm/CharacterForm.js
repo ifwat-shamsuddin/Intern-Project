@@ -22,6 +22,7 @@ import ConfirmButton from "@/components/Buttons/ConfirmButton"
 import CancelButton from "@/components/Buttons/CancelButton"
 import DeleteButton from "@/components/Buttons/DeleteButton"
 import DeleteCharacterModal from "../DeleteCharacterModal"
+import { GET_ALL_HOMEWORLD } from "@/graphql/queries/homeworldQueries"
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -75,6 +76,9 @@ const CharacterForm = ({ onClose }) => {
   const { loading: getAllSpeciesLoading, data: getAllSpeciesData } =
     useQuery(GET_ALL_SPECIES)
 
+  const { loading: getAllHomeworldLoading, data: getAllHomeworldData } =
+    useQuery(GET_ALL_HOMEWORLD)
+
   const { control, handleSubmit, reset } = useForm({
     defaultValues: {
       name: "",
@@ -104,10 +108,10 @@ const CharacterForm = ({ onClose }) => {
   }, [isEdit, character])
 
   useEffect(() => {
-    if (!getAllSpeciesLoading) {
+    if (!getAllSpeciesLoading && !getAllHomeworldLoading) {
       setIsLoadingFetch(false)
     }
-  }, [getAllSpeciesLoading])
+  }, [getAllSpeciesLoading, getAllHomeworldLoading])
 
   const onSubmit = (formData) => {
     client.writeFragment({
@@ -275,13 +279,20 @@ const CharacterForm = ({ onClose }) => {
               item
               xs
             >
-              <ControlledTextInputField
+              <ControlledSelectInputField
                 control={control}
+                isRequired
                 name="homeworld"
                 label="HomeWorld"
-                placeholder="Enter homeworld"
                 error={errors.homeworld}
-                isRequired
+                SelectProps={{
+                  isSearchable: true,
+                  isLoading: isLoadingFetch,
+                  options: handlePrepareOptionsArray(
+                    getAllHomeworldData?.allPlanets.planets
+                  ),
+                  placeholder: "Select homeworld",
+                }}
               />
             </Grid>
           </Grid>
