@@ -74,7 +74,6 @@ const CharacterForm = ({ onClose }) => {
     loading: getACharacterLoading,
     data: character,
   } = useQuery(GET_A_CHARACTER, {
-    fetchPolicy: "cache-first",
     variables: {
       personId: params[1],
     },
