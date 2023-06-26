@@ -72,7 +72,7 @@ export const prepareNewCharacterData = ({ formData }) => {
     name,
     eyeColor,
     height,
-    gender: gender?.value,
+    gender: gender.value ?? "n/a",
     birthYear,
   }
 }
@@ -111,7 +111,7 @@ export const prepareEditCharacterData = ({ formData, character }) => {
     name,
     eyeColor,
     height,
-    gender: gender?.value,
+    gender: gender ? gender.value : "n/a",
     birthYear,
     homeworld: characterHomeworld,
     species: characterSpecies,
