@@ -167,6 +167,7 @@ const CharacterForm = ({ onClose }) => {
 
   const handlePrepareOptionsArray = (optionsArray = []) =>
     optionsArray.map((option) => ({
+      id: option.id,
       value: option.id,
       label: option.name,
     }))
