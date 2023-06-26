@@ -252,11 +252,14 @@ const CharacterForm = ({ onClose }) => {
                 control={control}
                 name="gender"
                 label="Gender"
-                placeholder="Select gender"
-                options={[
-                  { value: genderEnum.male, label: "Male" },
-                  { value: genderEnum.female, label: "Female" },
-                ]}
+                SelectProps={{
+                  isClearable: true,
+                  options: [
+                    { value: genderEnum.male, label: "Male" },
+                    { value: genderEnum.female, label: "Female" },
+                  ],
+                  placeholder: "Select Gender",
+                }}
               />
             </Grid>
           </Grid>
@@ -287,6 +290,7 @@ const CharacterForm = ({ onClose }) => {
                 label="HomeWorld"
                 error={errors.homeworld}
                 SelectProps={{
+                  isClearable: true,
                   isSearchable: true,
                   isLoading: isLoadingFetch,
                   options: handlePrepareOptionsArray(
@@ -311,6 +315,7 @@ const CharacterForm = ({ onClose }) => {
                 name="species"
                 label="Species"
                 SelectProps={{
+                  isClearable: true,
                   isSearchable: true,
                   isLoading: isLoadingFetch,
                   options: handlePrepareOptionsArray(
