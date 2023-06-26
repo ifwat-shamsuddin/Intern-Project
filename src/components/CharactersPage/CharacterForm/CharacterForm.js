@@ -64,11 +64,6 @@ const CharacterForm = ({ onClose }) => {
     return params[0] === formModeEnum.edit
   }, [params])
 
-  const characterCacheId = client.cache.identify({
-    __typename: "Person",
-    id: params[1],
-  })
-
   const {
     error: getACharacterError,
     loading: getACharacterLoading,
@@ -112,7 +107,10 @@ const CharacterForm = ({ onClose }) => {
 
   const onSubmit = (formData) => {
     client.writeFragment({
-      id: characterCacheId,
+      id: client.cache.identify({
+        __typename: "Person",
+        id: params[1],
+      }),
       fragment: CHARACTER_FRAGMENT,
       data: prepareEditCharacterData({ formData, character: character.person }),
     })
