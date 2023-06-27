@@ -50,6 +50,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
+const handlePrepareOptionsArray = (optionsArray = []) =>
+  optionsArray.map((option) => ({
+    id: option.id,
+    value: option.id,
+    label: option.name,
+  }))
+
 const CharacterForm = ({ onClose }) => {
   const classes = useStyles()
   const router = useRouter()
@@ -65,8 +72,8 @@ const CharacterForm = ({ onClose }) => {
   }, [params])
 
   const {
-    error: getACharacterError,
-    loading: getACharacterLoading,
+    error: getACharacterHasError,
+    loading: getACharacterIsLoading,
     data: character,
   } = useQuery(GET_A_CHARACTER, {
     variables: {
@@ -74,11 +81,19 @@ const CharacterForm = ({ onClose }) => {
     },
   })
 
-  const { loading: getAllSpeciesLoading, data: getAllSpeciesData } =
+  const { loading: getAllSpeciesIsLoading, data: getAllSpeciesData } =
     useQuery(GET_ALL_SPECIES)
 
-  const { loading: getAllHomeworldLoading, data: getAllHomeworldData } =
+  const { loading: getAllHomeworldIsLoading, data: getAllHomeworldData } =
     useQuery(GET_ALL_HOMEWORLD)
+
+  const speciesOptions = useMemo(() => {
+    return handlePrepareOptionsArray(getAllSpeciesData?.allSpecies.species)
+  }, [getAllSpeciesData])
+
+  const homeworldOptions = useMemo(() => {
+    return handlePrepareOptionsArray(getAllHomeworldData?.allPlanets.planets)
+  }, [getAllHomeworldData])
 
   const { control, handleSubmit, reset } = useForm({
     defaultValues: {
@@ -98,12 +113,6 @@ const CharacterForm = ({ onClose }) => {
     if (!character) return
     reset(prepareCharacterForFormReset(character.person))
   }, [character])
-
-  useEffect(() => {
-    if (!getAllSpeciesLoading && !getAllHomeworldLoading) {
-      setIsLoadingFetch(false)
-    }
-  }, [getAllSpeciesLoading, getAllHomeworldLoading])
 
   const onSubmit = (formData) => {
     client.writeFragment({
@@ -162,15 +171,8 @@ const CharacterForm = ({ onClose }) => {
     setDeleteCharacterModalOpen(false)
   }
 
-  const handlePrepareOptionsArray = (optionsArray = []) =>
-    optionsArray.map((option) => ({
-      id: option.id,
-      value: option.id,
-      label: option.name,
-    }))
-
-  if (getACharacterLoading) return <div>loading...</div>
-  if (getACharacterError) return <div>{getACharacterError.message}</div>
+  if (getACharacterIsLoading) return <div>loading...</div>
+  if (getACharacterHasError) return <div>{getACharacterHasError.message}</div>
 
   return (
     <>
@@ -290,10 +292,8 @@ const CharacterForm = ({ onClose }) => {
                 SelectProps={{
                   isClearable: true,
                   isSearchable: true,
-                  isLoading: isLoadingFetch,
-                  options: handlePrepareOptionsArray(
-                    getAllHomeworldData?.allPlanets.planets
-                  ),
+                  isLoading: getAllHomeworldIsLoading,
+                  options: homeworldOptions,
                   placeholder: "Select homeworld",
                 }}
               />
@@ -315,10 +315,8 @@ const CharacterForm = ({ onClose }) => {
                 SelectProps={{
                   isClearable: true,
                   isSearchable: true,
-                  isLoading: isLoadingFetch,
-                  options: handlePrepareOptionsArray(
-                    getAllSpeciesData?.allSpecies.species
-                  ),
+                  isLoading: getAllSpeciesIsLoading,
+                  options: speciesOptions,
                   placeholder: "Select species",
                 }}
               />
