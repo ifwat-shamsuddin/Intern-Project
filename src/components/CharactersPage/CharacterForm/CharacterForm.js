@@ -62,7 +62,6 @@ const CharacterForm = ({ onClose }) => {
   const router = useRouter()
   const client = useApolloClient()
   const [errors, setErrors] = useState({})
-  const [isLoadingFetch, setIsLoadingFetch] = useState(true)
   const [deleteCharacterModalOpen, setDeleteCharacterModalOpen] =
     useState(false)
   const { params = [] } = router.query
