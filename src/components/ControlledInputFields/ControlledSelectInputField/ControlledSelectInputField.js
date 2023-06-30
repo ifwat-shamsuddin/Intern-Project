@@ -25,7 +25,7 @@ const ControlledSelectInputField = ({
   label,
   error,
   customValidationFunctions = {},
-  SelectProps = { placeholder: "" },
+  SelectProps = {},
 }) => {
   const classes = useStyles()
   const theme = useTheme()
