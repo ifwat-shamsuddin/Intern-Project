@@ -198,16 +198,16 @@ const CharacterForm = ({ onClose }) => {
               xs
             >
               <ControlledTextInputField
+                isRequired
                 control={control}
+                error={errors.name}
                 name="name"
                 label="Name"
-                placeholder="Enter name"
                 customValidationFunctions={{
                   validateNameMinLength,
                   validateNamePattern,
                 }}
-                error={errors.name}
-                isRequired
+                TextFieldProps={{ placeholder: "Enter name" }}
               />
             </Grid>
             <Grid
@@ -215,12 +215,12 @@ const CharacterForm = ({ onClose }) => {
               xs
             >
               <ControlledTextInputField
+                isRequired
                 control={control}
+                error={errors.eyeColor}
                 name="eyeColor"
                 label="Eye Color"
-                placeholder="Enter eye color"
-                error={errors.eyeColor}
-                isRequired
+                TextFieldProps={{ placeholder: "Enter eye color" }}
               />
             </Grid>
           </Grid>
@@ -235,12 +235,11 @@ const CharacterForm = ({ onClose }) => {
             >
               <ControlledNumberInputField
                 control={control}
+                error={errors.height}
                 name="height"
                 label="Height"
-                placeholder="Enter height"
-                type="number"
                 customValidationFunctions={{ handleHeightValidation }}
-                error={errors.height}
+                TextFieldProps={{ placeholder: "Enter height" }}
               />
             </Grid>
             <Grid
@@ -275,7 +274,7 @@ const CharacterForm = ({ onClose }) => {
                 control={control}
                 name="birthYear"
                 label="Birth Year"
-                placeholder="Enter birth year"
+                TextFieldProps={{ placeholder: "Enter birth year" }}
               />
             </Grid>
             <Grid
@@ -283,11 +282,11 @@ const CharacterForm = ({ onClose }) => {
               xs
             >
               <ControlledSelectInputField
-                control={control}
                 isRequired
+                control={control}
+                error={errors.homeworld}
                 name="homeworld"
                 label="HomeWorld"
-                error={errors.homeworld}
                 SelectProps={{
                   isClearable: true,
                   isSearchable: true,
@@ -325,14 +324,15 @@ const CharacterForm = ({ onClose }) => {
               xs
             >
               <ControlledNumberInputField
+                isRequired
                 control={control}
+                error={errors.numberOfFilms}
                 name="numberOfFilms"
                 label="Number Of Films"
-                placeholder="Enter number of films appeared"
-                type="number"
                 customValidationFunctions={{ handleNumberOfFilmValidation }}
-                error={errors.numberOfFilms}
-                isRequired
+                TextFieldProps={{
+                  placeholder: "Enter number of films appeared",
+                }}
               />
             </Grid>
           </Grid>
