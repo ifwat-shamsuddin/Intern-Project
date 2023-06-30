@@ -43,7 +43,7 @@ export const GET_ALL_CHARACTERS = gql`
   }
 `
 
-export const GET_A_CHARACTER = gql`
+export const GET_CHARACTER = gql`
   query GetACharacter($personId: ID) {
     person(id: $personId) {
       ...Character

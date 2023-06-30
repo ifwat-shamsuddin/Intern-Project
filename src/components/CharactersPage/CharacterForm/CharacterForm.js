@@ -5,7 +5,7 @@ import { useRouter } from "next/router"
 import { useApolloClient, useQuery } from "@apollo/client"
 
 import { CHARACTER_FRAGMENT } from "@/graphql/fragments/characterFragments"
-import { GET_A_CHARACTER } from "@/graphql/queries/characterQueries"
+import { GET_CHARACTER } from "@/graphql/queries/characterQueries"
 import { GET_ALL_SPECIES } from "@/graphql/queries/speciesQueries"
 import { GET_ALL_HOMEWORLD } from "@/graphql/queries/homeworldQueries"
 import { genderEnum } from "@/enums/genderEnum"
@@ -71,10 +71,10 @@ const CharacterForm = ({ onClose }) => {
   }, [params])
 
   const {
-    error: getACharacterHasError,
-    loading: getACharacterIsLoading,
-    data: character,
-  } = useQuery(GET_A_CHARACTER, {
+    error: characterError,
+    loading: IsCharacterLoading,
+    data: characterData,
+  } = useQuery(GET_CHARACTER, {
     variables: {
       personId: params[1],
     },
@@ -109,9 +109,9 @@ const CharacterForm = ({ onClose }) => {
   })
 
   useEffect(() => {
-    if (!character) return
-    reset(prepareCharacterForFormReset(character.person))
-  }, [character])
+    if (!characterData) return
+    reset(prepareCharacterForFormReset(characterData.person))
+  }, [characterData])
 
   const onSubmit = (formData) => {
     client.writeFragment({
@@ -120,7 +120,10 @@ const CharacterForm = ({ onClose }) => {
         id: params[1],
       }),
       fragment: CHARACTER_FRAGMENT,
-      data: prepareEditCharacterData({ formData, character: character.person }),
+      data: prepareEditCharacterData({
+        formData,
+        character: characterData.person,
+      }),
     })
     onClose()
   }
@@ -170,15 +173,15 @@ const CharacterForm = ({ onClose }) => {
     setDeleteCharacterModalOpen(false)
   }
 
-  if (getACharacterIsLoading) return <div>loading...</div>
-  if (getACharacterHasError) return <div>{getACharacterHasError.message}</div>
+  if (IsCharacterLoading) return <div>loading...</div>
+  if (characterError) return <div>{characterError.message}</div>
 
   return (
     <>
       <DeleteCharacterModal
         isModalOpen={deleteCharacterModalOpen}
         onClose={handleCloseDeleteCharacterModal}
-        character={character.person}
+        character={characterData.person}
       />
 
       <Box className={classes.root}>
@@ -186,7 +189,7 @@ const CharacterForm = ({ onClose }) => {
           className={classes.formHeader}
           color="text.disabled"
         >
-          {`Edit Character - ${character?.person.name}`}
+          {`Edit Character - ${characterData?.person.name}`}
         </Box>
         <Box className={classes.formBody}>
           <Grid
