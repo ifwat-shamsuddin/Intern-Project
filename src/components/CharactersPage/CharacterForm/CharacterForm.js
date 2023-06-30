@@ -80,19 +80,19 @@ const CharacterForm = ({ onClose }) => {
     },
   })
 
-  const { loading: getAllSpeciesIsLoading, data: getAllSpeciesData } =
+  const { loading: isAllSpeciesLoading, data: allSpeciesData } =
     useQuery(GET_ALL_SPECIES)
 
-  const { loading: getAllHomeworldIsLoading, data: getAllHomeworldData } =
+  const { loading: isAllHomeworldLoading, data: allHomeworldData } =
     useQuery(GET_ALL_HOMEWORLD)
 
   const speciesOptions = useMemo(() => {
-    return handlePrepareOptionsArray(getAllSpeciesData?.allSpecies.species)
-  }, [getAllSpeciesData])
+    return handlePrepareOptionsArray(allSpeciesData?.allSpecies.species)
+  }, [allSpeciesData])
 
   const homeworldOptions = useMemo(() => {
-    return handlePrepareOptionsArray(getAllHomeworldData?.allPlanets.planets)
-  }, [getAllHomeworldData])
+    return handlePrepareOptionsArray(allHomeworldData?.allPlanets.planets)
+  }, [allHomeworldData])
 
   const { control, handleSubmit, reset } = useForm({
     defaultValues: {
@@ -293,7 +293,7 @@ const CharacterForm = ({ onClose }) => {
                 SelectProps={{
                   isClearable: true,
                   isSearchable: true,
-                  isLoading: getAllHomeworldIsLoading,
+                  isLoading: isAllHomeworldLoading,
                   options: homeworldOptions,
                   placeholder: "Select homeworld",
                 }}
@@ -316,7 +316,7 @@ const CharacterForm = ({ onClose }) => {
                 SelectProps={{
                   isClearable: true,
                   isSearchable: true,
-                  isLoading: getAllSpeciesIsLoading,
+                  isLoading: isAllSpeciesLoading,
                   options: speciesOptions,
                   placeholder: "Select species",
                 }}
