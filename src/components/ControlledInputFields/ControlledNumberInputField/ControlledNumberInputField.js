@@ -37,9 +37,9 @@ const ControlledNumberInputField = ({
   control,
   name,
   label,
-  placeholder = "",
   error,
   customValidationFunctions = {},
+  TextFieldProps = {},
 }) => {
   const classes = useStyles()
 
@@ -79,14 +79,14 @@ const ControlledNumberInputField = ({
             <>
               <TextField
                 value={value}
-                placeholder={placeholder}
+                error={!!error}
                 variant="outlined"
                 size="small"
                 inputProps={{ pattern: "[0-9]*" }}
                 onChange={(event) => {
                   handleChange({ event, onChange })
                 }}
-                error={!!error}
+                {...TextFieldProps}
               />
               <InputErrorMessage errorMessage={error?.message} />
             </>
