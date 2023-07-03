@@ -19,14 +19,13 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const ControlledSelectInputField = ({
+  isRequired = false,
   control,
   name,
   label,
-  placeholder,
-  options,
-  customValidationFunctions,
-  error,
-  required,
+  errorMessage = "",
+  customValidationFunctions = {},
+  SelectProps = {},
 }) => {
   const classes = useStyles()
   const theme = useTheme()
@@ -34,7 +33,7 @@ const ControlledSelectInputField = ({
   const customStyles = useMemo(() => {
     return {
       control: (baseStyles, { isFocused }) => {
-        const borderColor = !!error
+        const borderColor = !!errorMessage
           ? theme.palette.error.main
           : isFocused
           ? theme.palette.primary.main
@@ -69,10 +68,10 @@ const ControlledSelectInputField = ({
         color: theme.palette.text.hint,
       }),
     }
-  }, [theme, error])
+  }, [theme, errorMessage])
 
   const validateRequired = (value) => {
-    if (required && !value) return "This field is required"
+    if (isRequired && !value) return "This field is required"
     return true
   }
 
@@ -80,7 +79,7 @@ const ControlledSelectInputField = ({
     <div className={classes.root}>
       <span className={classes.label}>
         {label}
-        {required && "*"}
+        {isRequired && "*"}
       </span>
 
       <Controller
@@ -92,12 +91,11 @@ const ControlledSelectInputField = ({
             <>
               <Select
                 styles={customStyles}
-                options={options}
-                placeholder={placeholder}
                 value={value}
                 onChange={(newValue) => onChange(newValue)}
+                {...SelectProps}
               />
-              <InputErrorMessage errorMessage={error?.message} />
+              <InputErrorMessage errorMessage={errorMessage} />
             </>
           )
         }}

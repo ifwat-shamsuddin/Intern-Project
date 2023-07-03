@@ -18,10 +18,17 @@ export const prepareCharacterForFormReset = ({
         }
       : null
 
-  const characterSpecies = species?.name
+  const characterSpecies = species
     ? {
-        value: species.name,
+        value: species.id,
         label: species.name,
+      }
+    : null
+
+  const characterHomeworld = homeworld
+    ? {
+        value: homeworld.id,
+        label: homeworld.name,
       }
     : null
 
@@ -31,9 +38,9 @@ export const prepareCharacterForFormReset = ({
     height,
     gender: characterGender,
     birthYear: birthYear !== "unknown" ? birthYear : "",
-    homeworld: homeworld.name,
+    homeworld: characterHomeworld,
     species: characterSpecies,
-    numberOfFilms: filmConnection.totalCount,
+    numberOfFilms: filmConnection?.totalCount ?? "",
   }
 }
 
@@ -65,7 +72,7 @@ export const prepareNewCharacterData = ({ formData }) => {
     name,
     eyeColor,
     height,
-    gender: gender?.value,
+    gender: gender.value ?? "n/a",
     birthYear,
   }
 }
@@ -83,21 +90,33 @@ export const prepareEditCharacterData = ({ formData, character }) => {
   } = formData
   const { id } = character
 
+  const characterSpecies = species
+    ? {
+        ...character.species,
+        id: character.species.id ?? species.value,
+        name: species.label,
+      }
+    : null
+
+  const characterHomeworld = homeworld
+    ? {
+        ...character.homeworld,
+        name: homeworld.label,
+      }
+    : null
+
   return {
     id,
-    homeworld: {
-      name: homeworld,
-    },
-    species: {
-      name: species?.value,
-    },
-    filmConnection: {
-      totalCount: numberOfFilms,
-    },
     name,
     eyeColor,
     height,
-    gender: gender?.value,
+    gender: gender ? gender.value : "n/a",
     birthYear,
+    homeworld: characterHomeworld,
+    species: characterSpecies,
+    filmConnection: {
+      ...character.filmConnection,
+      totalCount: numberOfFilms,
+    },
   }
 }

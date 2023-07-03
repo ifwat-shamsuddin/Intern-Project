@@ -23,18 +23,18 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const ControlledTextInputField = ({
+  isRequired = false,
   control,
   name,
   label,
-  placeholder,
-  customValidationFunctions,
-  error,
-  required,
+  errorMessage = "",
+  customValidationFunctions = {},
+  TextFieldProps = {},
 }) => {
   const classes = useStyles()
 
   const validateRequired = (value) => {
-    if (required)
+    if (isRequired)
       return formValidationUtils.validateNotEmptyString({
         value,
         errorReturn: "This field is required",
@@ -47,7 +47,7 @@ const ControlledTextInputField = ({
     <div className={classes.root}>
       <span className={classes.label}>
         {label}
-        {required && "*"}
+        {isRequired && "*"}
       </span>
 
       <Controller
@@ -61,13 +61,13 @@ const ControlledTextInputField = ({
             <>
               <TextField
                 value={value}
-                placeholder={placeholder}
+                error={!!errorMessage}
                 variant="outlined"
-                onChange={(event) => onChange(event.target.value)}
                 size="small"
-                error={!!error}
+                onChange={(event) => onChange(event.target.value)}
+                {...TextFieldProps}
               />
-              <InputErrorMessage errorMessage={error?.message} />
+              <InputErrorMessage errorMessage={errorMessage} />
             </>
           )
         }}

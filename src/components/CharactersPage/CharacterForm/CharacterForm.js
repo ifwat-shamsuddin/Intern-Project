@@ -1,14 +1,15 @@
 import { Box, Grid, makeStyles } from "@material-ui/core"
 import { useEffect, useMemo, useState } from "react"
 import { useForm } from "react-hook-form"
-import { useDispatch, useSelector } from "react-redux"
-import { addCharacter, editCharacter } from "@/actions/characterActions"
 import { useRouter } from "next/router"
+import { useApolloClient, useQuery } from "@apollo/client"
 
+import { CHARACTER_FRAGMENT } from "@/graphql/fragments/characterFragments"
+import { GET_CHARACTER } from "@/graphql/queries/characterQueries"
+import { GET_ALL_SPECIES } from "@/graphql/queries/speciesQueries"
+import { GET_ALL_HOMEWORLD } from "@/graphql/queries/homeworldQueries"
 import { genderEnum } from "@/enums/genderEnum"
-import { speciesEnum } from "@/enums/speciesEnum"
 import { formModeEnum } from "@/enums/formModeEnum"
-import * as characterSelectors from "@/selectors/characterSelectors"
 import {
   ControlledTextInputField,
   ControlledNumberInputField,
@@ -18,7 +19,6 @@ import * as formValidationUtils from "@/utils/formValidationUtils"
 import {
   prepareCharacterForFormReset,
   prepareEditCharacterData,
-  prepareNewCharacterData,
 } from "@/utils/CharactersPageUtils"
 import ConfirmButton from "@/components/Buttons/ConfirmButton"
 import CancelButton from "@/components/Buttons/CancelButton"
@@ -50,9 +50,16 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
+const handlePrepareOptionsArray = (optionsArray = []) =>
+  optionsArray.map((option) => ({
+    value: option.id,
+    label: option.name,
+  }))
+
 const CharacterForm = ({ onClose }) => {
   const classes = useStyles()
   const router = useRouter()
+  const client = useApolloClient()
   const [errors, setErrors] = useState({})
   const [deleteCharacterModalOpen, setDeleteCharacterModalOpen] =
     useState(false)
@@ -62,7 +69,29 @@ const CharacterForm = ({ onClose }) => {
     return params[0] === formModeEnum.edit
   }, [params])
 
-  const character = useSelector(characterSelectors.character(params[1]))
+  const {
+    error: characterError,
+    loading: IsCharacterLoading,
+    data: characterData,
+  } = useQuery(GET_CHARACTER, {
+    variables: {
+      personId: params[1],
+    },
+  })
+
+  const { loading: isAllSpeciesLoading, data: allSpeciesData } =
+    useQuery(GET_ALL_SPECIES)
+
+  const { loading: isAllHomeworldLoading, data: allHomeworldData } =
+    useQuery(GET_ALL_HOMEWORLD)
+
+  const speciesOptions = useMemo(() => {
+    return handlePrepareOptionsArray(allSpeciesData?.allSpecies.species)
+  }, [allSpeciesData])
+
+  const homeworldOptions = useMemo(() => {
+    return handlePrepareOptionsArray(allHomeworldData?.allPlanets.planets)
+  }, [allHomeworldData])
 
   const { control, handleSubmit, reset } = useForm({
     defaultValues: {
@@ -79,29 +108,22 @@ const CharacterForm = ({ onClose }) => {
   })
 
   useEffect(() => {
-    if (!character) return
-    reset(prepareCharacterForFormReset(character))
-  }, [character])
-
-  useEffect(() => {
-    if (isEdit && !character) {
-      router.push({
-        pathname: "/characters/[[...params]]",
-        query: undefined,
-      })
-    }
-  }, [isEdit, character])
-
-  const dispatch = useDispatch()
+    if (!characterData) return
+    reset(prepareCharacterForFormReset(characterData.person))
+  }, [characterData])
 
   const onSubmit = (formData) => {
-    if (isEdit) {
-      const characterData = prepareEditCharacterData({ formData, character })
-      dispatch(editCharacter(characterData))
-    } else {
-      const characterData = prepareNewCharacterData({ formData })
-      dispatch(addCharacter(characterData))
-    }
+    client.writeFragment({
+      id: client.cache.identify({
+        __typename: "Person",
+        id: params[1],
+      }),
+      fragment: CHARACTER_FRAGMENT,
+      data: prepareEditCharacterData({
+        formData,
+        character: characterData.person,
+      }),
+    })
     onClose()
   }
 
@@ -150,12 +172,15 @@ const CharacterForm = ({ onClose }) => {
     setDeleteCharacterModalOpen(false)
   }
 
+  if (IsCharacterLoading) return <div>loading...</div>
+  if (characterError) return <div>{characterError.message}</div>
+
   return (
     <>
       <DeleteCharacterModal
         isModalOpen={deleteCharacterModalOpen}
         onClose={handleCloseDeleteCharacterModal}
-        character={character}
+        character={characterData.person}
       />
 
       <Box className={classes.root}>
@@ -163,7 +188,7 @@ const CharacterForm = ({ onClose }) => {
           className={classes.formHeader}
           color="text.disabled"
         >
-          {isEdit ? `Edit Character - ${character?.name}` : "Add New Character"}
+          {`Edit Character - ${characterData?.person.name}`}
         </Box>
         <Box className={classes.formBody}>
           <Grid
@@ -175,16 +200,16 @@ const CharacterForm = ({ onClose }) => {
               xs
             >
               <ControlledTextInputField
+                isRequired
                 control={control}
+                errorMessage={errors.name?.message}
                 name="name"
                 label="Name"
-                placeholder="Enter name"
                 customValidationFunctions={{
                   validateNameMinLength,
                   validateNamePattern,
                 }}
-                error={errors.name}
-                required
+                TextFieldProps={{ placeholder: "Enter name" }}
               />
             </Grid>
             <Grid
@@ -192,12 +217,12 @@ const CharacterForm = ({ onClose }) => {
               xs
             >
               <ControlledTextInputField
+                isRequired
                 control={control}
+                errorMessage={errors.eyeColor?.message}
                 name="eyeColor"
                 label="Eye Color"
-                placeholder="Enter eye color"
-                error={errors.eyeColor}
-                required
+                TextFieldProps={{ placeholder: "Enter eye color" }}
               />
             </Grid>
           </Grid>
@@ -212,12 +237,11 @@ const CharacterForm = ({ onClose }) => {
             >
               <ControlledNumberInputField
                 control={control}
+                errorMessage={errors.height?.message}
                 name="height"
                 label="Height"
-                placeholder="Enter height"
-                type="number"
                 customValidationFunctions={{ handleHeightValidation }}
-                error={errors.height}
+                TextFieldProps={{ placeholder: "Enter height" }}
               />
             </Grid>
             <Grid
@@ -228,11 +252,14 @@ const CharacterForm = ({ onClose }) => {
                 control={control}
                 name="gender"
                 label="Gender"
-                placeholder="Select gender"
-                options={[
-                  { value: genderEnum.male, label: "Male" },
-                  { value: genderEnum.female, label: "Female" },
-                ]}
+                SelectProps={{
+                  isClearable: true,
+                  options: [
+                    { value: genderEnum.male, label: "Male" },
+                    { value: genderEnum.female, label: "Female" },
+                  ],
+                  placeholder: "Select Gender",
+                }}
               />
             </Grid>
           </Grid>
@@ -249,20 +276,26 @@ const CharacterForm = ({ onClose }) => {
                 control={control}
                 name="birthYear"
                 label="Birth Year"
-                placeholder="Enter birth year"
+                TextFieldProps={{ placeholder: "Enter birth year" }}
               />
             </Grid>
             <Grid
               item
               xs
             >
-              <ControlledTextInputField
+              <ControlledSelectInputField
+                isRequired
                 control={control}
+                errorMessage={errors.homeworld?.message}
                 name="homeworld"
                 label="HomeWorld"
-                placeholder="Enter homeworld"
-                error={errors.homeworld}
-                required
+                SelectProps={{
+                  isClearable: true,
+                  isSearchable: true,
+                  isLoading: isAllHomeworldLoading,
+                  options: homeworldOptions,
+                  placeholder: "Select homeworld",
+                }}
               />
             </Grid>
           </Grid>
@@ -279,11 +312,13 @@ const CharacterForm = ({ onClose }) => {
                 control={control}
                 name="species"
                 label="Species"
-                placeholder="Select species"
-                options={[
-                  { value: speciesEnum.droid, label: "Droid" },
-                  { value: speciesEnum.human, label: "Human" },
-                ]}
+                SelectProps={{
+                  isClearable: true,
+                  isSearchable: true,
+                  isLoading: isAllSpeciesLoading,
+                  options: speciesOptions,
+                  placeholder: "Select species",
+                }}
               />
             </Grid>
             <Grid
@@ -291,21 +326,22 @@ const CharacterForm = ({ onClose }) => {
               xs
             >
               <ControlledNumberInputField
+                isRequired
                 control={control}
+                errorMessage={errors.numberOfFilms?.message}
                 name="numberOfFilms"
                 label="Number Of Films"
-                placeholder="Enter number of films appeared"
-                type="number"
                 customValidationFunctions={{ handleNumberOfFilmValidation }}
-                error={errors.numberOfFilms}
-                required
+                TextFieldProps={{
+                  placeholder: "Enter number of films appeared",
+                }}
               />
             </Grid>
           </Grid>
         </Box>
         <Box className={classes.formFooter}>
           <ConfirmButton
-            label="Submit"
+            label="Save"
             onClick={submit}
           />
           <CancelButton onClick={onClose} />

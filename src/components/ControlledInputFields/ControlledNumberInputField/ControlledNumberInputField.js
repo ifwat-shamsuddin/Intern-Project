@@ -33,13 +33,13 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const ControlledNumberInputField = ({
+  isRequired = false,
   control,
   name,
   label,
-  placeholder,
-  customValidationFunctions,
-  error,
-  required,
+  errorMessage = "",
+  customValidationFunctions = {},
+  TextFieldProps = {},
 }) => {
   const classes = useStyles()
 
@@ -49,7 +49,7 @@ const ControlledNumberInputField = ({
   }
 
   const validateRequired = (value) => {
-    if (required && value === "") {
+    if (isRequired && value === "") {
       return "This field is required"
     }
     return true
@@ -64,7 +64,7 @@ const ControlledNumberInputField = ({
     <div className={classes.root}>
       <span className={classes.label}>
         {label}
-        {required && "*"}
+        {isRequired && "*"}
       </span>
 
       <Controller
@@ -79,16 +79,16 @@ const ControlledNumberInputField = ({
             <>
               <TextField
                 value={value}
-                placeholder={placeholder}
+                error={!!errorMessage}
                 variant="outlined"
                 size="small"
                 inputProps={{ pattern: "[0-9]*" }}
                 onChange={(event) => {
                   handleChange({ event, onChange })
                 }}
-                error={!!error}
+                {...TextFieldProps}
               />
-              <InputErrorMessage errorMessage={error?.message} />
+              <InputErrorMessage errorMessage={errorMessage} />
             </>
           )
         }}

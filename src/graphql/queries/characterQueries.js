@@ -1,5 +1,7 @@
 import { gql } from "@apollo/client"
 
+import { CHARACTER_FRAGMENT } from "../fragments/characterFragments"
+
 export const GET_ALL_CHARACTERS = gql`
   query AllCharacters(
     $first: Int
@@ -39,4 +41,13 @@ export const GET_ALL_CHARACTERS = gql`
       }
     }
   }
+`
+
+export const GET_CHARACTER = gql`
+  query GetACharacter($personId: ID) {
+    person(id: $personId) {
+      ...Character
+    }
+  }
+  ${CHARACTER_FRAGMENT}
 `
