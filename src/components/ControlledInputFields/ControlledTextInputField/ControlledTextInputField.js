@@ -27,7 +27,7 @@ const ControlledTextInputField = ({
   control,
   name,
   label,
-  error,
+  error = "",
   customValidationFunctions = {},
   TextFieldProps = {},
 }) => {
@@ -67,7 +67,7 @@ const ControlledTextInputField = ({
                 onChange={(event) => onChange(event.target.value)}
                 {...TextFieldProps}
               />
-              <InputErrorMessage errorMessage={error?.message} />
+              <InputErrorMessage errorMessage={error} />
             </>
           )
         }}

@@ -23,7 +23,7 @@ const ControlledSelectInputField = ({
   control,
   name,
   label,
-  error,
+  error = "",
   customValidationFunctions = {},
   SelectProps = {},
 }) => {
@@ -95,7 +95,7 @@ const ControlledSelectInputField = ({
                 onChange={(newValue) => onChange(newValue)}
                 {...SelectProps}
               />
-              <InputErrorMessage errorMessage={error?.message} />
+              <InputErrorMessage errorMessage={error} />
             </>
           )
         }}
