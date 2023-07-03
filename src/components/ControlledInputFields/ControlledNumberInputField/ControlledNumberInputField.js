@@ -34,10 +34,11 @@ const useStyles = makeStyles((theme) => ({
 
 const ControlledNumberInputField = ({
   isRequired = false,
+  hasError = false,
   control,
   name,
   label,
-  error,
+  errorMessage = "",
   customValidationFunctions = {},
   TextFieldProps = {},
 }) => {
@@ -79,7 +80,7 @@ const ControlledNumberInputField = ({
             <>
               <TextField
                 value={value}
-                error={!!error}
+                error={hasError}
                 variant="outlined"
                 size="small"
                 inputProps={{ pattern: "[0-9]*" }}
@@ -88,7 +89,7 @@ const ControlledNumberInputField = ({
                 }}
                 {...TextFieldProps}
               />
-              <InputErrorMessage errorMessage={error?.message} />
+              <InputErrorMessage errorMessage={errorMessage} />
             </>
           )
         }}

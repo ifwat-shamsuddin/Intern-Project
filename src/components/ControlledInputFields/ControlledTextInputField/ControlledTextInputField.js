@@ -24,10 +24,11 @@ const useStyles = makeStyles((theme) => ({
 
 const ControlledTextInputField = ({
   isRequired = false,
+  hasError = false,
   control,
   name,
   label,
-  error,
+  errorMessage = "",
   customValidationFunctions = {},
   TextFieldProps = {},
 }) => {
@@ -61,13 +62,13 @@ const ControlledTextInputField = ({
             <>
               <TextField
                 value={value}
-                error={!!error}
+                error={hasError}
                 variant="outlined"
                 size="small"
                 onChange={(event) => onChange(event.target.value)}
                 {...TextFieldProps}
               />
-              <InputErrorMessage errorMessage={error?.message} />
+              <InputErrorMessage errorMessage={errorMessage} />
             </>
           )
         }}

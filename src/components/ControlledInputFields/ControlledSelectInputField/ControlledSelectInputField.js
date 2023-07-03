@@ -20,10 +20,11 @@ const useStyles = makeStyles((theme) => ({
 
 const ControlledSelectInputField = ({
   isRequired = false,
+  hasError = false,
   control,
   name,
   label,
-  error,
+  errorMessage = "",
   customValidationFunctions = {},
   SelectProps = {},
 }) => {
@@ -33,7 +34,7 @@ const ControlledSelectInputField = ({
   const customStyles = useMemo(() => {
     return {
       control: (baseStyles, { isFocused }) => {
-        const borderColor = !!error
+        const borderColor = hasError
           ? theme.palette.error.main
           : isFocused
           ? theme.palette.primary.main
@@ -68,7 +69,7 @@ const ControlledSelectInputField = ({
         color: theme.palette.text.hint,
       }),
     }
-  }, [theme, error])
+  }, [theme, hasError])
 
   const validateRequired = (value) => {
     if (isRequired && !value) return "This field is required"
@@ -95,7 +96,7 @@ const ControlledSelectInputField = ({
                 onChange={(newValue) => onChange(newValue)}
                 {...SelectProps}
               />
-              <InputErrorMessage errorMessage={error?.message} />
+              <InputErrorMessage errorMessage={errorMessage} />
             </>
           )
         }}
