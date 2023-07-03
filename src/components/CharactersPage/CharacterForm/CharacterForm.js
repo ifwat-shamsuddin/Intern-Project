@@ -201,9 +201,8 @@ const CharacterForm = ({ onClose }) => {
             >
               <ControlledTextInputField
                 isRequired
-                hasError={!!errors.name}
-                errorMessage={errors.name?.message}
                 control={control}
+                error={errors.name}
                 name="name"
                 label="Name"
                 customValidationFunctions={{
@@ -219,9 +218,8 @@ const CharacterForm = ({ onClose }) => {
             >
               <ControlledTextInputField
                 isRequired
-                hasError={!!errors.eyeColor}
-                errorMessage={errors.eyeColor?.message}
                 control={control}
+                error={errors.eyeColor}
                 name="eyeColor"
                 label="Eye Color"
                 TextFieldProps={{ placeholder: "Enter eye color" }}
@@ -238,9 +236,8 @@ const CharacterForm = ({ onClose }) => {
               xs
             >
               <ControlledNumberInputField
-                hasError={!!errors.height}
-                errorMessage={errors.height?.message}
                 control={control}
+                error={errors.height}
                 name="height"
                 label="Height"
                 customValidationFunctions={{ handleHeightValidation }}
@@ -288,9 +285,8 @@ const CharacterForm = ({ onClose }) => {
             >
               <ControlledSelectInputField
                 isRequired
-                hasError={!!errors.homeworld}
-                errorMessage={errors.homeworld?.message}
                 control={control}
+                error={errors.homeworld}
                 name="homeworld"
                 label="HomeWorld"
                 SelectProps={{
@@ -331,9 +327,8 @@ const CharacterForm = ({ onClose }) => {
             >
               <ControlledNumberInputField
                 isRequired
-                hasError={!!errors.numberOfFilms}
-                errorMessage={errors.numberOfFilms?.message}
                 control={control}
+                error={errors.numberOfFilms}
                 name="numberOfFilms"
                 label="Number Of Films"
                 customValidationFunctions={{ handleNumberOfFilmValidation }}
