@@ -202,7 +202,7 @@ const CharacterForm = ({ onClose }) => {
               <ControlledTextInputField
                 isRequired
                 control={control}
-                error={errors.name?.message}
+                errorMessage={errors.name?.message}
                 name="name"
                 label="Name"
                 customValidationFunctions={{
@@ -219,7 +219,7 @@ const CharacterForm = ({ onClose }) => {
               <ControlledTextInputField
                 isRequired
                 control={control}
-                error={errors.eyeColor?.message}
+                errorMessage={errors.eyeColor?.message}
                 name="eyeColor"
                 label="Eye Color"
                 TextFieldProps={{ placeholder: "Enter eye color" }}
@@ -237,7 +237,7 @@ const CharacterForm = ({ onClose }) => {
             >
               <ControlledNumberInputField
                 control={control}
-                error={errors.height?.message}
+                errorMessage={errors.height?.message}
                 name="height"
                 label="Height"
                 customValidationFunctions={{ handleHeightValidation }}
@@ -286,7 +286,7 @@ const CharacterForm = ({ onClose }) => {
               <ControlledSelectInputField
                 isRequired
                 control={control}
-                error={errors.homeworld?.message}
+                errorMessage={errors.homeworld?.message}
                 name="homeworld"
                 label="HomeWorld"
                 SelectProps={{
@@ -328,7 +328,7 @@ const CharacterForm = ({ onClose }) => {
               <ControlledNumberInputField
                 isRequired
                 control={control}
-                error={errors.numberOfFilms?.message}
+                errorMessage={errors.numberOfFilms?.message}
                 name="numberOfFilms"
                 label="Number Of Films"
                 customValidationFunctions={{ handleNumberOfFilmValidation }}

@@ -37,7 +37,7 @@ const ControlledNumberInputField = ({
   control,
   name,
   label,
-  error = "",
+  errorMessage = "",
   customValidationFunctions = {},
   TextFieldProps = {},
 }) => {
@@ -79,7 +79,7 @@ const ControlledNumberInputField = ({
             <>
               <TextField
                 value={value}
-                error={!!error}
+                error={!!errorMessage}
                 variant="outlined"
                 size="small"
                 inputProps={{ pattern: "[0-9]*" }}
@@ -88,7 +88,7 @@ const ControlledNumberInputField = ({
                 }}
                 {...TextFieldProps}
               />
-              <InputErrorMessage errorMessage={error} />
+              <InputErrorMessage errorMessage={errorMessage} />
             </>
           )
         }}
