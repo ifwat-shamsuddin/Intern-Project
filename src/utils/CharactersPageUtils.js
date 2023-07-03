@@ -20,7 +20,6 @@ export const prepareCharacterForFormReset = ({
 
   const characterSpecies = species
     ? {
-        id: species.id,
         value: species.id,
         label: species.name,
       }
@@ -28,7 +27,6 @@ export const prepareCharacterForFormReset = ({
 
   const characterHomeworld = homeworld
     ? {
-        id: homeworld.id,
         value: homeworld.id,
         label: homeworld.name,
       }
@@ -95,7 +93,7 @@ export const prepareEditCharacterData = ({ formData, character }) => {
   const characterSpecies = species
     ? {
         ...character.species,
-        id: species.id,
+        id: character.species.id ?? species.value,
         name: species.label,
       }
     : null
@@ -103,7 +101,6 @@ export const prepareEditCharacterData = ({ formData, character }) => {
   const characterHomeworld = homeworld
     ? {
         ...character.homeworld,
-        id: homeworld.id,
         name: homeworld.label,
       }
     : null
