@@ -1,15 +1,9 @@
-import {
-  DialogActions,
-  DialogContent,
-  Typography,
-  makeStyles,
-} from "@material-ui/core"
-import { useDispatch } from "react-redux"
+import { makeStyles } from "@material-ui/core"
+import { useApolloClient } from "@apollo/client"
 
 import AlertModal from "@/components/AlertModal"
 import CancelButton from "@/components/Buttons/CancelButton/CancelButton"
 import DeleteButton from "@/components/Buttons/DeleteButton/DeleteButton"
-import { deleteCharacter } from "@/actions/characterActions"
 
 const useStyles = makeStyles((theme) => ({
   body: {
@@ -27,11 +21,14 @@ const useStyles = makeStyles((theme) => ({
 
 const DeleteCharacterModal = ({ isModalOpen, onClose, character }) => {
   const classes = useStyles()
-
-  const dispatch = useDispatch()
+  const cache = useApolloClient().cache
 
   const handleOnClick = () => {
-    dispatch(deleteCharacter(character.id))
+    cache.evict({
+      id: cache.identify({ __typename: "Person", id: character.id }),
+    })
+
+    onClose()
   }
 
   if (!character) return
