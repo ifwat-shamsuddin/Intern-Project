@@ -3,6 +3,7 @@ import { useEffect, useMemo, useState } from "react"
 import { useForm } from "react-hook-form"
 import { useRouter } from "next/router"
 import { useApolloClient, useQuery } from "@apollo/client"
+import { has } from "lodash"
 
 import { CHARACTER_FRAGMENT } from "@/graphql/fragments/characterFragments"
 import { GET_CHARACTER } from "@/graphql/queries/characterQueries"
@@ -108,6 +109,19 @@ const CharacterForm = ({ onClose }) => {
   })
 
   useEffect(() => {
+    if (isEdit) {
+      const cachedCharacters = client.cache.extract()
+
+      if (!has(cachedCharacters, `Person:${params[1]}`)) {
+        router.push({
+          pathname: "/characters/[[...params]]",
+          query: undefined,
+        })
+      }
+    }
+  }, [isEdit, params])
+
+  useEffect(() => {
     if (!characterData) return
     reset(prepareCharacterForFormReset(characterData.person))
   }, [characterData])
@@ -170,6 +184,7 @@ const CharacterForm = ({ onClose }) => {
 
   const handleCloseDeleteCharacterModal = () => {
     setDeleteCharacterModalOpen(false)
+    onClose()
   }
 
   if (IsCharacterLoading) return <div>loading...</div>
