@@ -4,6 +4,10 @@ import { useApolloClient } from "@apollo/client"
 import AlertModal from "@/components/AlertModal"
 import CancelButton from "@/components/Buttons/CancelButton/CancelButton"
 import DeleteButton from "@/components/Buttons/DeleteButton/DeleteButton"
+import {
+  GET_ALL_CHARACTERS,
+  GET_CHARACTER,
+} from "@/graphql/queries/characterQueries"
 
 const useStyles = makeStyles((theme) => ({
   body: {
@@ -24,6 +28,36 @@ const DeleteCharacterModal = ({ isModalOpen, onClose, character }) => {
   const cache = useApolloClient().cache
 
   const handleOnClick = () => {
+    const data = cache.readQuery({
+      query: GET_ALL_CHARACTERS,
+    })
+
+    const updatedPeople = data.allPeople.people.filter((person) => {
+      return person.id !== character.id
+    })
+
+    const updatedData = {
+      allPeople: {
+        ...data.allPeople,
+        people: updatedPeople,
+      },
+    }
+
+    cache.writeQuery({
+      query: GET_ALL_CHARACTERS,
+      data: updatedData,
+    })
+
+    cache.writeQuery({
+      query: GET_CHARACTER,
+      variables: {
+        personId: character.id,
+      },
+      data: {
+        person: null,
+      },
+    })
+
     cache.evict({
       id: cache.identify({ __typename: "Person", id: character.id }),
     })
