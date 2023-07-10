@@ -109,20 +109,16 @@ const CharacterForm = ({ onClose }) => {
   })
 
   useEffect(() => {
-    if (isEdit) {
-      const cachedCharacters = client.cache.extract()
-
-      if (!has(cachedCharacters, `Person:${params[1]}`)) {
-        router.push({
-          pathname: "/characters/[[...params]]",
-          query: undefined,
-        })
-      }
-    }
-  }, [isEdit, params])
-
-  useEffect(() => {
     if (!characterData) return
+
+    if (!characterData?.person) {
+      router.push({
+        pathname: "/characters/[[...params]]",
+        query: undefined,
+      })
+      return
+    }
+
     reset(prepareCharacterForFormReset(characterData.person))
   }, [characterData])
 
@@ -184,7 +180,6 @@ const CharacterForm = ({ onClose }) => {
 
   const handleCloseDeleteCharacterModal = () => {
     setDeleteCharacterModalOpen(false)
-    onClose()
   }
 
   if (IsCharacterLoading) return <div>loading...</div>
@@ -203,7 +198,7 @@ const CharacterForm = ({ onClose }) => {
           className={classes.formHeader}
           color="text.disabled"
         >
-          {`Edit Character - ${characterData?.person.name}`}
+          {`Edit Character - ${characterData?.person?.name}`}
         </Box>
         <Box className={classes.formBody}>
           <Grid
