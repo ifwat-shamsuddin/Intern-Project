@@ -25,43 +25,29 @@ const useStyles = makeStyles((theme) => ({
 
 const DeleteCharacterModal = ({ isModalOpen, onClose, character }) => {
   const classes = useStyles()
-  const cache = useApolloClient().cache
+  const client = useApolloClient()
 
-  const handleOnClick = () => {
-    const data = cache.readQuery({
-      query: GET_ALL_CHARACTERS,
-    })
+  const onDelete = () => {
+    client.cache.modify({
+      id: client.cache.identify({
+        __typename: "Query",
+        id: "ROOT_QUERY",
+      }),
+      fields: {
+        allPeople(existing) {
+          const characterToDelete = `Person:${character.id}`
 
-    const updatedPeople = data.allPeople.people.filter((person) => {
-      return person.id !== character.id
-    })
+          const newPeople = existing.people.filter(
+            (character) => character.__ref !== characterToDelete
+          )
 
-    const updatedData = {
-      allPeople: {
-        ...data.allPeople,
-        people: updatedPeople,
-      },
-    }
-
-    cache.writeQuery({
-      query: GET_ALL_CHARACTERS,
-      data: updatedData,
-    })
-
-    cache.writeQuery({
-      query: GET_CHARACTER,
-      variables: {
-        personId: character.id,
-      },
-      data: {
-        person: null,
+          return {
+            ...existing,
+            people: newPeople,
+          }
+        },
       },
     })
-
-    cache.evict({
-      id: cache.identify({ __typename: "Person", id: character.id }),
-    })
-
     onClose()
   }
 
@@ -76,7 +62,7 @@ const DeleteCharacterModal = ({ isModalOpen, onClose, character }) => {
       <div className={classes.body}>{character.name}</div>
       <div className={classes.button}>
         <CancelButton onClick={onClose} />
-        <DeleteButton onClick={handleOnClick} />
+        <DeleteButton onClick={onDelete} />
       </div>
     </AlertModal>
   )
