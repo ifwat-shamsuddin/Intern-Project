@@ -110,15 +110,6 @@ const CharacterForm = ({ onClose }) => {
 
   useEffect(() => {
     if (!characterData) return
-
-    if (!characterData?.person) {
-      router.push({
-        pathname: "/characters/[[...params]]",
-        query: undefined,
-      })
-      return
-    }
-
     reset(prepareCharacterForFormReset(characterData.person))
   }, [characterData])
 
