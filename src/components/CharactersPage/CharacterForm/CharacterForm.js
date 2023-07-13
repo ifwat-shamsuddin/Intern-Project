@@ -3,7 +3,6 @@ import { useEffect, useMemo, useState } from "react"
 import { useForm } from "react-hook-form"
 import { useRouter } from "next/router"
 import { useApolloClient, useQuery } from "@apollo/client"
-import { has } from "lodash"
 
 import { CHARACTER_FRAGMENT } from "@/graphql/fragments/characterFragments"
 import { GET_CHARACTER } from "@/graphql/queries/characterQueries"
