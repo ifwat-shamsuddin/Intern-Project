@@ -4,10 +4,7 @@ import { useApolloClient } from "@apollo/client"
 import AlertModal from "@/components/AlertModal"
 import CancelButton from "@/components/Buttons/CancelButton/CancelButton"
 import DeleteButton from "@/components/Buttons/DeleteButton/DeleteButton"
-import {
-  GET_ALL_CHARACTERS,
-  GET_CHARACTER,
-} from "@/graphql/queries/characterQueries"
+import { __typenameEnum } from "@/enums/__typenameEnum"
 
 const useStyles = makeStyles((theme) => ({
   body: {
@@ -35,7 +32,7 @@ const DeleteCharacterModal = ({ isModalOpen, onClose, character }) => {
       }),
       fields: {
         allPeople(existing) {
-          const characterToDelete = `Person:${character.id}`
+          const characterToDelete = `${__typenameEnum.Person}:${character.id}`
 
           const newPeople = existing.people.filter(
             (character) => character.__ref !== characterToDelete

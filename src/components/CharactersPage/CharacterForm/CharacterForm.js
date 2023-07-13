@@ -10,6 +10,7 @@ import { GET_ALL_SPECIES } from "@/graphql/queries/speciesQueries"
 import { GET_ALL_HOMEWORLD } from "@/graphql/queries/homeworldQueries"
 import { genderEnum } from "@/enums/genderEnum"
 import { formModeEnum } from "@/enums/formModeEnum"
+import { __typenameEnum } from "@/enums/__typenameEnum"
 import {
   ControlledTextInputField,
   ControlledNumberInputField,
@@ -115,7 +116,7 @@ const CharacterForm = ({ onClose }) => {
   const onSubmit = (formData) => {
     client.writeFragment({
       id: client.cache.identify({
-        __typename: "Person",
+        __typename: __typenameEnum.Person,
         id: params[1],
       }),
       fragment: CHARACTER_FRAGMENT,
