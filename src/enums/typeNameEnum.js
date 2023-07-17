@@ -1,4 +1,4 @@
 export const typeNameEnum = Object.freeze({
-  Person: "Person",
-  Query: "Query",
+  person: "Person",
+  query: "Query",
 })

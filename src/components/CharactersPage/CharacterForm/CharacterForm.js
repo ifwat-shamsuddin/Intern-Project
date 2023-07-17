@@ -116,7 +116,7 @@ const CharacterForm = ({ onClose }) => {
   const onSubmit = (formData) => {
     client.writeFragment({
       id: client.cache.identify({
-        __typename: typeNameEnum.Person,
+        __typename: typeNameEnum.person,
         id: params[1],
       }),
       fragment: CHARACTER_FRAGMENT,

@@ -27,12 +27,12 @@ const DeleteCharacterModal = ({ isModalOpen, onClose, character }) => {
   const onDelete = () => {
     client.cache.modify({
       id: client.cache.identify({
-        __typename: typeNameEnum.Query,
+        __typename: typeNameEnum.query,
         id: "ROOT_QUERY",
       }),
       fields: {
         allPeople(existing) {
-          const characterToDelete = `${typeNameEnum.Person}:${character.id}`
+          const characterToDelete = `${typeNameEnum.person}:${character.id}`
 
           const newPeople = existing.people.filter(
             (character) => character.__ref !== characterToDelete
