@@ -16,12 +16,6 @@ const client = new ApolloClient({
           },
         },
       },
-      Species: {
-        keyFields: false,
-      },
-      Planet: {
-        keyFields: false,
-      },
     },
   }),
 })
