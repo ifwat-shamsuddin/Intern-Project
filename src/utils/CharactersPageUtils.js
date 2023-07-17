@@ -1,5 +1,7 @@
 import { nanoid } from "@reduxjs/toolkit"
 
+import { typeNameEnum } from "@/enums/typeNameEnum"
+
 export const prepareCharacterForFormReset = ({
   name,
   eyeColor,
@@ -92,15 +94,16 @@ export const prepareEditCharacterData = ({ formData, character }) => {
 
   const characterSpecies = species
     ? {
-        ...character.species,
-        id: character.species.id ?? species.value,
+        __typename: typeNameEnum.species,
+        id: species.value,
         name: species.label,
       }
     : null
 
   const characterHomeworld = homeworld
     ? {
-        ...character.homeworld,
+        __typename: typeNameEnum.planet,
+        id: homeworld.value,
         name: homeworld.label,
       }
     : null

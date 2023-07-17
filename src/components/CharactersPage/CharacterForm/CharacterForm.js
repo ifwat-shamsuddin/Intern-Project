@@ -114,10 +114,7 @@ const CharacterForm = ({ onClose }) => {
 
   const onSubmit = (formData) => {
     client.writeFragment({
-      id: client.cache.identify({
-        __typename: "Person",
-        id: params[1],
-      }),
+      id: client.cache.identify(characterData.person),
       fragment: CHARACTER_FRAGMENT,
       data: prepareEditCharacterData({
         formData,
@@ -188,7 +185,7 @@ const CharacterForm = ({ onClose }) => {
           className={classes.formHeader}
           color="text.disabled"
         >
-          {`Edit Character - ${characterData?.person.name}`}
+          {`Edit Character - ${characterData?.person?.name}`}
         </Box>
         <Box className={classes.formBody}>
           <Grid
