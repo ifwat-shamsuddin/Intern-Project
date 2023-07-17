@@ -32,10 +32,7 @@ const DeleteCharacterModal = ({ isModalOpen, onClose, character }) => {
       }),
       fields: {
         allPeople(existing) {
-          const characterToDelete = client.cache.identify({
-            __typename: typeNameEnum.person,
-            id: character.id,
-          })
+          const characterToDelete = client.cache.identify(character)
 
           const newPeople = existing.people.filter(
             (character) => character.__ref !== characterToDelete
