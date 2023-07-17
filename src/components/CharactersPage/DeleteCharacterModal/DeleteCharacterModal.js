@@ -4,7 +4,7 @@ import { useApolloClient } from "@apollo/client"
 import AlertModal from "@/components/AlertModal"
 import CancelButton from "@/components/Buttons/CancelButton/CancelButton"
 import DeleteButton from "@/components/Buttons/DeleteButton/DeleteButton"
-import { __typenameEnum } from "@/enums/__typenameEnum"
+import { typeNameEnum } from "@/enums/typeNameEnum"
 
 const useStyles = makeStyles((theme) => ({
   body: {
@@ -27,12 +27,12 @@ const DeleteCharacterModal = ({ isModalOpen, onClose, character }) => {
   const onDelete = () => {
     client.cache.modify({
       id: client.cache.identify({
-        __typename: "Query",
+        __typename: typeNameEnum.Query,
         id: "ROOT_QUERY",
       }),
       fields: {
         allPeople(existing) {
-          const characterToDelete = `${__typenameEnum.Person}:${character.id}`
+          const characterToDelete = `${typeNameEnum.Person}:${character.id}`
 
           const newPeople = existing.people.filter(
             (character) => character.__ref !== characterToDelete
